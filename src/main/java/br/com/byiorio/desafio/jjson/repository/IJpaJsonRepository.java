@@ -1,8 +1,8 @@
 package br.com.byiorio.desafio.jjson.repository;
 
-import br.com.byiorio.desafio.jjson.entity.IJsonJapEntity;
+import br.com.byiorio.desafio.jjson.entity.IJapJsonEntity;
 
-public interface IJsonJpaRepository<T extends IJsonJapEntity> {
+public interface IJpaJsonRepository<T extends IJapJsonEntity> {
 
     T salvar(T entidade);
 

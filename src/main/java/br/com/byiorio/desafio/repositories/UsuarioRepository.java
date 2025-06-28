@@ -2,14 +2,19 @@ package br.com.byiorio.desafio.repositories;
 
 import org.springframework.stereotype.Component;
 
-import br.com.byiorio.desafio.jjson.repository.CrudJsonJpaRepository;
+import br.com.byiorio.desafio.jjson.config.JpajsonConfig;
+import br.com.byiorio.desafio.jjson.repository.CrudJpaJsonRepository;
 
 @Component
-public class UsuarioRepository extends CrudJsonJpaRepository {
+public class UsuarioRepository extends CrudJpaJsonRepository {
+
+    protected UsuarioRepository(JpajsonConfig jpajsonConfig) {
+        super(jpajsonConfig);
+    }
 
     @Override
     public String getNome() {
-        return "db/usuarios";
+        return "usuarios";
     }
 
 }

@@ -1,6 +1,6 @@
 package br.com.byiorio.desafio.jjson.entity;
 
-public interface IJsonJapEntity {
+public interface IJapJsonEntity {
 
     String getId();
 

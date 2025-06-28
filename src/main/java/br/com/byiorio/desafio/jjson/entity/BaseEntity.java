@@ -12,7 +12,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class BaseEntity implements IJsonJapEntity {
+public class BaseEntity implements IJapJsonEntity {
 
     @JsonProperty(access = Access.READ_ONLY)
     String id;

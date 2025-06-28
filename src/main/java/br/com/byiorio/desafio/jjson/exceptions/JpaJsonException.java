@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class JsonJpaException extends RuntimeException {
+public class JpaJsonException extends RuntimeException {
     private String descricao;
 
 }

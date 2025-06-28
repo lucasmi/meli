@@ -5,7 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import br.com.byiorio.desafio.jjson.exceptions.JsonJpaException;
+import br.com.byiorio.desafio.jjson.exceptions.JpaJsonException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
@@ -17,7 +17,7 @@ public class Diretorio {
             Path path = Paths.get(caminho);
             Files.createDirectories(path);
         } catch (IOException e) {
-            throw new JsonJpaException("Erro ao criar diretorio" + caminho);
+            throw new JpaJsonException("Erro ao criar diretorio" + caminho);
         }
     }
 

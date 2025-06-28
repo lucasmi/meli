@@ -14,7 +14,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 
-import br.com.byiorio.desafio.jjson.exceptions.JsonJpaException;
+import br.com.byiorio.desafio.jjson.exceptions.JpaJsonException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
@@ -46,7 +46,7 @@ public class Arquivos {
         try (InputStreamReader reader = new InputStreamReader(new FileInputStream(path))) {
             return gson.fromJson(reader, clazz);
         } catch (IOException | JsonSyntaxException e) {
-            throw new JsonJpaException("Erro ao ler o JSON no arquivo " + path);
+            throw new JpaJsonException("Erro ao ler o JSON no arquivo " + path);
         } finally {
             lock.unlock();
         }
@@ -58,7 +58,7 @@ public class Arquivos {
             Path caminhoFisico = Paths.get(caminho);
             Files.delete(caminhoFisico);
         } catch (IOException e) {
-            throw new JsonJpaException("Erro ao apagar JSON no caminho " + caminho);
+            throw new JpaJsonException("Erro ao apagar JSON no caminho " + caminho);
         } finally {
             lock.unlock();
         }
