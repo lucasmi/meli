@@ -39,13 +39,6 @@ public class MeioPagamentosController {
         return ResponseEntity.ok(meioPagamentosService.buscarTodos());
     }
 
-    @PostMapping(path = "/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<MeioPagamentoEntity> item(@Valid @RequestBody MeioPagamentoEntity entidade) {
-        MeioPagamentoEntity usuarioCriado = meioPagamentosService.criar(entidade);
-        URI uri = URI.create("/meiopagamentos/".concat(usuarioCriado.gerarId()));
-        return ResponseEntity.status(HttpStatus.CREATED).location(uri).body(usuarioCriado);
-    }
-
     @PutMapping("{id}")
     public ResponseEntity<MeioPagamentoEntity> atualizar(@PathVariable String id,
             @Valid @RequestBody MeioPagamentoEntity entidade) {
