@@ -8,6 +8,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BasicErrorDTO {
-	private Object data;
 	private Object errors;
 }

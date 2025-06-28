@@ -35,7 +35,7 @@ public class Arquivos {
             mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
             mapper.writeValue(writer, objeto);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new JpaJsonException("Erro ao salvar o JSON no caminho " + caminho);
         } finally {
             lock.unlock();
         }

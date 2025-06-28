@@ -16,6 +16,4 @@ public class MeioPagamentoEntity extends BaseEntity {
     // @JsonInclude(JsonInclude.Include.NON_NULL)
     CartaoCreditoDTO cartaoCredito;
 
-    // @JsonInclude(JsonInclude.Include.NON_NULL)
-    // private PixDTO pix;
 }
