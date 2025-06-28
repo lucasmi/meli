@@ -1,5 +1,7 @@
 package br.com.byiorio.desafio.jjson.repository;
 
+import java.util.List;
+
 import br.com.byiorio.desafio.jjson.config.JpajsonConfig;
 import br.com.byiorio.desafio.jjson.entity.IJapJsonEntity;
 import br.com.byiorio.desafio.jjson.exceptions.JpaJsonException;
@@ -85,6 +87,10 @@ public abstract class CrudJpaJsonRepository implements IAcoesBasicas, IJpaJsonRe
         if (Arquivos.verifica(caminhoArquivo)) {
             Arquivos.apagar(caminhoArquivo);
         }
+    }
+
+    public List<String> buscarTodos() {
+        return Diretorio.listaArquivos(jpajsonConfig.getNome().concat("/").concat(getNome()));
     }
 
 }

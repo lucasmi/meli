@@ -1,5 +1,9 @@
 package br.com.byiorio.desafio.services;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import br.com.byiorio.desafio.models.UsuarioEntity;
@@ -23,6 +27,20 @@ public class UsuarioService {
 
     public UsuarioEntity buscar(String id) {
         return (UsuarioEntity) usuarioRepository.buscar(id, UsuarioEntity.class);
+    }
+
+    public List<UsuarioEntity> buscarTodos() {
+
+        // Pega todos os arquivos
+        LinkedList<String> todosArquivos = new LinkedList<>(usuarioRepository.buscarTodos());
+
+        // Consulta todos os usuarios
+        LinkedList<UsuarioEntity> usuarios = new LinkedList<>();
+
+        // adiciona usuarios
+        todosArquivos.forEach(idUsuario -> usuarios.add(this.buscar(idUsuario)));
+
+        return usuarios;
     }
 
     public UsuarioEntity atualizar(String id, UsuarioEntity entidade) {

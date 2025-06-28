@@ -1,6 +1,8 @@
 package br.com.byiorio.desafio.services;
 
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -75,4 +77,18 @@ public class ProdutoService {
 
     }
 
+    public List<ProdutoEntity> buscarTodos() {
+
+        // Pega todos os arquivos
+        LinkedList<String> todosArquivos = new LinkedList<>(produtoRepository.buscarTodos());
+
+        // Consulta todos os usuarios
+        LinkedList<ProdutoEntity> produtos = new LinkedList<>();
+
+        // adiciona usuarios
+        todosArquivos.forEach(idProduto -> produtos.add(this.buscar(idProduto)));
+
+        return produtos;
+
+    }
 }
