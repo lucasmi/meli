@@ -45,16 +45,20 @@ public class ProdutoService {
 
     public ProdutoEntity atualizar(String id, ProdutoEntity entidade) {
 
+        // verifica se produto existe
+        ProdutoEntity produtoEncontrado = (ProdutoEntity) produtoRepository.buscar(id,
+                ProdutoEntity.class);
+
         // Ja verifica se existe usuario
         UsuarioEntity usuarioEncontrado = (UsuarioEntity) usuarioRepository.buscar(entidade.getIdUsuario(),
                 UsuarioEntity.class);
 
         // Não deixa trocar de usuario durante atualizacao
-        if (!usuarioEncontrado.getId().equals(entidade.getIdUsuario())) {
+        if (!usuarioEncontrado.getId().equals(produtoEncontrado.getIdUsuario())) {
             throw new NegocialException("Usuario nao pode ser alterado do produto");
         }
 
-        return (ProdutoEntity) produtoRepository.salvar(id, entidade);
+        return (ProdutoEntity) produtoRepository.salvar(produtoEncontrado.getId(), entidade);
     }
 
     public void apagar(String id) {

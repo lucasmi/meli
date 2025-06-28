@@ -47,7 +47,7 @@ public class ExceptionsHandler {
     }
 
     @ExceptionHandler(value = { JpaJsonException.class })
-    public ResponseEntity<BasicErrorDTO> defaultException(JpaJsonException ex, WebRequest request) {
+    public ResponseEntity<BasicErrorDTO> jpaJsonException(JpaJsonException ex, WebRequest request) {
         logger.error("Exception:", ex);
 
         ArrayList<ErrorDTO> errorsArr = new ArrayList<>();
@@ -56,4 +56,16 @@ public class ExceptionsHandler {
 
         return ResponseEntity.badRequest().body(BasicErrorDTO.builder().errors(errorsArr).build());
     }
+
+    @ExceptionHandler(value = { NegocialException.class })
+    public ResponseEntity<BasicErrorDTO> negocialException(NegocialException ex, WebRequest request) {
+        logger.error("NegocialException:", ex);
+
+        ArrayList<ErrorDTO> errorsArr = new ArrayList<>();
+        errorsArr.add(ErrorDTO.builder().codigo(String.valueOf(HttpStatus.BAD_REQUEST.value()))
+                .msg(ex.getDescricao()).build());
+
+        return ResponseEntity.badRequest().body(BasicErrorDTO.builder().errors(errorsArr).build());
+    }
+
 }

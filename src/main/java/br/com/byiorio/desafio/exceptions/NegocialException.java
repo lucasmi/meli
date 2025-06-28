@@ -6,6 +6,5 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class NegocialException extends RuntimeException {
-    private String descricao;
-
+    final String descricao;
 }
