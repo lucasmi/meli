@@ -20,7 +20,7 @@ import br.com.byiorio.desafio.services.MeioPagamentosService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping(value = "/meiopagamentos")
+@RequestMapping(value = "/meio-pagamentos")
 public class MeioPagamentosController {
 
     MeioPagamentosService meioPagamentosService;
