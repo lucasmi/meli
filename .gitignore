@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+#meu projeto banco de dados
+/db/

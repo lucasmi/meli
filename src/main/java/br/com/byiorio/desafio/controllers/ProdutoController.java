@@ -1,8 +1,11 @@
 package br.com.byiorio.desafio.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.net.URI;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +23,6 @@ import jakarta.validation.Valid;
 @RequestMapping(value = "/produtos")
 public class ProdutoController {
 
-    @Autowired
     ProdutoService produtoService;
 
     public ProdutoController(ProdutoService produtoService) {
@@ -34,7 +36,11 @@ public class ProdutoController {
 
     @PostMapping(path = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProdutoEntity> item(@Valid @RequestBody ProdutoEntity entidade) {
-        return ResponseEntity.ok(produtoService.criar(entidade));
+
+        ProdutoEntity produtoCriado = produtoService.criar(entidade);
+        URI uri = URI.create("/produtos/".concat(produtoCriado.gerarId()));
+        return ResponseEntity.status(HttpStatus.CREATED).location(uri).body(produtoCriado);
+
     }
 
     @PutMapping("{id}")
@@ -42,4 +48,9 @@ public class ProdutoController {
         return ResponseEntity.ok(produtoService.atualizar(id, entidade));
     }
 
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> apagar(@PathVariable String id) {
+        produtoService.apagar(id);
+        return ResponseEntity.noContent().build();
+    }
 }

@@ -2,13 +2,13 @@ package br.com.byiorio.desafio.models;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.UUID;
+import java.util.HashSet;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
-import br.com.byiorio.desafio.jjson.entity.IJsonJapEntity;
+import br.com.byiorio.desafio.jjson.entity.BaseEntity;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
@@ -18,12 +18,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ProdutoEntity implements IJsonJapEntity {
-    @JsonProperty(access = Access.READ_ONLY)
-    String id;
-
+public class ProdutoEntity extends BaseEntity {
     @NotBlank
-    @Size(min = 36, max = 36)
+    @Size(min = 1, max = 50)
     String idUsuario;
 
     @NotBlank
@@ -41,15 +38,7 @@ public class ProdutoEntity implements IJsonJapEntity {
     @Digits(integer = 20, fraction = 2)
     BigDecimal preco;
 
-    ArrayList<String> avaliacoesIds;
+    @JsonProperty(access = Access.READ_ONLY)
+    HashSet<String> idAvaliacoes;
 
-    @Override
-    public String getId() {
-        return this.id;
-    }
-
-    @Override
-    public String gerarId() {
-        return UUID.randomUUID().toString();
-    }
 }

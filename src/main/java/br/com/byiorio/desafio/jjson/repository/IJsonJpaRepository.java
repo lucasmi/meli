@@ -7,4 +7,6 @@ public interface IJsonJpaRepository<T extends IJsonJapEntity> {
     T salvar(T entidade);
 
     T buscar(String id, Class<T> clazz);
+
+    void apagar(String id);
 }

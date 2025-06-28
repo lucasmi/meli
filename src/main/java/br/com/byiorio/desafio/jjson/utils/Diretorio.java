@@ -5,15 +5,19 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import br.com.byiorio.desafio.jjson.exceptions.JsonJpaException;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Diretorio {
 
-    public static void criar(String caminho) throws IOException {
+    public static void criar(String caminho) {
         try {
             Path path = Paths.get(caminho);
             Files.createDirectories(path);
-            System.out.println("Diretório criado em: " + path.toAbsolutePath());
         } catch (IOException e) {
-            throw e;
+            throw new JsonJpaException("Erro ao criar diretorio" + caminho);
         }
     }
 

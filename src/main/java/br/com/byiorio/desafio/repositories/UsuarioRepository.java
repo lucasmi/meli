@@ -2,10 +2,10 @@ package br.com.byiorio.desafio.repositories;
 
 import org.springframework.stereotype.Component;
 
-import br.com.byiorio.desafio.jjson.repository.BaseJsonJpaRepository;
+import br.com.byiorio.desafio.jjson.repository.CrudJsonJpaRepository;
 
 @Component
-public class UsuarioRepository extends BaseJsonJpaRepository {
+public class UsuarioRepository extends CrudJsonJpaRepository {
 
     @Override
     public String getNome() {

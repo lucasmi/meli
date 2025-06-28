@@ -1,7 +1,11 @@
 package br.com.byiorio.desafio.controllers;
 
+import java.net.URI;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,11 +36,20 @@ public class UsuarioController {
 
     @PostMapping(path = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UsuarioEntity> item(@Valid @RequestBody UsuarioEntity entidade) {
-        return ResponseEntity.ok(usuarioService.criar(entidade));
+        UsuarioEntity usuarioCriado = usuarioService.criar(entidade);
+        URI uri = URI.create("/usuarios/".concat(usuarioCriado.gerarId()));
+        return ResponseEntity.status(HttpStatus.CREATED).location(uri).body(usuarioCriado);
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<UsuarioEntity> atualizar(@PathVariable String id, @RequestBody UsuarioEntity entidade) {
+    public ResponseEntity<UsuarioEntity> atualizar(@PathVariable String id,
+            @Valid @RequestBody UsuarioEntity entidade) {
         return ResponseEntity.ok(usuarioService.atualizar(id, entidade));
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> apagar(@PathVariable String id) {
+        usuarioService.apagar(id);
+        return ResponseEntity.noContent().build();
     }
 }

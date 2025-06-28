@@ -1,25 +1,23 @@
 package br.com.byiorio.desafio.jjson.repository;
 
-import java.io.IOException;
-
 import br.com.byiorio.desafio.jjson.entity.IJsonJapEntity;
 import br.com.byiorio.desafio.jjson.exceptions.JsonJpaException;
 import br.com.byiorio.desafio.jjson.utils.Arquivos;
 import br.com.byiorio.desafio.jjson.utils.Diretorio;
 
-public abstract class BaseJsonJpaRepository implements IAcoesBasicas, IJsonJpaRepository<IJsonJapEntity> {
-    public BaseJsonJpaRepository() {
+public abstract class CrudJsonJpaRepository implements IAcoesBasicas, IJsonJpaRepository<IJsonJapEntity> {
+
+    private static final String JSON_EXTENSAO = ".json";
+
+    protected CrudJsonJpaRepository() {
         this.configurar();
     }
 
     @Override
     public void configurar() {
-        try {
-            if (!Diretorio.verifica(getNome())) {
-                Diretorio.criar(getNome());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        // Cria diretorio onde serao armazenados os Jsons
+        if (!Diretorio.verifica(getNome())) {
+            Diretorio.criar(getNome());
         }
     }
 
@@ -34,7 +32,7 @@ public abstract class BaseJsonJpaRepository implements IAcoesBasicas, IJsonJpaRe
         }
 
         // gera caminhho
-        String caminhoArquivo = getNome().concat("/").concat(entidade.getId()).concat(".json");
+        String caminhoArquivo = getNome().concat("/").concat(entidade.getId()).concat(JSON_EXTENSAO);
 
         if (!Arquivos.verifica(caminhoArquivo) && novoArquivo) {
             // Se for arquivo novo salva
@@ -51,14 +49,15 @@ public abstract class BaseJsonJpaRepository implements IAcoesBasicas, IJsonJpaRe
     }
 
     public IJsonJapEntity salvar(String id, IJsonJapEntity entidade) {
+        // Salva arquivo
         entidade.setId(id);
         return salvar(entidade);
     }
 
     @Override
     public IJsonJapEntity buscar(String id, Class clazz) {
-        // gera caminhho
-        String caminhoArquivo = getNome().concat("/").concat(id).concat(".json");
+        // Gera caminhho
+        String caminhoArquivo = getNome().concat("/").concat(id).concat(JSON_EXTENSAO);
 
         // Salva arquivo
         if (Arquivos.verifica(caminhoArquivo)) {
@@ -67,6 +66,16 @@ public abstract class BaseJsonJpaRepository implements IAcoesBasicas, IJsonJpaRe
             throw new JsonJpaException(getNome() + " não encontrado");
         }
 
+    }
+
+    public void apagar(String id) {
+        // gera caminhho
+        String caminhoArquivo = getNome().concat("/").concat(id).concat(JSON_EXTENSAO);
+
+        // Salva arquivo
+        if (Arquivos.verifica(caminhoArquivo)) {
+            Arquivos.apagar(caminhoArquivo);
+        }
     }
 
 }
