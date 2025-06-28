@@ -15,8 +15,8 @@ public abstract class BaseJsonJpaRepository implements IAcoesBasicas, IJsonJpaRe
     @Override
     public void configurar() {
         try {
-            if (!Diretorio.verifica(getNomePasta())) {
-                Diretorio.criar(getNomePasta());
+            if (!Diretorio.verifica(getNome())) {
+                Diretorio.criar(getNome());
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -34,7 +34,7 @@ public abstract class BaseJsonJpaRepository implements IAcoesBasicas, IJsonJpaRe
         }
 
         // gera caminhho
-        String caminhoArquivo = getNomePasta().concat("/").concat(entidade.getId()).concat(".json");
+        String caminhoArquivo = getNome().concat("/").concat(entidade.getId()).concat(".json");
 
         if (!Arquivos.verifica(caminhoArquivo) && novoArquivo) {
             // Se for arquivo novo salva
@@ -58,13 +58,13 @@ public abstract class BaseJsonJpaRepository implements IAcoesBasicas, IJsonJpaRe
     @Override
     public IJsonJapEntity buscar(String id, Class clazz) {
         // gera caminhho
-        String caminhoArquivo = getNomePasta().concat("/").concat(id).concat(".json");
+        String caminhoArquivo = getNome().concat("/").concat(id).concat(".json");
 
         // Salva arquivo
         if (Arquivos.verifica(caminhoArquivo)) {
             return (IJsonJapEntity) Arquivos.ler(caminhoArquivo, clazz);
         } else {
-            throw new JsonJpaException("Arquivo não encontrado");
+            throw new JsonJpaException(getNome() + " não encontrado");
         }
 
     }

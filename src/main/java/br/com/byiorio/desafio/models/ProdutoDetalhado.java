@@ -7,6 +7,5 @@ import lombok.Setter;
 @Setter
 public class ProdutoDetalhado {
     UsuarioEntity vendedor;
-    ProdutoDTO produto;
-
+    ProdutoEntity produto;
 }

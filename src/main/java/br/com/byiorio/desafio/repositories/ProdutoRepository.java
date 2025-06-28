@@ -5,11 +5,11 @@ import org.springframework.stereotype.Component;
 import br.com.byiorio.desafio.jjson.repository.BaseJsonJpaRepository;
 
 @Component
-public class UsuarioRepository extends BaseJsonJpaRepository {
+public class ProdutoRepository extends BaseJsonJpaRepository {
 
     @Override
     public String getNome() {
-        return "db/usuarios";
+        return "db/produtos";
     }
 
 }

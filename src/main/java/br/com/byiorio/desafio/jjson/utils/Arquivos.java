@@ -10,11 +10,14 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 
 public class Arquivos {
     private static final Lock lock = new ReentrantLock();
-    private static Gson gson = new Gson();
+    private static Gson gson = new GsonBuilder()
+            .serializeNulls()
+            .create();
 
     public static boolean verifica(String caminho) {
         return Files.isRegularFile(Path.of(caminho));
