@@ -115,6 +115,7 @@ public class AvaliacaoService {
         produtoEncontrado.getIdsAvaliacoes().remove(id);
         produtoRepository.salvar(produtoEncontrado);
 
-        usuarioRepository.apagar(id);
+        // Apaga avaliacao
+        avaliacaoRepository.apagar(id);
     }
 }

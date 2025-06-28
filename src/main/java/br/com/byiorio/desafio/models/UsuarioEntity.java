@@ -25,7 +25,7 @@ public class UsuarioEntity extends BaseEntity {
     HashSet<String> idsProdutos = new HashSet<>();
 
     @Schema(hidden = true)
-    HashSet<String> idsFormaPagamentos = new HashSet<>();
+    HashSet<String> idsMeioPagamentos = new HashSet<>();
 
     @Schema(hidden = true)
     HashSet<String> idsAvaliacoes = new HashSet<>();
