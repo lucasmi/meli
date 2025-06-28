@@ -71,7 +71,7 @@ public abstract class CrudJpaJsonRepository implements IAcoesBasicas, IJpaJsonRe
         if (Arquivos.verifica(caminhoArquivo)) {
             return (IJapJsonEntity) Arquivos.ler(caminhoArquivo, clazz);
         } else {
-            throw new JpaJsonException("id:" + id + " nao encontrado na base " + getNome());
+            throw new JpaJsonException("o id " + id + " nao foi encontrado na base " + getNome());
         }
 
     }
