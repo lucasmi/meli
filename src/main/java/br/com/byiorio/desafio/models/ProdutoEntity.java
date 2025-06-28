@@ -5,10 +5,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import br.com.byiorio.desafio.jjson.entity.BaseEntity;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
@@ -38,7 +37,7 @@ public class ProdutoEntity extends BaseEntity {
     @Digits(integer = 20, fraction = 2)
     BigDecimal preco;
 
-    @JsonProperty(access = Access.READ_ONLY)
-    HashSet<String> idAvaliacoes;
+    @Schema(hidden = true)
+    HashSet<String> idsAvaliacoes = new HashSet<>();
 
 }

@@ -2,10 +2,8 @@ package br.com.byiorio.desafio.models;
 
 import java.util.HashSet;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
-
 import br.com.byiorio.desafio.jjson.entity.BaseEntity;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -23,10 +21,13 @@ public class UsuarioEntity extends BaseEntity {
     @Size(max = 100)
     String email;
 
-    @JsonProperty(access = Access.READ_ONLY)
+    @Schema(hidden = true)
     HashSet<String> idsProdutos = new HashSet<>();
 
-    @JsonProperty(access = Access.READ_ONLY)
+    @Schema(hidden = true)
     HashSet<String> idsFormaPagamentos = new HashSet<>();
+
+    @Schema(hidden = true)
+    HashSet<String> idsAvaliacoes = new HashSet<>();
 
 }

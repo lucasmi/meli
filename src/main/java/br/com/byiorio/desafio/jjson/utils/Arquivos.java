@@ -10,9 +10,9 @@ import java.nio.file.Paths;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonSyntaxException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import br.com.byiorio.desafio.jjson.exceptions.JpaJsonException;
 import lombok.AccessLevel;
@@ -22,9 +22,6 @@ import lombok.AllArgsConstructor;
 public class Arquivos {
 
     private static final Lock lock = new ReentrantLock();
-    private static Gson gson = new GsonBuilder()
-            .serializeNulls()
-            .create();
 
     public static boolean verifica(String caminho) {
         return Files.isRegularFile(Path.of(caminho));
@@ -33,7 +30,10 @@ public class Arquivos {
     public static void salvar(String caminho, Object objeto) {
         lock.lock();
         try (FileWriter writer = new FileWriter(caminho, false)) {
-            gson.toJson(objeto, writer);
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.registerModule(new JavaTimeModule());
+            mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+            mapper.writeValue(writer, objeto);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -44,9 +44,15 @@ public class Arquivos {
     public static <T> T ler(String path, Class<T> clazz) {
         lock.lock();
         try (InputStreamReader reader = new InputStreamReader(new FileInputStream(path))) {
-            return gson.fromJson(reader, clazz);
-        } catch (IOException | JsonSyntaxException e) {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.registerModule(new JavaTimeModule());
+            mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+
+            return mapper.readValue(reader, clazz);
+
+        } catch (IOException e) {
             throw new JpaJsonException("Erro ao ler o JSON no arquivo " + path);
+
         } finally {
             lock.unlock();
         }

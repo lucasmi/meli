@@ -4,9 +4,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
-
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,7 +12,7 @@ import lombok.Setter;
 @Setter
 public class BaseEntity implements IJapJsonEntity {
 
-    @JsonProperty(access = Access.READ_ONLY)
+    @Schema(hidden = true)
     String id;
 
     @Override
