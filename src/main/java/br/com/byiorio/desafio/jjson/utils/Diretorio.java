@@ -1,4 +1,4 @@
-package br.com.byiorio.desafio.utils;
+package br.com.byiorio.desafio.jjson.utils;
 
 import java.io.IOException;
 import java.nio.file.Files;
