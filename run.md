@@ -18,6 +18,8 @@
    http://localhost:8080/swagger-ui/index.html
 
 5. **Sonar**
-  Esse comando funciona somente na maquina onde foi desenvolvido. A imagem do relatório está no arquivo relatiroSonar.png
+  - Esse comando funciona somente na maquina onde foi desenvolvido. 
+  - A imagem do relatório está no arquivo relatiroSonar.png
+  
   ```sh
   mvn clean install sonar:sonar -Dsonar.login=squ_2e3e9853d89bc907cc002b333f6c7eabe9e67031 -Dsonar.host.url=http://localhost:9000
