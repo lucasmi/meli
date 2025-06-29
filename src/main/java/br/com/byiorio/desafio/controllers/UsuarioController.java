@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.byiorio.desafio.models.MeioPagamentoDTO;
 import br.com.byiorio.desafio.models.MeioPagamentoEntity;
 import br.com.byiorio.desafio.models.UsuarioEntity;
 import br.com.byiorio.desafio.services.MeioPagamentosService;
@@ -64,9 +65,13 @@ public class UsuarioController {
 
     @PostMapping(path = "/{id}/meios-pagamento", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MeioPagamentoEntity> meioPagamentos(@PathVariable String id,
-            @Valid @RequestBody MeioPagamentoEntity entidade) {
-        MeioPagamentoEntity usuarioCriado = meioPagamentosService.criar(entidade);
-        URI uri = URI.create("/meiopagamentos/".concat(usuarioCriado.gerarId()));
+            @Valid @RequestBody MeioPagamentoDTO request) {
+
+        MeioPagamentoEntity usuarioCriado = meioPagamentosService
+                .criar(MeioPagamentoEntity.builder().cartaoCredito(request.getCartaoCredito())
+                        .idUsuario(id).build());
+
+        URI uri = URI.create("/meios-pagamento/".concat(usuarioCriado.gerarId()));
         return ResponseEntity.status(HttpStatus.CREATED).location(uri).body(usuarioCriado);
     }
 }
