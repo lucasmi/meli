@@ -112,6 +112,48 @@ class ProdutoControllerTest {
         }
 
         @Test
+        void putErrorNaoEncontradoest() throws Exception {
+                // le arquivo de request e response
+                // e executa o post
+                String request = FileUtils.readFileToString(
+                                ResourceUtils.getFile("classpath:./produto/PutRequestError1.json"),
+                                StandardCharsets.UTF_8.name());
+
+                String response = FileUtils.readFileToString(
+                                ResourceUtils.getFile("classpath:./produto/PutResponseError1.json"),
+                                StandardCharsets.UTF_8.name());
+
+                // Consulta o usuario criado
+                mvc.perform(MockMvcRequestBuilders.put("/produtos/9bce8ac2-1ddf-48ee-8bd4-2b9e8e13fa95")
+                                .content(request)
+                                .contentType(MediaType.APPLICATION_JSON))
+                                .andDo(MockMvcResultHandlers.print())
+                                .andExpect(MockMvcResultMatchers.status().is4xxClientError())
+                                .andExpect(MockMvcResultMatchers.content().json(response));
+        }
+
+        @Test
+        void putErrorAlteracaoTest() throws Exception {
+                // le arquivo de request e response
+                // e executa o post
+                String request = FileUtils.readFileToString(
+                                ResourceUtils.getFile("classpath:./produto/PutRequestError2.json"),
+                                StandardCharsets.UTF_8.name());
+
+                String response = FileUtils.readFileToString(
+                                ResourceUtils.getFile("classpath:./produto/PutResponseError2.json"),
+                                StandardCharsets.UTF_8.name());
+
+                // Consulta o usuario criado
+                mvc.perform(MockMvcRequestBuilders.put("/produtos/9bce8ac2-1ddf-48ee-8bd4-2b9e8e13fa95")
+                                .content(request)
+                                .contentType(MediaType.APPLICATION_JSON))
+                                .andDo(MockMvcResultHandlers.print())
+                                .andExpect(MockMvcResultMatchers.status().is4xxClientError())
+                                .andExpect(MockMvcResultMatchers.content().json(response));
+        }
+
+        @Test
         void deleteTest() throws Exception {
                 // Consulta o usuario criado
                 mvc.perform(MockMvcRequestBuilders.delete("/produtos/9bce8ac2-1ddf-48ee-8bd4-2b9e8e13fa95")

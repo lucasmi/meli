@@ -1,0 +1,8 @@
+{
+    "errors": [
+        {
+            "codigo": "400",
+            "msg": "Usuario nao pode ser alterado do produto"
+        }
+    ]
+}

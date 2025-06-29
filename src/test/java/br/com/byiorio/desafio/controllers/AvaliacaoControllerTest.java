@@ -112,6 +112,48 @@ class AvaliacaoControllerTest {
         }
 
         @Test
+        void putErroUsuarioTest() throws Exception {
+                // le arquivo de request e response
+                // e executa o post
+                String request = FileUtils.readFileToString(
+                                ResourceUtils.getFile("classpath:./avaliacao/PutRequestError1.json"),
+                                StandardCharsets.UTF_8.name());
+
+                String response = FileUtils.readFileToString(
+                                ResourceUtils.getFile("classpath:./avaliacao/PutResponseError1.json"),
+                                StandardCharsets.UTF_8.name());
+
+                // Consulta o usuario criado
+                mvc.perform(MockMvcRequestBuilders.put("/avaliacoes/1eb2bc27-7ae6-472f-9422-cd53fbce22f9")
+                                .content(request)
+                                .contentType(MediaType.APPLICATION_JSON))
+                                .andDo(MockMvcResultHandlers.print())
+                                .andExpect(MockMvcResultMatchers.status().is4xxClientError())
+                                .andExpect(MockMvcResultMatchers.content().json(response));
+        }
+
+        @Test
+        void putErroProdutoTest() throws Exception {
+                // le arquivo de request e response
+                // e executa o post
+                String request = FileUtils.readFileToString(
+                                ResourceUtils.getFile("classpath:./avaliacao/PutRequestError2.json"),
+                                StandardCharsets.UTF_8.name());
+
+                String response = FileUtils.readFileToString(
+                                ResourceUtils.getFile("classpath:./avaliacao/PutResponseError2.json"),
+                                StandardCharsets.UTF_8.name());
+
+                // Consulta o usuario criado
+                mvc.perform(MockMvcRequestBuilders.put("/avaliacoes/1eb2bc27-7ae6-472f-9422-cd53fbce22f9")
+                                .content(request)
+                                .contentType(MediaType.APPLICATION_JSON))
+                                .andDo(MockMvcResultHandlers.print())
+                                .andExpect(MockMvcResultMatchers.status().is4xxClientError())
+                                .andExpect(MockMvcResultMatchers.content().json(response));
+        }
+
+        @Test
         void deleteTest() throws Exception {
                 // Consulta o usuario criado
                 mvc.perform(MockMvcRequestBuilders.delete("/avaliacoes/1eb2bc27-7ae6-472f-9422-cd53fbce22f9")

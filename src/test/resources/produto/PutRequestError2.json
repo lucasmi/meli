@@ -1,0 +1,11 @@
+{
+  "idUsuario": "f33d57ea-d316-4167-92a8-8f2258b71abd",
+  "titulo": "Titulo Novo",
+  "descricao": "descricao nova",
+  "imagens": [
+    {
+      "url": "url nova"
+    }
+  ],
+  "preco": 300.0
+}
