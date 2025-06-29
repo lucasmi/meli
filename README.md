@@ -9,6 +9,15 @@
 - You can use any backend technology or framework of your choice ✅
 - Do not use real databases, persist everything in local JSON or CSV files ✅
 
+### Data
+The page should display key information such as:
+  - Product images ✅
+  - Title and description ✅
+  - Price ✅
+  - Payment methods ✅
+  - Seller information ✅
+  - Additional details (e.g., ratings ✅, reviews ✅, or available stock)
+
 ### Non-functional requirements
 
 - Proper error handling ✅
