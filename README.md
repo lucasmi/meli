@@ -38,7 +38,7 @@ Along with your code submission, include a brief (1-2 page) document that:
 - Provide a link to your repository or a zipped project folder. ✅  
   [https://github.com/lucasmi/meli](https://github.com/lucasmi/meli)
 - It must contain a `run.md` explaining how to run the project ✅  
-  [https://github.com/lucasmi/meli/run.md](https://github.com/lucasmi/meli/run.md)
+  [https://github.com/lucasmi/meli/run.md](https://github.com/lucasmi/meli/blob/main/run.md)
 
 
 ## Explains your design choices  
