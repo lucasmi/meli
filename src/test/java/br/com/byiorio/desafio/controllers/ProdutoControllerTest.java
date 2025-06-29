@@ -63,7 +63,7 @@ class ProdutoControllerTest {
         void getAllTest() throws Exception {
                 // le arquivo de response e executa o get
                 String response = FileUtils.readFileToString(
-                                ResourceUtils.getFile("classpath:./produto/GetResponseAllProdutos.json"),
+                                ResourceUtils.getFile("classpath:./produto/GetResponseAll.json"),
                                 StandardCharsets.UTF_8.name());
 
                 mvc.perform(MockMvcRequestBuilders.get("/produtos/")

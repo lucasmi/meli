@@ -49,4 +49,20 @@ public class ConfiguraMassa {
                 "dbtest/" + ProdutoRepository.NOME_PASTA
                         + "/9d04d49e-89a7-4e3f-9304-2253e5f36d2a.json");
     }
+
+    public static void configuraMassaAvaliacao() throws IOException {
+        Diretorio.apagar("dbtest/" + AvaliacaoRepository.NOME_PASTA);
+        Diretorio.criar("dbtest/" + AvaliacaoRepository.NOME_PASTA);
+
+        // Sempre copia duas massas de dados de usuario para os testes
+        Arquivos.copiar(
+                "src/test/resources/avaliacao/1eb2bc27-7ae6-472f-9422-cd53fbce22f9.json",
+                "dbtest/" + AvaliacaoRepository.NOME_PASTA
+                        + "/1eb2bc27-7ae6-472f-9422-cd53fbce22f9.json");
+
+        Arquivos.copiar(
+                "src/test/resources/avaliacao/fb0c958d-a8f3-4e2e-83b6-8fc9d33ea9bf.json",
+                "dbtest/" + AvaliacaoRepository.NOME_PASTA
+                        + "/fb0c958d-a8f3-4e2e-83b6-8fc9d33ea9bf.json");
+    }
 }

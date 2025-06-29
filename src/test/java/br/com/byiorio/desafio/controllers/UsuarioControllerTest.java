@@ -60,7 +60,7 @@ class UsuarioControllerTest {
 
                 // le arquivo de response e executa o get
                 String response = FileUtils.readFileToString(
-                                ResourceUtils.getFile("classpath:./usuario/GetResponseAllUsers.json"),
+                                ResourceUtils.getFile("classpath:./usuario/GetResponseAll.json"),
                                 StandardCharsets.UTF_8.name());
 
                 mvc.perform(MockMvcRequestBuilders.get("/usuarios/")
