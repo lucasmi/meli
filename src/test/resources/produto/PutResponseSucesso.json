@@ -1,0 +1,13 @@
+{
+    "id": "9bce8ac2-1ddf-48ee-8bd4-2b9e8e13fa95",
+    "idUsuario": "99d44695-2b71-451a-97ee-1398a0b439a5",
+    "titulo": "Titulo Novo",
+    "descricao": "descricao nova",
+    "imagens": [
+        {
+            "url": "url nova"
+        }
+    ],
+    "preco": "300.0",
+    "idsAvaliacoes": []
+}

@@ -11,18 +11,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.util.ResourceUtils;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import br.com.byiorio.desafio.jjson.utils.Arquivos;
-import br.com.byiorio.desafio.jjson.utils.Diretorio;
-import br.com.byiorio.desafio.models.UsuarioEntity;
-import br.com.byiorio.desafio.repositories.UsuarioRepository;
+import br.com.byiorio.desafio.utils.ConfiguraMassa;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, properties = "spring.config.location=classpath:application-test.properties")
 @AutoConfigureMockMvc
@@ -32,24 +26,12 @@ class UsuarioControllerTest {
 
         @BeforeEach
         void setup() throws Throwable {
-                Diretorio.apagar("dbtest/" + UsuarioRepository.NOME_PASTA);
-                Diretorio.criar("dbtest/" + UsuarioRepository.NOME_PASTA);
-
-                // Sempre copia duas massas de dados de usuario para os testes
-                Arquivos.copiar(
-                                "src/test/resources/usuario/99d44695-2b71-451a-97ee-1398a0b439a5.json",
-                                "dbtest/" + UsuarioRepository.NOME_PASTA
-                                                + "/99d44695-2b71-451a-97ee-1398a0b439a5.json");
-
-                Arquivos.copiar(
-                                "src/test/resources/usuario/f33d57ea-d316-4167-92a8-8f2258b71abd.json",
-                                "dbtest/" + UsuarioRepository.NOME_PASTA
-                                                + "/f33d57ea-d316-4167-92a8-8f2258b71abd.json");
+                ConfiguraMassa.configuraMassaUsuario();
         }
 
         @AfterAll
         static void finalizar() throws Throwable {
-                Diretorio.apagar("dbtest/" + UsuarioRepository.NOME_PASTA);
+                ConfiguraMassa.apagaTodoBancoDeDados();
         }
 
         @Test
