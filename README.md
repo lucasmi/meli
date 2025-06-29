@@ -41,7 +41,7 @@ Along with your code submission, include a brief (1-2 page) document that:
   [https://github.com/lucasmi/meli/run.md](https://github.com/lucasmi/meli/run.md)
 
 
-  ## Explains your design choices  
+## Explains your design choices  
   Based on the technologies within my domain, I chose to work with Java, given my longer experience with the language. Once the primary technology was defined, I began analyzing the project requirements.
 
   As I needed to develop endpoints following the REST architecture, I selected Spring Boot for its development agility and ease of integration. For the persistence layer, the only constraint was to use either JSON or CSV files. Considering this, I opted for JSON due to its flexibility and better fit for the data structures I planned to handle.
@@ -56,7 +56,7 @@ Relationship Diagram.
     
   ![Diagrama](https://github.com/lucasmi/meli/blob/main/diagrama.png)
 
-  ## Challenges
+## Challenges
   - File handling with parallel threads: To ensure data integrity during concurrent operations, I implemented locking mechanisms on the threads before performing any file manipulation. This guaranteed that only one thread could access the shared resource at a time, effectively preventing race conditions.
 
   - Relationship management and manipulation of generated files: To streamline and standardize development, I created the JpaJson library, inspired by JPA principles. This approach led me to structure the code into two main layers:
