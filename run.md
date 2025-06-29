@@ -3,6 +3,7 @@
 1. **Pré-requisitos:**
    - Java 21 ou superior instalado
    - Maven instalado
+   - Tenho uma pagina explicando como montar o ambiente https://www.byiorio.com.br/product/1
 
 2. **Compilar o projeto:**
    ```sh
@@ -20,6 +21,7 @@
 5. **Sonar**
   - Esse comando funciona somente na maquina onde foi desenvolvido. 
   - A imagem do relatório está no arquivo relatiroSonar.png
+  - Tenho uma página explicando como rodar https://www.byiorio.com.br/product/11/item/38
   
   ![Relatório Sonar](https://github.com/lucasmi/meli/blob/main/relatorioSonar.png)
 
