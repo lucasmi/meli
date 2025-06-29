@@ -1,7 +1,7 @@
 # Como subir o projeto e acessar o Swagger UI
 
 1. **Pré-requisitos:**
-   - Java 17 ou superior instalado
+   - Java 21 ou superior instalado
    - Maven instalado
 
 2. **Compilar o projeto:**
