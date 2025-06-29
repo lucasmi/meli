@@ -53,6 +53,21 @@ class ProdutoDetalhesControllerTest {
     }
 
     @Test
+    void getAllRaizContextoTest() throws Exception {
+
+        // le arquivo de response e executa o get
+        String response = FileUtils.readFileToString(
+                ResourceUtils.getFile("classpath:./produto-detalhe/GetResponseAll.json"),
+                StandardCharsets.UTF_8.name());
+
+        mvc.perform(MockMvcRequestBuilders.get("/")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
+                .andExpect(MockMvcResultMatchers.content().json(response));
+    }
+
+    @Test
     void getTest() throws Exception {
 
         // le arquivo de request e response
