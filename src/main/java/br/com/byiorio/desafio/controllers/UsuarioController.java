@@ -63,16 +63,29 @@ public class UsuarioController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping(path = "/{id}/meios-pagamento", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/{id}/meios-pagamentos", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MeioPagamentoEntity> meioPagamentos(@PathVariable String id,
             @Valid @RequestBody MeioPagamentoDTO request) {
 
-        MeioPagamentoEntity usuarioCriado = meioPagamentosService
+        MeioPagamentoEntity meioPagamentoEntity = meioPagamentosService
                 .criar(MeioPagamentoEntity.builder()
                         .cartaoCredito(request.getCartaoCredito())
                         .idUsuario(id).build());
 
-        URI uri = URI.create("/meios-pagamento/".concat(usuarioCriado.gerarId()));
-        return ResponseEntity.status(HttpStatus.CREATED).location(uri).body(usuarioCriado);
+        URI uri = URI.create("/meios-pagamento/".concat(meioPagamentoEntity.gerarId()));
+        return ResponseEntity.status(HttpStatus.CREATED).location(uri).body(meioPagamentoEntity);
     }
+
+    @PutMapping("{id}/meios-pagamentos/{meioPagamentoId}")
+    public ResponseEntity<MeioPagamentoEntity> atualizar(@PathVariable String id, @PathVariable String meioPagamentoId,
+            @Valid @RequestBody MeioPagamentoDTO request) {
+
+        MeioPagamentoEntity meioPagamentoEntity = meioPagamentosService.atualizar(meioPagamentoId,
+                MeioPagamentoEntity.builder()
+                        .cartaoCredito(request.getCartaoCredito())
+                        .idUsuario(id).build());
+
+        return ResponseEntity.ok(meioPagamentoEntity);
+    }
+
 }

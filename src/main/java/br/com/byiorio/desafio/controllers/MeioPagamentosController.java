@@ -6,14 +6,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.byiorio.desafio.models.MeioPagamentoEntity;
 import br.com.byiorio.desafio.services.MeioPagamentosService;
-import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/meio-pagamentos")
@@ -33,12 +30,6 @@ public class MeioPagamentosController {
     @GetMapping("/")
     public ResponseEntity<List<MeioPagamentoEntity>> consultar() {
         return ResponseEntity.ok(meioPagamentosService.buscarTodos());
-    }
-
-    @PutMapping("{id}")
-    public ResponseEntity<MeioPagamentoEntity> atualizar(@PathVariable String id,
-            @Valid @RequestBody MeioPagamentoEntity entidade) {
-        return ResponseEntity.ok(meioPagamentosService.atualizar(id, entidade));
     }
 
     @DeleteMapping("{id}")

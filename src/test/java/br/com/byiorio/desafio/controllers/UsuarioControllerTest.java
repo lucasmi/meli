@@ -27,6 +27,7 @@ class UsuarioControllerTest {
         @BeforeEach
         void setup() throws Throwable {
                 ConfiguraMassa.configuraMassaUsuario();
+                ConfiguraMassa.configuraMassaMeioPagamento();
         }
 
         @AfterAll
@@ -109,7 +110,7 @@ class UsuarioControllerTest {
         }
 
         @Test
-        void postPagamentoUsuarioTest() throws Exception {
+        void postMeioPagamentoTest() throws Exception {
                 // le arquivo de request e response
                 // e executa o post
                 String request = FileUtils.readFileToString(
@@ -122,12 +123,34 @@ class UsuarioControllerTest {
 
                 // Consulta o usuario criado
                 mvc.perform(MockMvcRequestBuilders
-                                .post("/usuarios/99d44695-2b71-451a-97ee-1398a0b439a5/meios-pagamento")
+                                .post("/usuarios/99d44695-2b71-451a-97ee-1398a0b439a5/meios-pagamentos")
                                 .content(request)
                                 .contentType(MediaType.APPLICATION_JSON))
                                 .andDo(MockMvcResultHandlers.print())
                                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
                                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNotEmpty())
+                                .andExpect(MockMvcResultMatchers.content().json(response));
+        }
+
+        @Test
+        void putMeioPagamentoTest() throws Exception {
+                // le arquivo de request e response
+                // e executa o post
+                String request = FileUtils.readFileToString(
+                                ResourceUtils.getFile("classpath:./meiopagamento/PutRequestSucesso.json"),
+                                StandardCharsets.UTF_8.name());
+
+                String response = FileUtils.readFileToString(
+                                ResourceUtils.getFile("classpath:./meiopagamento/PutResponseSucesso.json"),
+                                StandardCharsets.UTF_8.name());
+
+                // Consulta o usuario criado
+                mvc.perform(MockMvcRequestBuilders.put(
+                                "/usuarios/f33d57ea-d316-4167-92a8-8f2258b71abd/meios-pagamentos/114cbcfb-ec12-487e-b842-59fa878154ee")
+                                .content(request)
+                                .contentType(MediaType.APPLICATION_JSON))
+                                .andDo(MockMvcResultHandlers.print())
+                                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
                                 .andExpect(MockMvcResultMatchers.content().json(response));
         }
 

@@ -65,4 +65,20 @@ public class ConfiguraMassa {
                 "dbtest/" + AvaliacaoRepository.NOME_PASTA
                         + "/fb0c958d-a8f3-4e2e-83b6-8fc9d33ea9bf.json");
     }
+
+    public static void configuraMassaMeioPagamento() throws IOException {
+        Diretorio.apagar("dbtest/" + MeioPagamentoRepository.NOME_PASTA);
+        Diretorio.criar("dbtest/" + MeioPagamentoRepository.NOME_PASTA);
+
+        // Sempre copia duas massas de dados de usuario para os testes
+        Arquivos.copiar(
+                "src/test/resources/meiopagamento/114cbcfb-ec12-487e-b842-59fa878154ee.json",
+                "dbtest/" + MeioPagamentoRepository.NOME_PASTA
+                        + "/114cbcfb-ec12-487e-b842-59fa878154ee.json");
+
+        Arquivos.copiar(
+                "src/test/resources/meiopagamento/85424311-7cf9-47fa-962f-7f3cb93cf499.json",
+                "dbtest/" + MeioPagamentoRepository.NOME_PASTA
+                        + "/85424311-7cf9-47fa-962f-7f3cb93cf499.json");
+    }
 }
