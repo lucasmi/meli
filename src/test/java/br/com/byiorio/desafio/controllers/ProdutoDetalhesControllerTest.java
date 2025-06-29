@@ -20,7 +20,7 @@ import br.com.byiorio.desafio.utils.ConfiguraMassa;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, properties = "spring.config.location=classpath:application-test.properties")
 @AutoConfigureMockMvc
-public class ProdutoDetalhesControllerTest {
+class ProdutoDetalhesControllerTest {
     @Autowired
     private MockMvc mvc;
 
