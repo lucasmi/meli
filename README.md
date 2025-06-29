@@ -31,20 +31,21 @@ Along with your code submission, include a brief (1-2 page) document that:
 
 
   ## Explains your design choices  
-  Com base nas tecnologias sob meu domínio, optei por utilizar Java, considerando meu maior tempo de experiência com essa linguagem. Uma vez definida a tecnologia principal, passei a analisar os requisitos do projeto.
+  Based on the technologies within my domain, I chose to work with Java, given my longer experience with the language. Once the primary technology was defined, I began analyzing the project requirements.
 
-  Como precisava desenvolver endpoints baseados na arquitetura REST, escolhi o Spring Boot pela agilidade no desenvolvimento e pela facilidade de integração. Para a camada de persistência, a única restrição era utilizar arquivos JSON ou CSV. Diante disso, optei pelo formato JSON, por ser mais flexível e adequado à estrutura dos dados que pretendo manipular.
+  As I needed to develop endpoints following the REST architecture, I selected Spring Boot for its development agility and ease of integration. For the persistence layer, the only constraint was to use either JSON or CSV files. Considering this, I opted for JSON due to its flexibility and better fit for the data structures I planned to handle.
 
-  Comecei a idealizar diferentes abordagens para a construção da solução, ciente dos desafios que enfrentaria com o paralelismo na manipulação de arquivos e com o relacionamento entre dados. Foi então que surgiu a ideia de me inspirar no JPA — uma biblioteca amplamente utilizada para abstrair operações com bancos de dados relacionais.
+  I started exploring various approaches to building the solution, fully aware of the challenges related to parallelism in file manipulation and data relationships. That’s when I had the idea to draw inspiration from JPA—a widely used library that abstracts interactions with relational databases.
 
-  Adaptei essa inspiração ao contexto de arquivos: estruturei os dados em pastas representando "tabelas" e considerei que cada arquivo individual simbolizaria uma "linha" nessa estrutura. Para simplificar os relacionamentos e o controle de chaves primárias, optei pelo uso de UUIDs como identificadores únicos. Dessa forma, evitei a complexidade de gerenciar identificadores sequenciais manualmente, o que também trouxe maior robustez e escalabilidade ao projeto.
+  I adapted that concept to a file-based context: I organized data into folders representing “tables,” and treated each individual file as a “row” within that structure. To simplify relationships and primary key handling, I chose to use UUIDs as unique identifiers. This eliminated the need to manage sequential numbers manually, adding robustness and scalability to the project.
 
-  Diagrama de relacionamento  
-    ![Diagrama](https://github.com/lucasmi/meli/blob/main/diagrama.png)
+Relationship Diagram.
+    
+  ![Diagrama](https://github.com/lucasmi/meli/blob/main/diagrama.png)
 
   ## Challenges
-  - Manipulação de arquivos com threads paralelas: Para garantir a integridade dos dados durante operações concorrentes, utilizei mecanismos de lock nas threads antes da manipulação dos arquivos. Isso assegurou que apenas uma thread tivesse acesso ao recurso compartilhado por vez, evitando condições de corrida.
+  - File handling with parallel threads: To ensure data integrity during concurrent operations, I implemented locking mechanisms on the threads before performing any file manipulation. This guaranteed that only one thread could access the shared resource at a time, effectively preventing race conditions.
 
-  - Relacionamento e manipulação dos arquivos gerados: Para facilitar e padronizar o desenvolvimento, criei a biblioteca JpaJson, inspirada nos princípios do JPA. Essa abordagem me levou a estruturar o código em duas camadas principais:
-    - A camada Repository, responsável pela persistência dos dados no formato JSON.
-    - A camada Entity, encarregada da representação e manipulação dos dados.
+  - Relationship management and manipulation of generated files: To streamline and standardize development, I created the JpaJson library, inspired by JPA principles. This approach led me to structure the code into two main layers:
+    - The Repository layer, responsible for persisting data in JSON format.
+    - The Entity layer, in charge of representing and manipulating the data.
