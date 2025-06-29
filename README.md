@@ -12,7 +12,7 @@
 ### Non-functional requirements
 
 - Proper error handling ✅
-- Documented
+- Documented ✅ (Swagger)
 - At least 80% code coverage ✅
 
 ## Documentation
