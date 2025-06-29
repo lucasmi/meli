@@ -70,7 +70,7 @@ class MeioPagamentosControllerTest {
         }
 
         @Test
-        void apagarUsuarioTest() throws Exception {
+        void deleteTest() throws Exception {
                 // Consulta o usuario criado
                 mvc.perform(MockMvcRequestBuilders.delete("/meio-pagamentos/114cbcfb-ec12-487e-b842-59fa878154ee")
                                 .contentType(MediaType.APPLICATION_JSON))

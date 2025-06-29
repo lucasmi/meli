@@ -155,7 +155,7 @@ class UsuarioControllerTest {
         }
 
         @Test
-        void apagarUsuarioTest() throws Exception {
+        void deleteTest() throws Exception {
                 // Consulta o usuario criado
                 mvc.perform(MockMvcRequestBuilders.delete("/usuarios/99d44695-2b71-451a-97ee-1398a0b439a5")
                                 .contentType(MediaType.APPLICATION_JSON))

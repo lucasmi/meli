@@ -1,0 +1,65 @@
+[
+    {
+        "vendedor": {
+            "id": "99d44695-2b71-451a-97ee-1398a0b439a5",
+            "nome": "Nome usuario",
+            "email": "email@gmail.com"
+        },
+        "avaliacoes": [
+            {
+                "usuario": {
+                    "id": "99d44695-2b71-451a-97ee-1398a0b439a5",
+                    "nome": "Nome usuario",
+                    "email": "email@gmail.com"
+                },
+                "avaliacao": {
+                    "nota": 2,
+                    "comentario": "Comentario 2",
+                    "dataReview": "28/06/2025 15:35"
+                }
+            },
+            {
+                "usuario": {
+                    "id": "f33d57ea-d316-4167-92a8-8f2258b71abd",
+                    "nome": "nome1",
+                    "email": "email1"
+                },
+                "avaliacao": {
+                    "nota": 5,
+                    "comentario": "Gostei",
+                    "dataReview": "28/06/2025 17:00"
+                }
+            }
+        ],
+        "produto": {
+            "id": "9bce8ac2-1ddf-48ee-8bd4-2b9e8e13fa95",
+            "titulo": "Titulo Produto 1",
+            "descricao": "Descricao Produto 1",
+            "imagens": [
+                {
+                    "url": "imagens"
+                }
+            ],
+            "preco": 12222.5
+        }
+    },
+    {
+        "vendedor": {
+            "id": "99d44695-2b71-451a-97ee-1398a0b439a5",
+            "nome": "Nome usuario",
+            "email": "email@gmail.com"
+        },
+        "avaliacoes": [],
+        "produto": {
+            "id": "9d04d49e-89a7-4e3f-9304-2253e5f36d2a",
+            "titulo": "titulo 2",
+            "descricao": "descr 2",
+            "imagens": [
+                {
+                    "url": "url 2"
+                }
+            ],
+            "preco": 200.2
+        }
+    }
+]

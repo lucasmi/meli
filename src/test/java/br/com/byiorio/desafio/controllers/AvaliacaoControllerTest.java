@@ -112,7 +112,7 @@ class AvaliacaoControllerTest {
         }
 
         @Test
-        void apagarUsuarioTest() throws Exception {
+        void deleteTest() throws Exception {
                 // Consulta o usuario criado
                 mvc.perform(MockMvcRequestBuilders.delete("/avaliacoes/1eb2bc27-7ae6-472f-9422-cd53fbce22f9")
                                 .contentType(MediaType.APPLICATION_JSON))
