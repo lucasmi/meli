@@ -22,7 +22,9 @@ The page should display key information such as:
 
 - Proper error handling ✅
 - Documented ✅ (Swagger)
-- At least 80% code coverage ✅
+- At least 80% code coverage ✅  
+  
+  ![Relatório Sonar](https://github.com/lucasmi/meli/blob/main/relatorioSonar.png)
 
 ## Documentation
 
