@@ -12,8 +12,8 @@
    ```sh
    mvn spring-boot:run
 
-4. **Interagir com o projeto**
-   Abra o browser e acesse
+4. **Interagindo com o projeto**
+   - Abra o browser e acesse
    ```sh
    http://localhost:8080/swagger-ui/index.html
 
