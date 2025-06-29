@@ -3,7 +3,6 @@ package br.com.byiorio.desafio.controllers;
 import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.io.FileUtils;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +35,8 @@ class UsuarioControllerTest {
 
         @Test
         void criarUsuarioTest() throws Exception {
+                // le arquivos de request e response
+                // e executa o post
                 String request = FileUtils.readFileToString(
                                 ResourceUtils.getFile("classpath:./usuario/PostRequestSucesso.json"),
                                 StandardCharsets.UTF_8.name());
@@ -59,6 +60,7 @@ class UsuarioControllerTest {
                 criarUsuarioTest();
                 criarUsuarioTest();
 
+                // le arquivo de response e executa o get
                 String response = FileUtils.readFileToString(
                                 ResourceUtils.getFile("classpath:./usuario/GetResponseAllUsers.json"),
                                 StandardCharsets.UTF_8.name());
@@ -74,6 +76,8 @@ class UsuarioControllerTest {
 
         @Test
         void consultarIndividualTest() throws Exception {
+                // le arquivo de request e response
+                // e executa o post
                 String request = FileUtils.readFileToString(
                                 ResourceUtils.getFile("classpath:./usuario/PostRequestSucesso.json"),
                                 StandardCharsets.UTF_8.name());
@@ -103,6 +107,8 @@ class UsuarioControllerTest {
 
         @Test
         void atualizarUsuarioTest() throws Exception {
+                // le arquivo de request e response
+                // e executa o post
                 String request = FileUtils.readFileToString(
                                 ResourceUtils.getFile("classpath:./usuario/PutRequestSucesso.json"),
                                 StandardCharsets.UTF_8.name());
@@ -111,7 +117,6 @@ class UsuarioControllerTest {
                                 ResourceUtils.getFile("classpath:./usuario/PutResponseSucesso.json"),
                                 StandardCharsets.UTF_8.name());
 
-                // Cria um usuario
                 MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/usuarios/")
                                 .content(request)
                                 .contentType(MediaType.APPLICATION_JSON))
@@ -134,6 +139,8 @@ class UsuarioControllerTest {
 
         @Test
         void apagarUsuarioTest() throws Exception {
+                // le arquivo de request e response
+                // e executa o post
                 String request = FileUtils.readFileToString(
                                 ResourceUtils.getFile("classpath:./usuario/PutRequestSucesso.json"),
                                 StandardCharsets.UTF_8.name());
