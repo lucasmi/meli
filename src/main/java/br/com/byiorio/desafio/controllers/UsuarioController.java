@@ -22,6 +22,7 @@ import br.com.byiorio.desafio.models.UsuarioEntity;
 import br.com.byiorio.desafio.services.MeioPagamentosService;
 import br.com.byiorio.desafio.services.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -46,7 +47,8 @@ public class UsuarioController {
     @ApiResponse(responseCode = "400", description = "Erro de parametrização", content = @Content(schema = @Schema(implementation = BasicErrorDTO.class)))
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor", content = @Content(schema = @Schema(implementation = BasicErrorDTO.class)))
     @GetMapping("/{id}")
-    public ResponseEntity<UsuarioEntity> consultar(@PathVariable String id) {
+    public ResponseEntity<UsuarioEntity> consultar(
+            @Parameter(description = "ID do usuário", example = "1eb2bc27-7ae6-472f-9422-cd53fbce22f9") @PathVariable String id) {
         return ResponseEntity.ok(usuarioService.buscar(id));
     }
 
@@ -75,7 +77,8 @@ public class UsuarioController {
     @ApiResponse(responseCode = "400", description = "Erro de parametrização", content = @Content(schema = @Schema(implementation = BasicErrorDTO.class)))
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor", content = @Content(schema = @Schema(implementation = BasicErrorDTO.class)))
     @PutMapping("{id}")
-    public ResponseEntity<UsuarioEntity> atualizar(@PathVariable String id,
+    public ResponseEntity<UsuarioEntity> atualizar(
+            @Parameter(description = "ID do usuário", example = "1eb2bc27-7ae6-472f-9422-cd53fbce22f9") @PathVariable String id,
             @Valid @RequestBody UsuarioEntity entidade) {
         return ResponseEntity.ok(usuarioService.atualizar(id, entidade));
     }
@@ -85,7 +88,8 @@ public class UsuarioController {
     @ApiResponse(responseCode = "400", description = "Erro de parametrização", content = @Content(schema = @Schema(implementation = BasicErrorDTO.class)))
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor", content = @Content(schema = @Schema(implementation = BasicErrorDTO.class)))
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> apagar(@PathVariable String id) {
+    public ResponseEntity<Void> apagar(
+            @Parameter(description = "ID do usuário", example = "1eb2bc27-7ae6-472f-9422-cd53fbce22f9") @PathVariable String id) {
         usuarioService.apagar(id);
         return ResponseEntity.noContent().build();
     }
@@ -95,7 +99,8 @@ public class UsuarioController {
     @ApiResponse(responseCode = "400", description = "Erro de parametrização", content = @Content(schema = @Schema(implementation = BasicErrorDTO.class)))
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor", content = @Content(schema = @Schema(implementation = BasicErrorDTO.class)))
     @PostMapping(path = "/{id}/meios-pagamentos", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<MeioPagamentoEntity> meioPagamentos(@PathVariable String id,
+    public ResponseEntity<MeioPagamentoEntity> meioPagamentos(
+            @Parameter(description = "ID do usuário", example = "1eb2bc27-7ae6-472f-9422-cd53fbce22f9") @PathVariable String id,
             @Valid @RequestBody MeioPagamentoDTO request) {
 
         MeioPagamentoEntity meioPagamentoEntity = meioPagamentosService
@@ -112,7 +117,9 @@ public class UsuarioController {
     @ApiResponse(responseCode = "400", description = "Erro de parametrização", content = @Content(schema = @Schema(implementation = BasicErrorDTO.class)))
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor", content = @Content(schema = @Schema(implementation = BasicErrorDTO.class)))
     @PutMapping("{id}/meios-pagamentos/{meioPagamentoId}")
-    public ResponseEntity<MeioPagamentoEntity> atualizar(@PathVariable String id, @PathVariable String meioPagamentoId,
+    public ResponseEntity<MeioPagamentoEntity> atualizar(
+            @Parameter(description = "ID do usuário", example = "1eb2bc27-7ae6-472f-9422-cd53fbce22f9") @PathVariable String id,
+            @Parameter(description = "ID do pagamento", example = "1eb2bc27-7ae6-472f-9422-cd53fbce22f9") @PathVariable String meioPagamentoId,
             @Valid @RequestBody MeioPagamentoDTO request) {
 
         MeioPagamentoEntity meioPagamentoEntity = meioPagamentosService.atualizar(meioPagamentoId,
