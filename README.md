@@ -39,7 +39,7 @@ Along with your code submission, include a brief (1-2 page) document that:
 
   Adaptei essa inspiração ao contexto de arquivos: estruturei os dados em pastas representando "tabelas" e considerei que cada arquivo individual simbolizaria uma "linha" nessa estrutura. Para simplificar os relacionamentos e o controle de chaves primárias, optei pelo uso de UUIDs como identificadores únicos. Dessa forma, evitei a complexidade de gerenciar identificadores sequenciais manualmente, o que também trouxe maior robustez e escalabilidade ao projeto.
 
-  Diagrama de relacionamento
+  Diagrama de relacionamento  
     ![Diagrama](https://github.com/lucasmi/meli/blob/main/diagrama.png)
 
   ## Challenges
