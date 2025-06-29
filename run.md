@@ -13,7 +13,9 @@
    mvn spring-boot:run
 
 4. **Interagir com o projeto**
-   Abra o browser e acesse http://localhost:8080/swagger-ui/index.html
+   Abra o browser e acesse
+   ```sh
+   http://localhost:8080/swagger-ui/index.html
 
 5. **Sonar**
   Esse comando funciona somente na maquina onde foi desenvolvido. A imagem do relatório está no arquivo relatiroSonar.png
