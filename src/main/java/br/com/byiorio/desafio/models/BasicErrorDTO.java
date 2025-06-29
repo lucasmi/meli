@@ -1,5 +1,7 @@
 package br.com.byiorio.desafio.models;
 
+import java.util.ArrayList;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,5 +10,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BasicErrorDTO {
-	private Object errors;
+	private ArrayList<ErrorDTO> errors;
 }
