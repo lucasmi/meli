@@ -44,6 +44,8 @@ Along with your code submission, include a brief (1-2 page) document that:
 
   As I needed to develop endpoints following the REST architecture, I selected Spring Boot for its development agility and ease of integration. For the persistence layer, the only constraint was to use either JSON or CSV files. Considering this, I opted for JSON due to its flexibility and better fit for the data structures I planned to handle.
 
+  To structure the project in an organized manner and maintain a clear separation of responsibilities, I chose to follow the MVC (Model-View-Controller) architectural pattern, both in the folder organization and in the division of the application’s logic. To ensure the quality and reliability of the application, I implemented JUnit 5 for integration testing, taking advantage of its modern features and strong compatibility with the Java ecosystem.
+
   I started exploring various approaches to building the solution, fully aware of the challenges related to parallelism in file manipulation and data relationships. That’s when I had the idea to draw inspiration from JPA—a widely used library that abstracts interactions with relational databases.
 
   I adapted that concept to a file-based context: I organized data into folders representing “tables,” and treated each individual file as a “row” within that structure. To simplify relationships and primary key handling, I chose to use UUIDs as unique identifiers. This eliminated the need to manage sequential numbers manually, adding robustness and scalability to the project.
