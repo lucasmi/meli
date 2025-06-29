@@ -22,49 +22,45 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import br.com.byiorio.desafio.jjson.utils.Arquivos;
 import br.com.byiorio.desafio.jjson.utils.Diretorio;
 import br.com.byiorio.desafio.models.UsuarioEntity;
-import br.com.byiorio.desafio.repositories.UsuarioRepository;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, properties = "spring.config.location=classpath:application-test.properties")
 @AutoConfigureMockMvc
-class UsuarioControllerTest {
+class ProdutoControllerTest {
         @Autowired
         private MockMvc mvc;
 
         @BeforeEach
         void setup() throws Throwable {
-                Diretorio.apagar("dbtest/" + UsuarioRepository.NOME_PASTA);
-                Diretorio.criar("dbtest/" + UsuarioRepository.NOME_PASTA);
-
-                // Sempre copia duas massas de dados de usuario para os testes
-                Arquivos.copiar(
-                                "src/test/resources/usuario/99d44695-2b71-451a-97ee-1398a0b439a5.json",
-                                "dbtest/" + UsuarioRepository.NOME_PASTA
-                                                + "/99d44695-2b71-451a-97ee-1398a0b439a5.json");
-
-                Arquivos.copiar(
-                                "src/test/resources/usuario/f33d57ea-d316-4167-92a8-8f2258b71abd.json",
-                                "dbtest/" + UsuarioRepository.NOME_PASTA
-                                                + "/f33d57ea-d316-4167-92a8-8f2258b71abd.json");
+                Diretorio.apagar("dbtest/produtos");
+                Diretorio.criar("dbtest/produtos");
+                Diretorio.criar("dbtest/usuarios");
         }
 
         @AfterAll
         static void finalizar() throws Throwable {
-                Diretorio.apagar("dbtest/" + UsuarioRepository.NOME_PASTA);
+                Diretorio.apagar("dbtest/produtos");
         }
 
         @Test
-        void postTest() throws Exception {
+        void criarTest() throws Exception {
+
+                Arquivos.copiar(
+                                "src/test/resources/usuario/99d44695-2b71-451a-97ee-1398a0b439a5.json",
+                                "dbtest/usuarios/99d44695-2b71-451a-97ee-1398a0b439a5.json");
+
                 // le arquivos de request e response
                 // e executa o post
                 String request = FileUtils.readFileToString(
-                                ResourceUtils.getFile("classpath:./usuario/PostRequestSucesso.json"),
+                                ResourceUtils.getFile("classpath:./produto/PostRequestSucesso.json"),
                                 StandardCharsets.UTF_8.name());
 
                 String response = FileUtils.readFileToString(
-                                ResourceUtils.getFile("classpath:./usuario/PostResponseSucesso.json"),
+                                ResourceUtils.getFile("classpath:./produto/PostResponseSucesso.json"),
                                 StandardCharsets.UTF_8.name());
 
-                mvc.perform(MockMvcRequestBuilders.post("/usuarios/")
+                // Cria um produto
+                // e verifica se o id foi gerado
+                mvc.perform(MockMvcRequestBuilders.post("/produtos/")
                                 .content(request)
                                 .contentType(MediaType.APPLICATION_JSON))
                                 .andDo(MockMvcResultHandlers.print())
@@ -74,39 +70,55 @@ class UsuarioControllerTest {
         }
 
         @Test
-        void getAllTest() throws Exception {
+        void consultarUsuariosTest() throws Exception {
 
                 // le arquivo de response e executa o get
                 String response = FileUtils.readFileToString(
                                 ResourceUtils.getFile("classpath:./usuario/GetResponseAllUsers.json"),
                                 StandardCharsets.UTF_8.name());
 
-                mvc.perform(MockMvcRequestBuilders.get("/usuarios/")
+                mvc.perform(MockMvcRequestBuilders.get("/produtos/")
                                 .contentType(MediaType.APPLICATION_JSON))
                                 .andDo(MockMvcResultHandlers.print())
                                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
+                                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").isNotEmpty())
+                                .andExpect(MockMvcResultMatchers.jsonPath("$[1].id").isNotEmpty())
                                 .andExpect(MockMvcResultMatchers.content().json(response));
         }
 
         @Test
-        void getTest() throws Exception {
-
+        void consultarIndividualTest() throws Exception {
                 // le arquivo de request e response
-                // e executa o get
-                String response = FileUtils.readFileToString(
-                                ResourceUtils.getFile("classpath:./usuario/PostResponseFixoSucesso.json"),
+                // e executa o post
+                String request = FileUtils.readFileToString(
+                                ResourceUtils.getFile("classpath:./usuario/PostRequestSucesso.json"),
                                 StandardCharsets.UTF_8.name());
 
+                String response = FileUtils.readFileToString(
+                                ResourceUtils.getFile("classpath:./usuario/PostResponseSucesso.json"),
+                                StandardCharsets.UTF_8.name());
+
+                MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/produtos/")
+                                .content(request)
+                                .contentType(MediaType.APPLICATION_JSON))
+                                .andReturn();
+
+                // pega o id do usuario criado
+                String responseBody = result.getResponse().getContentAsString();
+                ObjectMapper mapper = new ObjectMapper();
+                UsuarioEntity dto = mapper.readValue(responseBody, UsuarioEntity.class);
+
                 // Consulta o usuario criado
-                mvc.perform(MockMvcRequestBuilders.get("/usuarios/99d44695-2b71-451a-97ee-1398a0b439a5")
+                mvc.perform(MockMvcRequestBuilders.get("/produtos/" + dto.getId())
                                 .contentType(MediaType.APPLICATION_JSON))
                                 .andDo(MockMvcResultHandlers.print())
                                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
+                                .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNotEmpty())
                                 .andExpect(MockMvcResultMatchers.content().json(response));
         }
 
         @Test
-        void putTest() throws Exception {
+        void atualizarUsuarioTest() throws Exception {
                 // le arquivo de request e response
                 // e executa o post
                 String request = FileUtils.readFileToString(
@@ -117,20 +129,47 @@ class UsuarioControllerTest {
                                 ResourceUtils.getFile("classpath:./usuario/PutResponseSucesso.json"),
                                 StandardCharsets.UTF_8.name());
 
+                MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/produtos/")
+                                .content(request)
+                                .contentType(MediaType.APPLICATION_JSON))
+                                .andReturn();
+
+                // pega o id do usuario criado
+                String responseBody = result.getResponse().getContentAsString();
+                ObjectMapper mapper = new ObjectMapper();
+                UsuarioEntity dto = mapper.readValue(responseBody, UsuarioEntity.class);
+
                 // Consulta o usuario criado
-                mvc.perform(MockMvcRequestBuilders.put("/usuarios/99d44695-2b71-451a-97ee-1398a0b439a5")
+                mvc.perform(MockMvcRequestBuilders.put("/produtos/" + dto.getId())
                                 .content(request)
                                 .contentType(MediaType.APPLICATION_JSON))
                                 .andDo(MockMvcResultHandlers.print())
                                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
+                                .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNotEmpty())
                                 .andExpect(MockMvcResultMatchers.content().json(response));
         }
 
         @Test
-        void postPagamentoUsuarioTest() throws Exception {
+        void inserePagamentoUsuarioTest() throws Exception {
                 // le arquivo de request e response
                 // e executa o post
                 String request = FileUtils.readFileToString(
+                                ResourceUtils.getFile("classpath:./usuario/PutRequestSucesso.json"),
+                                StandardCharsets.UTF_8.name());
+
+                MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/produtos/")
+                                .content(request)
+                                .contentType(MediaType.APPLICATION_JSON))
+                                .andReturn();
+
+                // pega o id do usuario criado
+                String responseBody = result.getResponse().getContentAsString();
+                ObjectMapper mapper = new ObjectMapper();
+                UsuarioEntity dto = mapper.readValue(responseBody, UsuarioEntity.class);
+
+                // le arquivo de request e response
+                // e executa o post
+                request = FileUtils.readFileToString(
                                 ResourceUtils.getFile("classpath:./usuario/MeioPagamentoRequestSucesso.json"),
                                 StandardCharsets.UTF_8.name());
 
@@ -139,8 +178,7 @@ class UsuarioControllerTest {
                                 StandardCharsets.UTF_8.name());
 
                 // Consulta o usuario criado
-                mvc.perform(MockMvcRequestBuilders
-                                .post("/usuarios/99d44695-2b71-451a-97ee-1398a0b439a5/meios-pagamento")
+                mvc.perform(MockMvcRequestBuilders.post("/produtos/" + dto.getId() + "/meios-pagamento")
                                 .content(request)
                                 .contentType(MediaType.APPLICATION_JSON))
                                 .andDo(MockMvcResultHandlers.print())
@@ -151,8 +189,26 @@ class UsuarioControllerTest {
 
         @Test
         void apagarUsuarioTest() throws Exception {
+                // le arquivo de request e response
+                // e executa o post
+                String request = FileUtils.readFileToString(
+                                ResourceUtils.getFile("classpath:./usuario/PutRequestSucesso.json"),
+                                StandardCharsets.UTF_8.name());
+
+                // Cria um usuario
+                MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/produtos/")
+                                .content(request)
+                                .contentType(MediaType.APPLICATION_JSON))
+                                .andReturn();
+
+                // pega o id do usuario criado
+                String responseBody = result.getResponse().getContentAsString();
+                ObjectMapper mapper = new ObjectMapper();
+                UsuarioEntity dto = mapper.readValue(responseBody, UsuarioEntity.class);
+
                 // Consulta o usuario criado
-                mvc.perform(MockMvcRequestBuilders.delete("/usuarios/99d44695-2b71-451a-97ee-1398a0b439a5")
+                mvc.perform(MockMvcRequestBuilders.delete("/produtos/" + dto.getId())
+                                .content(request)
                                 .contentType(MediaType.APPLICATION_JSON))
                                 .andDo(MockMvcResultHandlers.print())
                                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());

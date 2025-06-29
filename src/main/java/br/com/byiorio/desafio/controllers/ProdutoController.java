@@ -40,7 +40,7 @@ public class ProdutoController {
     }
 
     @PostMapping(path = "/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ProdutoEntity> item(@Valid @RequestBody ProdutoEntity entidade) {
+    public ResponseEntity<ProdutoEntity> criar(@Valid @RequestBody ProdutoEntity entidade) {
 
         ProdutoEntity produtoCriado = produtoService.criar(entidade);
         URI uri = URI.create("/produtos/".concat(produtoCriado.gerarId()));

@@ -68,7 +68,8 @@ public class UsuarioController {
             @Valid @RequestBody MeioPagamentoDTO request) {
 
         MeioPagamentoEntity usuarioCriado = meioPagamentosService
-                .criar(MeioPagamentoEntity.builder().cartaoCredito(request.getCartaoCredito())
+                .criar(MeioPagamentoEntity.builder()
+                        .cartaoCredito(request.getCartaoCredito())
                         .idUsuario(id).build());
 
         URI uri = URI.create("/meios-pagamento/".concat(usuarioCriado.gerarId()));

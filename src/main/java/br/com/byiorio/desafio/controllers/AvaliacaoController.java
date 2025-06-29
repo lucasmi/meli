@@ -40,7 +40,7 @@ public class AvaliacaoController {
     }
 
     @PostMapping(path = "/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<AvaliacaoEntity> item(@Valid @RequestBody AvaliacaoEntity entidade) {
+    public ResponseEntity<AvaliacaoEntity> criar(@Valid @RequestBody AvaliacaoEntity entidade) {
         AvaliacaoEntity usuarioCriado = avaliacaoService.criar(entidade);
         URI uri = URI.create("/avaliacoes/".concat(usuarioCriado.gerarId()));
         return ResponseEntity.status(HttpStatus.CREATED).location(uri).body(usuarioCriado);

@@ -8,13 +8,15 @@ import br.com.byiorio.desafio.jjson.repository.CrudJpaJsonRepository;
 @Component
 public class ProdutoRepository extends CrudJpaJsonRepository {
 
+    public static final String NOME_PASTA = "produtos";
+
     protected ProdutoRepository(JpajsonConfig jpajsonConfig) {
         super(jpajsonConfig);
     }
 
     @Override
     public String getNome() {
-        return "produtos";
+        return NOME_PASTA;
     }
 
 }

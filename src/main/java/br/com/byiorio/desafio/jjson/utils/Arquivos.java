@@ -69,4 +69,18 @@ public class Arquivos {
             lock.unlock();
         }
     }
+
+    public static void copiar(String caminhoOrigem, String caminhoDestino) {
+        lock.lock();
+        try {
+            Files.copy(
+                    Paths.get(caminhoOrigem),
+                    Paths.get(caminhoDestino));
+        } catch (IOException e) {
+            throw new JpaJsonException("Erro ao copiar " + caminhoOrigem + " para " + caminhoDestino);
+        } finally {
+            lock.unlock();
+        }
+    }
+
 }

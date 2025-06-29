@@ -1,12 +1,20 @@
 [
     {
-        "nome": "nome1",
-        "email": "email1",
-        "idsProdutos": [],
-        "idsMeioPagamentos": [],
-        "idsAvaliacoes": []
+        "id": "99d44695-2b71-451a-97ee-1398a0b439a5",
+        "nome": "Nome usuario",
+        "email": "email@gmail.com",
+        "idsProdutos": [
+            "9bce8ac2-1ddf-48ee-8bd4-2b9e8e13fa95"
+        ],
+        "idsMeioPagamentos": [
+            "85424311-7cf9-47fa-962f-7f3cb93cf499"
+        ],
+        "idsAvaliacoes": [
+            "1eb2bc27-7ae6-472f-9422-cd53fbce22f9"
+        ]
     },
     {
+        "id": "f33d57ea-d316-4167-92a8-8f2258b71abd",
         "nome": "nome1",
         "email": "email1",
         "idsProdutos": [],
