@@ -33,8 +33,7 @@ public class OneToOneUtil {
                     String idPkOrigem = (String) idFieldOrigem.get(clazz);
 
                     // Carrega o repository e a entidade
-                    IJpaJsonRepository<IJapJsonEntity> repositorioDestino = (IJpaJsonRepository<IJapJsonEntity>) SpringContext
-                            .getBean(otm.repository());
+                    IJpaJsonRepository<IJapJsonEntity> repositorioDestino = SpringContext.getBean(otm.repository());
                     IJapJsonEntity tabelaDestino = repositorioDestino.buscar(idPkDestino, otm.entity());
 
                     // Pega a lista de relacionamentos
