@@ -28,6 +28,8 @@ class ProdutoControllerTest {
         void setup() throws Throwable {
                 ConfiguraMassa.configuraMassaUsuario();
                 ConfiguraMassa.configuraMassaProduto();
+                ConfiguraMassa.configuraMassaMeioPagamento();
+                ConfiguraMassa.configuraMassaAvaliacao();
         }
 
         @AfterAll

@@ -97,10 +97,12 @@ public class AvaliacaoService {
         ProdutoEntity produtoEncontrado = produtoRepository.buscar(avaliacaoEncontrada.getIdProduto(),
                 ProdutoEntity.class);
 
-        // Apaga todos os registros relacionados
+        // Apaga os vinculos das avaliacoes com o usuario e produto
+        // Remove vinculo do usuario com a avaliacao
         usuarioEncontrado.getIdsAvaliacoes().remove(id);
         usuarioRepository.salvar(usuarioEncontrado);
 
+        // Remove vinculo do produto com a avaliacao
         produtoEncontrado.getIdsAvaliacoes().remove(id);
         produtoRepository.salvar(produtoEncontrado);
 
