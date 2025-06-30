@@ -84,7 +84,7 @@ public class UsuarioController {
     }
 
     @Operation(summary = "Apagar usuário", description = "Remove um usuário do sistema.")
-    @ApiResponse(responseCode = "200", description = "Operação realizada com sucesso")
+    @ApiResponse(responseCode = "204", description = "Operação realizada com sucesso")
     @ApiResponse(responseCode = "400", description = "Erro de parametrização", content = @Content(schema = @Schema(implementation = BasicErrorDTO.class)))
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor", content = @Content(schema = @Schema(implementation = BasicErrorDTO.class)))
     @DeleteMapping("{id}")
