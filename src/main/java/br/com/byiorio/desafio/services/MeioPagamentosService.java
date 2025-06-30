@@ -23,18 +23,7 @@ public class MeioPagamentosService {
     }
 
     public MeioPagamentoEntity criar(@Valid MeioPagamentoEntity entidade) {
-        // Verifica se existe usuario
-        UsuarioEntity usuarioEncontrado = usuarioRepository.buscar(entidade.getIdUsuario(),
-                UsuarioEntity.class);
-
-        // Salva meioPagamento
-        MeioPagamentoEntity meioPagamento = meioPagamentoRepository.salvar(entidade);
-
-        // Salva meioPagamento no usuario, para registrar que ele fez essa meioPagamento
-        usuarioEncontrado.getIdsMeioPagamentos().add(meioPagamento.getId());
-        usuarioRepository.salvar(usuarioEncontrado);
-
-        return meioPagamento;
+        return meioPagamentoRepository.salvar(entidade);
     }
 
     public MeioPagamentoEntity buscar(String id) {
@@ -63,20 +52,7 @@ public class MeioPagamentosService {
     }
 
     public void apagar(String id) {
-        // Encontra meioPagamento
-        MeioPagamentoEntity meiosPagamentosEncontrados = meioPagamentoRepository.buscar(id,
-                MeioPagamentoEntity.class);
-
-        // Verifica se existe usuario
-        UsuarioEntity usuarioEncontrado = usuarioRepository.buscar(
-                meiosPagamentosEncontrados.getIdUsuario(),
-                UsuarioEntity.class);
-
-        // Apaga todos os registros relacionados
-        usuarioEncontrado.getIdsMeioPagamentos().remove(id);
-        usuarioRepository.salvar(usuarioEncontrado);
-
         // Apaga meio de pagamentos
-        meioPagamentoRepository.apagar(id);
+        meioPagamentoRepository.apagar(id, MeioPagamentoEntity.class);
     }
 }

@@ -28,27 +28,9 @@ public class AvaliacaoService {
     }
 
     public AvaliacaoEntity criar(@Valid AvaliacaoEntity entidade) {
-        // Verifica se existe usuario
-        UsuarioEntity usuarioEncontrado = usuarioRepository.buscar(entidade.getIdUsuario(),
-                UsuarioEntity.class);
-
-        // Verifica se existe produto
-        ProdutoEntity produtoEncontrado = produtoRepository.buscar(entidade.getIdProduto(),
-                ProdutoEntity.class);
-
-        // Salva avaliacao
+        // Atualiza data do review
         entidade.setDataReview(LocalDateTime.now()); // Data do review
-        AvaliacaoEntity avaliacao = avaliacaoRepository.salvar(entidade);
-
-        // Salva avaliacao no usuario, para registrar que ele fez essa avaliacao
-        usuarioEncontrado.getIdsAvaliacoes().add(avaliacao.getId());
-        usuarioRepository.salvar(usuarioEncontrado);
-
-        // Salva avaliacao no produto, para registrar que ele fez essa avaliacao
-        produtoEncontrado.getIdsAvaliacoes().add(avaliacao.getId());
-        produtoRepository.salvar(produtoEncontrado);
-
-        return avaliacao;
+        return avaliacaoRepository.salvar(entidade);
     }
 
     public AvaliacaoEntity buscar(String id) {
@@ -85,28 +67,7 @@ public class AvaliacaoService {
     }
 
     public void apagar(String id) {
-        // Encontra avaliacao
-        AvaliacaoEntity avaliacaoEncontrada = avaliacaoRepository.buscar(id,
-                AvaliacaoEntity.class);
-
-        // Verifica se existe usuario
-        UsuarioEntity usuarioEncontrado = usuarioRepository.buscar(avaliacaoEncontrada.getIdUsuario(),
-                UsuarioEntity.class);
-
-        // Verifica se existe produto
-        ProdutoEntity produtoEncontrado = produtoRepository.buscar(avaliacaoEncontrada.getIdProduto(),
-                ProdutoEntity.class);
-
-        // Apaga os vinculos das avaliacoes com o usuario e produto
-        // Remove vinculo do usuario com a avaliacao
-        usuarioEncontrado.getIdsAvaliacoes().remove(id);
-        usuarioRepository.salvar(usuarioEncontrado);
-
-        // Remove vinculo do produto com a avaliacao
-        produtoEncontrado.getIdsAvaliacoes().remove(id);
-        produtoRepository.salvar(produtoEncontrado);
-
         // Apaga avaliacao
-        avaliacaoRepository.apagar(id);
+        avaliacaoRepository.apagar(id, AvaliacaoEntity.class);
     }
 }
