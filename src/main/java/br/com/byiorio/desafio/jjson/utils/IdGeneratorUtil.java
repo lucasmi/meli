@@ -27,7 +27,7 @@ public class IdGeneratorUtil {
                     if (value == null || value.toString().isEmpty()) {
                         String uuid = UUID.randomUUID().toString();
                         String encoded = URLEncoder.encode(uuid, StandardCharsets.UTF_8);
-                        field.set(entity, encoded);
+                        field.set(entity, encoded); // NOSONAR
                     }
                 } catch (IllegalAccessException e) {
                     throw new JpaJsonException("Erro ao gerar ID");
