@@ -45,6 +45,7 @@ class ProdutoDetalhesControllerTest {
                 ResourceUtils.getFile("classpath:./produto-detalhe/GetResponseAll.json"),
                 StandardCharsets.UTF_8.name());
 
+        // Consulta todos os produtos detalhados
         mvc.perform(MockMvcRequestBuilders.get("/produtos-detalhe/")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(MockMvcResultHandlers.print())
@@ -60,6 +61,7 @@ class ProdutoDetalhesControllerTest {
                 ResourceUtils.getFile("classpath:./produto-detalhe/GetResponseAll.json"),
                 StandardCharsets.UTF_8.name());
 
+        // Consulta todos os produtos detalhados
         mvc.perform(MockMvcRequestBuilders.get("/")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(MockMvcResultHandlers.print())
@@ -76,7 +78,7 @@ class ProdutoDetalhesControllerTest {
                 ResourceUtils.getFile("classpath:./produto-detalhe/PostResponseFixoSucesso.json"),
                 StandardCharsets.UTF_8.name());
 
-        // Consulta o usuario criado
+        // Consulta um produto detalhado especifico
         mvc.perform(MockMvcRequestBuilders.get("/produtos-detalhe/9bce8ac2-1ddf-48ee-8bd4-2b9e8e13fa95")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(MockMvcResultHandlers.print())
