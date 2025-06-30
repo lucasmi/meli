@@ -41,7 +41,7 @@ public class AvaliacaoService {
         return avaliacaoRepository.buscarTodos(AvaliacaoEntity.class);
     }
 
-    public AvaliacaoEntity atualizar(String id, AvaliacaoEntity entidade) {
+    public AvaliacaoEntity atualizar(String id, @Valid AvaliacaoEntity entidade) {
         // Verifica se existe avaliacao
         AvaliacaoEntity avaliacao = avaliacaoRepository.buscar(id, AvaliacaoEntity.class);
 

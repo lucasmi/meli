@@ -28,7 +28,7 @@ public class UsuarioService {
         return usuarioRepository.buscarTodos(UsuarioEntity.class);
     }
 
-    public UsuarioEntity atualizar(String id, UsuarioEntity entidade) {
+    public UsuarioEntity atualizar(String id, @Valid UsuarioEntity entidade) {
         return usuarioRepository.salvar(id, entidade);
     }
 

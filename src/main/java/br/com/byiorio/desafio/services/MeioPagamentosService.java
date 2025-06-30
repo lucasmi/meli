@@ -34,7 +34,7 @@ public class MeioPagamentosService {
         return meioPagamentoRepository.buscarTodos(MeioPagamentoEntity.class);
     }
 
-    public MeioPagamentoEntity atualizar(String id, MeioPagamentoEntity entidade) {
+    public MeioPagamentoEntity atualizar(String id, @Valid MeioPagamentoEntity entidade) {
         // Verifica se existe Meio de pagamento
         MeioPagamentoEntity meioPagamento = meioPagamentoRepository.buscar(id,
                 MeioPagamentoEntity.class);

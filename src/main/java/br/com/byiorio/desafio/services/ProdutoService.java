@@ -34,7 +34,7 @@ public class ProdutoService {
         return produtoRepository.buscarTodos(ProdutoEntity.class);
     }
 
-    public ProdutoEntity atualizar(String id, ProdutoEntity entidade) {
+    public ProdutoEntity atualizar(String id, @Valid ProdutoEntity entidade) {
 
         // verifica se produto existe
         ProdutoEntity produtoEncontrado = produtoRepository.buscar(id,
