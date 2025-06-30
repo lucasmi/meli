@@ -32,7 +32,7 @@ public class AvaliacaoService {
         UsuarioEntity usuarioEncontrado = usuarioRepository.buscar(entidade.getIdUsuario(),
                 UsuarioEntity.class);
 
-        // Verifica se existe usuario
+        // Verifica se existe produto
         ProdutoEntity produtoEncontrado = produtoRepository.buscar(entidade.getIdProduto(),
                 ProdutoEntity.class);
 
@@ -60,7 +60,7 @@ public class AvaliacaoService {
     }
 
     public AvaliacaoEntity atualizar(String id, AvaliacaoEntity entidade) {
-        // Verifica se existe usuario
+        // Verifica se existe avaliacao
         AvaliacaoEntity avaliacao = avaliacaoRepository.buscar(id, AvaliacaoEntity.class);
 
         // Verifica se a relacao de usuario esta correta
@@ -68,7 +68,7 @@ public class AvaliacaoService {
             throw new NegocialException("Usuario nao pode ser alterado");
         }
 
-        // Verifica se a relacao de usuario esta correta
+        // Verifica se a relacao de produto esta correta
         if (!avaliacao.getIdProduto().equals(entidade.getIdProduto())) {
             throw new NegocialException("Produto nao pode ser alterado");
         }
@@ -76,7 +76,7 @@ public class AvaliacaoService {
         // Verifica se existe usuario
         usuarioRepository.buscar(entidade.getIdUsuario(), UsuarioEntity.class);
 
-        // Verifica se existe usuario
+        // Verifica se existe produto
         produtoRepository.buscar(entidade.getIdProduto(), ProdutoEntity.class);
 
         // Salva e retorna valores
@@ -93,7 +93,7 @@ public class AvaliacaoService {
         UsuarioEntity usuarioEncontrado = usuarioRepository.buscar(avaliacaoEncontrada.getIdUsuario(),
                 UsuarioEntity.class);
 
-        // Verifica se existe usuario
+        // Verifica se existe produto
         ProdutoEntity produtoEncontrado = produtoRepository.buscar(avaliacaoEncontrada.getIdProduto(),
                 ProdutoEntity.class);
 
