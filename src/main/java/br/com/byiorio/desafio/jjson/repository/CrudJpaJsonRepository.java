@@ -64,14 +64,14 @@ public abstract class CrudJpaJsonRepository implements IAcoesBasicas, IJpaJsonRe
     }
 
     @Override
-    public IJapJsonEntity buscar(String id, Class clazz) {
+    public <E extends IJapJsonEntity> E buscar(String id, Class<E> clazz) {
         // Gera caminhho
         String caminhoArquivo = jpajsonConfig.getNome().concat("/").concat(getNome()).concat("/").concat(id)
                 .concat(JSON_EXTENSAO);
 
         // Salva arquivo
         if (Arquivos.verifica(caminhoArquivo)) {
-            return (IJapJsonEntity) Arquivos.ler(caminhoArquivo, clazz);
+            return Arquivos.ler(caminhoArquivo, clazz);
         } else {
             throw new JpaJsonException("o id " + id + " nao foi encontrado na base " + getNome());
         }
