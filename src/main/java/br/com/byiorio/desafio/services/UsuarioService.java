@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import br.com.byiorio.desafio.models.UsuarioEntity;
+import br.com.byiorio.desafio.repositories.AvaliacaoRepository;
+import br.com.byiorio.desafio.repositories.MeioPagamentoRepository;
 import br.com.byiorio.desafio.repositories.ProdutoRepository;
 import br.com.byiorio.desafio.repositories.UsuarioRepository;
 import jakarta.validation.Valid;
@@ -13,10 +15,15 @@ import jakarta.validation.Valid;
 public class UsuarioService {
     private UsuarioRepository usuarioRepository;
     private ProdutoRepository produtoRepository;
+    private AvaliacaoRepository avaliacaoRepository;
+    private MeioPagamentoRepository meiosPagamentoRepository;
 
-    public UsuarioService(UsuarioRepository usuarioRepository, ProdutoRepository produtoRepository) {
+    public UsuarioService(UsuarioRepository usuarioRepository, ProdutoRepository produtoRepository,
+            AvaliacaoRepository avaliacaoRepository, MeioPagamentoRepository meiosPagamentoRepository) {
         this.usuarioRepository = usuarioRepository;
         this.produtoRepository = produtoRepository;
+        this.avaliacaoRepository = avaliacaoRepository;
+        this.meiosPagamentoRepository = meiosPagamentoRepository;
     }
 
     public UsuarioEntity criar(@Valid UsuarioEntity usuario) {
@@ -42,6 +49,13 @@ public class UsuarioService {
 
         // Apaga todos os produtos relacionados aos produtos
         usuarioEncontrado.getIdsProdutos().forEach(idProduto -> produtoRepository.apagar(idProduto));
+
+        // Apagar todas as avaliacoes relacionadas aos usuarios
+        usuarioEncontrado.getIdsAvaliacoes().forEach(idAvaliacao -> avaliacaoRepository.apagar(idAvaliacao));
+
+        // Apagar todos os meios de pagamento relacionados aos usuarios
+        usuarioEncontrado.getIdsMeioPagamentos()
+                .forEach(idMeioPagamento -> meiosPagamentoRepository.apagar(idMeioPagamento));
 
         // Apagando usuário
         usuarioRepository.apagar(id);

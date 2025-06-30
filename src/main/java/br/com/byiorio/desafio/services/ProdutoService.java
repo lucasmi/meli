@@ -1,7 +1,6 @@
 package br.com.byiorio.desafio.services;
 
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
