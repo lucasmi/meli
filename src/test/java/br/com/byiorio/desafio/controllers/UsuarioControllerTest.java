@@ -11,10 +11,14 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.util.ResourceUtils;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.byiorio.desafio.utils.ConfiguraMassa;
 
@@ -123,15 +127,28 @@ class UsuarioControllerTest {
                                 ResourceUtils.getFile("classpath:./usuario/MeioPagamentoResponseSucesso.json"),
                                 StandardCharsets.UTF_8.name());
 
-                // Consulta o usuario criado
-                mvc.perform(MockMvcRequestBuilders
+                // Insere meio de pagamento no usuario
+                MvcResult result = mvc.perform(MockMvcRequestBuilders
                                 .post("/usuarios/99d44695-2b71-451a-97ee-1398a0b439a5/meios-pagamentos")
                                 .content(request)
                                 .contentType(MediaType.APPLICATION_JSON))
                                 .andDo(MockMvcResultHandlers.print())
                                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
                                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNotEmpty())
-                                .andExpect(MockMvcResultMatchers.content().json(response));
+                                .andExpect(MockMvcResultMatchers.content().json(response)).andReturn();
+
+                // Pega o id gerado do meio de pagamento
+                String responseBody = result.getResponse().getContentAsString();
+                ObjectMapper mapper = new ObjectMapper();
+                JsonNode jsonNode = mapper.readTree(responseBody);
+                String idGerado = jsonNode.get("id").asText();
+
+                // Verifica se o usuario tem o meio de pagamento como referencia
+                mvc.perform(MockMvcRequestBuilders.get("/usuarios/99d44695-2b71-451a-97ee-1398a0b439a5")
+                                .contentType(MediaType.APPLICATION_JSON))
+                                .andDo(MockMvcResultHandlers.print())
+                                .andExpect(MockMvcResultMatchers.jsonPath("$.idsMeioPagamentos").value(
+                                                org.hamcrest.Matchers.hasItem(idGerado)));
         }
 
         @Test
@@ -146,7 +163,7 @@ class UsuarioControllerTest {
                                 ResourceUtils.getFile("classpath:./meiopagamento/PutResponseSucesso.json"),
                                 StandardCharsets.UTF_8.name());
 
-                // Consulta o usuario criado
+                // Atualiza meio de pagamento do usuario
                 mvc.perform(MockMvcRequestBuilders.put(
                                 "/usuarios/f33d57ea-d316-4167-92a8-8f2258b71abd/meios-pagamentos/114cbcfb-ec12-487e-b842-59fa878154ee")
                                 .content(request)
@@ -168,7 +185,7 @@ class UsuarioControllerTest {
                                 ResourceUtils.getFile("classpath:./meiopagamento/PutResponseError1.json"),
                                 StandardCharsets.UTF_8.name());
 
-                // Consulta o usuario criado
+                // atualiza meio de pagamento do usuario
                 mvc.perform(MockMvcRequestBuilders.put(
                                 "/usuarios/99d44695-2b71-451a-97ee-1398a0b439a5/meios-pagamentos/114cbcfb-ec12-487e-b842-59fa878154ee")
                                 .content(request)
