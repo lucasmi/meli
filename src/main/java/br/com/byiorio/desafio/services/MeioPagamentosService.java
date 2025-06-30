@@ -25,11 +25,11 @@ public class MeioPagamentosService {
 
     public MeioPagamentoEntity criar(@Valid MeioPagamentoEntity entidade) {
         // Verifica se existe usuario
-        UsuarioEntity usuarioEncontrado = (UsuarioEntity) usuarioRepository.buscar(entidade.getIdUsuario(),
+        UsuarioEntity usuarioEncontrado = usuarioRepository.buscar(entidade.getIdUsuario(),
                 UsuarioEntity.class);
 
         // Salva meioPagamento
-        MeioPagamentoEntity meioPagamento = (MeioPagamentoEntity) meioPagamentoRepository.salvar(entidade);
+        MeioPagamentoEntity meioPagamento = meioPagamentoRepository.salvar(entidade);
 
         // Salva meioPagamento no usuario, para registrar que ele fez essa meioPagamento
         usuarioEncontrado.getIdsMeioPagamentos().add(meioPagamento.getId());
@@ -39,7 +39,7 @@ public class MeioPagamentosService {
     }
 
     public MeioPagamentoEntity buscar(String id) {
-        return (MeioPagamentoEntity) meioPagamentoRepository.buscar(id, MeioPagamentoEntity.class);
+        return meioPagamentoRepository.buscar(id, MeioPagamentoEntity.class);
     }
 
     public List<MeioPagamentoEntity> buscarTodos() {
@@ -58,7 +58,7 @@ public class MeioPagamentosService {
 
     public MeioPagamentoEntity atualizar(String id, MeioPagamentoEntity entidade) {
         // Verifica se existe usuario
-        MeioPagamentoEntity meioPagamento = (MeioPagamentoEntity) meioPagamentoRepository.buscar(id,
+        MeioPagamentoEntity meioPagamento = meioPagamentoRepository.buscar(id,
                 MeioPagamentoEntity.class);
 
         // Verifica se a relacao de usuario esta correta
@@ -70,16 +70,16 @@ public class MeioPagamentosService {
         usuarioRepository.buscar(entidade.getIdUsuario(), UsuarioEntity.class);
 
         // Salva e retorna valores
-        return (MeioPagamentoEntity) meioPagamentoRepository.salvar(id, entidade);
+        return meioPagamentoRepository.salvar(id, entidade);
     }
 
     public void apagar(String id) {
         // Encontra meioPagamento
-        MeioPagamentoEntity meiosPagamentosEncontrados = (MeioPagamentoEntity) meioPagamentoRepository.buscar(id,
+        MeioPagamentoEntity meiosPagamentosEncontrados = meioPagamentoRepository.buscar(id,
                 MeioPagamentoEntity.class);
 
         // Verifica se existe usuario
-        UsuarioEntity usuarioEncontrado = (UsuarioEntity) usuarioRepository.buscar(
+        UsuarioEntity usuarioEncontrado = usuarioRepository.buscar(
                 meiosPagamentosEncontrados.getIdUsuario(),
                 UsuarioEntity.class);
 

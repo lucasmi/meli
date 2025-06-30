@@ -30,16 +30,16 @@ public class AvaliacaoService {
 
     public AvaliacaoEntity criar(@Valid AvaliacaoEntity entidade) {
         // Verifica se existe usuario
-        UsuarioEntity usuarioEncontrado = (UsuarioEntity) usuarioRepository.buscar(entidade.getIdUsuario(),
+        UsuarioEntity usuarioEncontrado = usuarioRepository.buscar(entidade.getIdUsuario(),
                 UsuarioEntity.class);
 
         // Verifica se existe usuario
-        ProdutoEntity produtoEncontrado = (ProdutoEntity) produtoRepository.buscar(entidade.getIdProduto(),
+        ProdutoEntity produtoEncontrado = produtoRepository.buscar(entidade.getIdProduto(),
                 ProdutoEntity.class);
 
         // Salva avaliacao
         entidade.setDataReview(LocalDateTime.now()); // Data do review
-        AvaliacaoEntity avaliacao = (AvaliacaoEntity) avaliacaoRepository.salvar(entidade);
+        AvaliacaoEntity avaliacao = avaliacaoRepository.salvar(entidade);
 
         // Salva avaliacao no usuario, para registrar que ele fez essa avaliacao
         usuarioEncontrado.getIdsAvaliacoes().add(avaliacao.getId());
@@ -53,7 +53,7 @@ public class AvaliacaoService {
     }
 
     public AvaliacaoEntity buscar(String id) {
-        return (AvaliacaoEntity) avaliacaoRepository.buscar(id, AvaliacaoEntity.class);
+        return avaliacaoRepository.buscar(id, AvaliacaoEntity.class);
     }
 
     public List<AvaliacaoEntity> buscarTodos() {
@@ -72,7 +72,7 @@ public class AvaliacaoService {
 
     public AvaliacaoEntity atualizar(String id, AvaliacaoEntity entidade) {
         // Verifica se existe usuario
-        AvaliacaoEntity avaliacao = (AvaliacaoEntity) avaliacaoRepository.buscar(id, AvaliacaoEntity.class);
+        AvaliacaoEntity avaliacao = avaliacaoRepository.buscar(id, AvaliacaoEntity.class);
 
         // Verifica se a relacao de usuario esta correta
         if (!avaliacao.getIdUsuario().equals(entidade.getIdUsuario())) {
@@ -92,20 +92,20 @@ public class AvaliacaoService {
 
         // Salva e retorna valores
         entidade.setDataReview(LocalDateTime.now()); // Atualizada data
-        return (AvaliacaoEntity) avaliacaoRepository.salvar(id, entidade);
+        return avaliacaoRepository.salvar(id, entidade);
     }
 
     public void apagar(String id) {
         // Encontra avaliacao
-        AvaliacaoEntity avaliacaoEncontrada = (AvaliacaoEntity) avaliacaoRepository.buscar(id,
+        AvaliacaoEntity avaliacaoEncontrada = avaliacaoRepository.buscar(id,
                 AvaliacaoEntity.class);
 
         // Verifica se existe usuario
-        UsuarioEntity usuarioEncontrado = (UsuarioEntity) usuarioRepository.buscar(avaliacaoEncontrada.getIdUsuario(),
+        UsuarioEntity usuarioEncontrado = usuarioRepository.buscar(avaliacaoEncontrada.getIdUsuario(),
                 UsuarioEntity.class);
 
         // Verifica se existe usuario
-        ProdutoEntity produtoEncontrado = (ProdutoEntity) produtoRepository.buscar(avaliacaoEncontrada.getIdProduto(),
+        ProdutoEntity produtoEncontrado = produtoRepository.buscar(avaliacaoEncontrada.getIdProduto(),
                 ProdutoEntity.class);
 
         // Apaga todos os registros relacionados

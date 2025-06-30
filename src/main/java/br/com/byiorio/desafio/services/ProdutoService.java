@@ -27,11 +27,11 @@ public class ProdutoService {
     public ProdutoEntity criar(@Valid ProdutoEntity entidade) {
 
         // Já verifica se existe usuario
-        UsuarioEntity usuarioEncontrado = (UsuarioEntity) usuarioRepository.buscar(entidade.getIdUsuario(),
+        UsuarioEntity usuarioEncontrado = usuarioRepository.buscar(entidade.getIdUsuario(),
                 UsuarioEntity.class);
 
         // Salva Produto
-        ProdutoEntity produtoSalvo = (ProdutoEntity) produtoRepository.salvar(entidade);
+        ProdutoEntity produtoSalvo = produtoRepository.salvar(entidade);
 
         // Salva Id do produto no usuario
         HashSet<String> produtosCriado = usuarioEncontrado.getIdsProdutos();
@@ -42,7 +42,7 @@ public class ProdutoService {
     }
 
     public ProdutoEntity buscar(String id) {
-        return (ProdutoEntity) produtoRepository.buscar(id, ProdutoEntity.class);
+        return produtoRepository.buscar(id, ProdutoEntity.class);
     }
 
     public List<ProdutoEntity> buscarTodos() {
@@ -63,11 +63,11 @@ public class ProdutoService {
     public ProdutoEntity atualizar(String id, ProdutoEntity entidade) {
 
         // verifica se produto existe
-        ProdutoEntity produtoEncontrado = (ProdutoEntity) produtoRepository.buscar(id,
+        ProdutoEntity produtoEncontrado = produtoRepository.buscar(id,
                 ProdutoEntity.class);
 
         // Ja verifica se existe usuario
-        UsuarioEntity usuarioEncontrado = (UsuarioEntity) usuarioRepository.buscar(entidade.getIdUsuario(),
+        UsuarioEntity usuarioEncontrado = usuarioRepository.buscar(entidade.getIdUsuario(),
                 UsuarioEntity.class);
 
         // Não deixa trocar de usuario durante atualizacao
@@ -75,14 +75,14 @@ public class ProdutoService {
             throw new NegocialException("Usuario nao pode ser alterado do produto");
         }
 
-        return (ProdutoEntity) produtoRepository.salvar(produtoEncontrado.getId(), entidade);
+        return produtoRepository.salvar(produtoEncontrado.getId(), entidade);
     }
 
     public void apagar(String id) {
-        ProdutoEntity produtoEncontrado = (ProdutoEntity) produtoRepository.buscar(id, ProdutoEntity.class);
+        ProdutoEntity produtoEncontrado = produtoRepository.buscar(id, ProdutoEntity.class);
 
         // Remove vinculo com o usuario
-        UsuarioEntity usuarioEncontrado = (UsuarioEntity) usuarioRepository.buscar(produtoEncontrado.getIdUsuario(),
+        UsuarioEntity usuarioEncontrado = usuarioRepository.buscar(produtoEncontrado.getIdUsuario(),
                 UsuarioEntity.class);
         usuarioEncontrado.getIdsProdutos().remove(produtoEncontrado.getId());
         usuarioRepository.salvar(usuarioEncontrado);

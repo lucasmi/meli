@@ -21,11 +21,11 @@ public class UsuarioService {
     }
 
     public UsuarioEntity criar(@Valid UsuarioEntity usuario) {
-        return (UsuarioEntity) usuarioRepository.salvar(usuario);
+        return usuarioRepository.salvar(usuario);
     }
 
     public UsuarioEntity buscar(String id) {
-        return (UsuarioEntity) usuarioRepository.buscar(id, UsuarioEntity.class);
+        return usuarioRepository.buscar(id, UsuarioEntity.class);
     }
 
     public List<UsuarioEntity> buscarTodos() {
@@ -43,11 +43,11 @@ public class UsuarioService {
     }
 
     public UsuarioEntity atualizar(String id, UsuarioEntity entidade) {
-        return (UsuarioEntity) usuarioRepository.salvar(id, entidade);
+        return usuarioRepository.salvar(id, entidade);
     }
 
     public void apagar(String id) {
-        UsuarioEntity usuarioEncontrado = (UsuarioEntity) usuarioRepository.buscar(id,
+        UsuarioEntity usuarioEncontrado = usuarioRepository.buscar(id,
                 UsuarioEntity.class);
 
         // Apaga todos os produtos relacionados

@@ -29,7 +29,7 @@ public abstract class CrudJpaJsonRepository implements IAcoesBasicas, IJpaJsonRe
     }
 
     @Override
-    public IJapJsonEntity salvar(IJapJsonEntity entidade) {
+    public <E extends IJapJsonEntity> E salvar(E entidade) {
         boolean novoArquivo = false;
 
         // Se o id estiver nulo gera o nome do arquivo
@@ -57,7 +57,7 @@ public abstract class CrudJpaJsonRepository implements IAcoesBasicas, IJpaJsonRe
         return entidade;
     }
 
-    public IJapJsonEntity salvar(String id, IJapJsonEntity entidade) {
+    public <E extends IJapJsonEntity> E salvar(String id, E entidade) {
         // Salva arquivo
         entidade.setId(id);
         return salvar(entidade);
