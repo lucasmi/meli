@@ -6,6 +6,4 @@ public interface IJapJsonEntity {
 
     void setId(String valor);
 
-    String gerarId();
-
 }

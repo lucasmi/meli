@@ -59,7 +59,7 @@ public class AvaliacaoController {
     public ResponseEntity<AvaliacaoEntity> criar(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Dados da nova avaliação") @Valid @RequestBody AvaliacaoEntity entidade) {
         AvaliacaoEntity usuarioCriado = avaliacaoService.criar(entidade);
-        URI uri = URI.create("/avaliacoes/".concat(usuarioCriado.gerarId()));
+        URI uri = URI.create("/avaliacoes/".concat(usuarioCriado.getId()));
         return ResponseEntity.status(HttpStatus.CREATED).location(uri).body(usuarioCriado);
     }
 

@@ -6,7 +6,8 @@ import java.util.HashSet;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import br.com.byiorio.desafio.jjson.entity.BaseEntity;
+import br.com.byiorio.desafio.jjson.annotations.ID;
+import br.com.byiorio.desafio.jjson.entity.IJapJsonEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Digits;
@@ -17,7 +18,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ProdutoEntity extends BaseEntity {
+public class ProdutoEntity implements IJapJsonEntity {
+    @ID
+    @Schema(hidden = true)
+    String id;
+
     @NotBlank
     @Size(min = 1, max = 50)
     String idUsuario;

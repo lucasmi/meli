@@ -61,7 +61,7 @@ public class ProdutoController {
             @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Dados do novo produto") @Valid @RequestBody ProdutoEntity entidade) {
 
         ProdutoEntity produtoCriado = produtoService.criar(entidade);
-        URI uri = URI.create("/produtos/".concat(produtoCriado.gerarId()));
+        URI uri = URI.create("/produtos/".concat(produtoCriado.getId()));
         return ResponseEntity.status(HttpStatus.CREATED).location(uri).body(produtoCriado);
 
     }

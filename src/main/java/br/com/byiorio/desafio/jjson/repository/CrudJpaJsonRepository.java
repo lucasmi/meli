@@ -8,6 +8,7 @@ import br.com.byiorio.desafio.jjson.entity.IJapJsonEntity;
 import br.com.byiorio.desafio.jjson.exceptions.JpaJsonException;
 import br.com.byiorio.desafio.jjson.utils.Arquivos;
 import br.com.byiorio.desafio.jjson.utils.Diretorio;
+import br.com.byiorio.desafio.jjson.utils.IdGeneratorUtil;
 
 public abstract class CrudJpaJsonRepository implements IAcoesBasicas, IJpaJsonRepository<IJapJsonEntity> {
     private static final String JSON_EXTENSAO = ".json";
@@ -36,7 +37,8 @@ public abstract class CrudJpaJsonRepository implements IAcoesBasicas, IJpaJsonRe
 
         // Verifica se o id da entidade é nulo, se for, gera um novo id
         if (entidade.getId() == null) {
-            entidade.setId(entidade.gerarId());
+            // Se o id for nulo, gera um novo id
+            IdGeneratorUtil.processIdAnnotations(entidade);
             novoArquivo = true;
         }
 

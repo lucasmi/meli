@@ -2,7 +2,8 @@ package br.com.byiorio.desafio.models;
 
 import java.util.HashSet;
 
-import br.com.byiorio.desafio.jjson.entity.BaseEntity;
+import br.com.byiorio.desafio.jjson.annotations.ID;
+import br.com.byiorio.desafio.jjson.entity.IJapJsonEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -12,7 +13,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UsuarioEntity extends BaseEntity {
+public class UsuarioEntity implements IJapJsonEntity {
+
+    @ID
+    @Schema(hidden = true)
+    String id;
 
     @NotBlank
     @Size(max = 100)

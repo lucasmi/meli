@@ -4,7 +4,8 @@ import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import br.com.byiorio.desafio.jjson.entity.BaseEntity;
+import br.com.byiorio.desafio.jjson.annotations.ID;
+import br.com.byiorio.desafio.jjson.entity.IJapJsonEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -16,7 +17,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AvaliacaoEntity extends BaseEntity {
+public class AvaliacaoEntity implements IJapJsonEntity {
+    @ID
+    @Schema(hidden = true)
+    String id;
+
     @NotBlank
     @Size(min = 1, max = 50)
     String idUsuario;

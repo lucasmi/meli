@@ -68,7 +68,7 @@ public class UsuarioController {
     @PostMapping(path = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UsuarioEntity> criar(@Valid @RequestBody UsuarioEntity entidade) {
         UsuarioEntity usuarioCriado = usuarioService.criar(entidade);
-        URI uri = URI.create("/usuarios/".concat(usuarioCriado.gerarId()));
+        URI uri = URI.create("/usuarios/".concat(usuarioCriado.getId()));
         return ResponseEntity.status(HttpStatus.CREATED).location(uri).body(usuarioCriado);
     }
 
@@ -108,7 +108,7 @@ public class UsuarioController {
                         .cartaoCredito(request.getCartaoCredito())
                         .idUsuario(id).build());
 
-        URI uri = URI.create("/meios-pagamento/".concat(meioPagamentoEntity.gerarId()));
+        URI uri = URI.create("/meios-pagamento/".concat(meioPagamentoEntity.getId()));
         return ResponseEntity.status(HttpStatus.CREATED).location(uri).body(meioPagamentoEntity);
     }
 
