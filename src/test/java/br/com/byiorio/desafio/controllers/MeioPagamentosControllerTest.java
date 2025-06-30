@@ -45,6 +45,7 @@ class MeioPagamentosControllerTest {
                                 ResourceUtils.getFile("classpath:./meiopagamento/GetResponseAll.json"),
                                 StandardCharsets.UTF_8.name());
 
+                // Insere meio de pagamento
                 mvc.perform(MockMvcRequestBuilders.get("/meio-pagamentos/")
                                 .contentType(MediaType.APPLICATION_JSON))
                                 .andDo(MockMvcResultHandlers.print())
@@ -61,7 +62,7 @@ class MeioPagamentosControllerTest {
                                 ResourceUtils.getFile("classpath:./meiopagamento/PostResponseFixoSucesso.json"),
                                 StandardCharsets.UTF_8.name());
 
-                // Consulta o usuario criado
+                // Consulta pagamento criado
                 mvc.perform(MockMvcRequestBuilders.get("/meio-pagamentos/114cbcfb-ec12-487e-b842-59fa878154ee")
                                 .contentType(MediaType.APPLICATION_JSON))
                                 .andDo(MockMvcResultHandlers.print())
@@ -71,10 +72,27 @@ class MeioPagamentosControllerTest {
 
         @Test
         void deleteTest() throws Exception {
-                // Consulta o usuario criado
-                mvc.perform(MockMvcRequestBuilders.delete("/meio-pagamentos/114cbcfb-ec12-487e-b842-59fa878154ee")
+                // Verifica se o usuario tem o meio de pagamento como referencia
+                mvc.perform(MockMvcRequestBuilders.get("/usuarios/99d44695-2b71-451a-97ee-1398a0b439a5")
+                                .contentType(MediaType.APPLICATION_JSON))
+                                .andDo(MockMvcResultHandlers.print())
+                                .andExpect(MockMvcResultMatchers.jsonPath("$.idsMeioPagamentos").value(
+                                                org.hamcrest.Matchers.hasItem("85424311-7cf9-47fa-962f-7f3cb93cf499")));
+
+                // Apaga meio de pagamento
+                mvc.perform(MockMvcRequestBuilders.delete("/meio-pagamentos/85424311-7cf9-47fa-962f-7f3cb93cf499")
                                 .contentType(MediaType.APPLICATION_JSON))
                                 .andDo(MockMvcResultHandlers.print())
                                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
+
+                // Verifica se removeu o relacionamento
+                mvc.perform(MockMvcRequestBuilders.get("/usuarios/99d44695-2b71-451a-97ee-1398a0b439a5")
+                                .contentType(MediaType.APPLICATION_JSON))
+                                .andDo(MockMvcResultHandlers.print())
+                                .andExpect(MockMvcResultMatchers.jsonPath("$.idsProdutos")
+                                                .value(org.hamcrest.Matchers.not(org.hamcrest.Matchers
+                                                                .hasItem("85424311-7cf9-47fa-962f-7f3cb93cf499"))))
+                                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
+
         }
 }
