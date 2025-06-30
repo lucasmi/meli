@@ -85,28 +85,7 @@ public class AvaliacaoService {
     }
 
     public void apagar(String id) {
-        // Encontra avaliacao
-        AvaliacaoEntity avaliacaoEncontrada = avaliacaoRepository.buscar(id,
-                AvaliacaoEntity.class);
-
-        // Verifica se existe usuario
-        UsuarioEntity usuarioEncontrado = usuarioRepository.buscar(avaliacaoEncontrada.getIdUsuario(),
-                UsuarioEntity.class);
-
-        // Verifica se existe produto
-        ProdutoEntity produtoEncontrado = produtoRepository.buscar(avaliacaoEncontrada.getIdProduto(),
-                ProdutoEntity.class);
-
-        // Apaga os vinculos das avaliacoes com o usuario e produto
-        // Remove vinculo do usuario com a avaliacao
-        usuarioEncontrado.getIdsAvaliacoes().remove(id);
-        usuarioRepository.salvar(usuarioEncontrado);
-
-        // Remove vinculo do produto com a avaliacao
-        produtoEncontrado.getIdsAvaliacoes().remove(id);
-        produtoRepository.salvar(produtoEncontrado);
-
         // Apaga avaliacao
-        avaliacaoRepository.apagar(id);
+        avaliacaoRepository.apagar(id, AvaliacaoEntity.class);
     }
 }

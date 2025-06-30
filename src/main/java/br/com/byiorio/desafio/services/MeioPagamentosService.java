@@ -63,20 +63,7 @@ public class MeioPagamentosService {
     }
 
     public void apagar(String id) {
-        // Encontra meioPagamento
-        MeioPagamentoEntity meiosPagamentosEncontrados = meioPagamentoRepository.buscar(id,
-                MeioPagamentoEntity.class);
-
-        // Verifica se existe usuario
-        UsuarioEntity usuarioEncontrado = usuarioRepository.buscar(
-                meiosPagamentosEncontrados.getIdUsuario(),
-                UsuarioEntity.class);
-
-        // Apaga todos os registros relacionados
-        usuarioEncontrado.getIdsMeioPagamentos().remove(id);
-        usuarioRepository.salvar(usuarioEncontrado);
-
         // Apaga meio de pagamentos
-        meioPagamentoRepository.apagar(id);
+        meioPagamentoRepository.apagar(id, MeioPagamentoEntity.class);
     }
 }

@@ -7,7 +7,11 @@ import java.util.HashSet;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import br.com.byiorio.desafio.jjson.annotations.ID;
+import br.com.byiorio.desafio.jjson.annotations.OneToMany;
+import br.com.byiorio.desafio.jjson.annotations.OneToOne;
 import br.com.byiorio.desafio.jjson.entity.IJapJsonEntity;
+import br.com.byiorio.desafio.repositories.AvaliacaoRepository;
+import br.com.byiorio.desafio.repositories.UsuarioRepository;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Digits;
@@ -25,6 +29,7 @@ public class ProdutoEntity implements IJapJsonEntity {
 
     @NotBlank
     @Size(min = 1, max = 50)
+    @OneToOne(repository = UsuarioRepository.class, entity = UsuarioEntity.class, mappedBy = "idsProdutos")
     String idUsuario;
 
     @NotBlank
@@ -43,6 +48,7 @@ public class ProdutoEntity implements IJapJsonEntity {
     BigDecimal preco;
 
     @Schema(hidden = true)
+    @OneToMany(repository = AvaliacaoRepository.class, entity = AvaliacaoEntity.class)
     HashSet<String> idsAvaliacoes = new HashSet<>();
 
 }

@@ -5,7 +5,10 @@ import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import br.com.byiorio.desafio.jjson.annotations.ID;
+import br.com.byiorio.desafio.jjson.annotations.OneToOne;
 import br.com.byiorio.desafio.jjson.entity.IJapJsonEntity;
+import br.com.byiorio.desafio.repositories.ProdutoRepository;
+import br.com.byiorio.desafio.repositories.UsuarioRepository;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -24,10 +27,12 @@ public class AvaliacaoEntity implements IJapJsonEntity {
 
     @NotBlank
     @Size(min = 1, max = 50)
+    @OneToOne(repository = UsuarioRepository.class, entity = UsuarioEntity.class, mappedBy = "idsAvaliacoes")
     String idUsuario;
 
     @NotBlank
     @Size(min = 1, max = 50)
+    @OneToOne(repository = ProdutoRepository.class, entity = ProdutoEntity.class, mappedBy = "idsAvaliacoes")
     String idProduto;
 
     @NotNull

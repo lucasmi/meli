@@ -9,7 +9,11 @@ import br.com.byiorio.desafio.jjson.exceptions.JpaJsonException;
 import br.com.byiorio.desafio.jjson.utils.Arquivos;
 import br.com.byiorio.desafio.jjson.utils.Diretorio;
 import br.com.byiorio.desafio.jjson.utils.IdGeneratorUtil;
+import br.com.byiorio.desafio.jjson.utils.OneToManyUtil;
+import br.com.byiorio.desafio.jjson.utils.OneToOneUtil;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 public abstract class CrudJpaJsonRepository implements IAcoesBasicas, IJpaJsonRepository<IJapJsonEntity> {
     private static final String JSON_EXTENSAO = ".json";
 
@@ -81,13 +85,21 @@ public abstract class CrudJpaJsonRepository implements IAcoesBasicas, IJpaJsonRe
 
     }
 
-    public void apagar(String id) {
+    public <E extends IJapJsonEntity> void apagar(String id, Class<E> clazz) {
         // gera caminhho
         String caminhoArquivo = jpajsonConfig.getNome().concat("/").concat(getNome()).concat("/").concat(id)
                 .concat(JSON_EXTENSAO);
 
         // Apagar Arquivo
         if (Arquivos.verifica(caminhoArquivo)) {
+            // Necessário para acessar os IDs relacionados
+            E entidade = this.buscar(id, clazz);
+
+            // Apaga relacionamentos
+            OneToOneUtil.apagarRelacionados(entidade);
+            OneToManyUtil.apagarRelacionados(entidade);
+
+            // Apaga arquivo principal
             Arquivos.apagar(caminhoArquivo);
         }
     }

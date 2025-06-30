@@ -12,5 +12,5 @@ public interface IJpaJsonRepository<T extends IJapJsonEntity> {
 
     <E extends T> List<E> buscarTodos(Class<E> clazz);
 
-    void apagar(String id);
+    <E extends T> void apagar(String id, Class<E> clazz);
 }
