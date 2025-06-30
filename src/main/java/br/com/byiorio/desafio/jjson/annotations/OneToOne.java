@@ -11,7 +11,7 @@ import br.com.byiorio.desafio.jjson.repository.IJpaJsonRepository;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface OneToOne {
-    Class<? extends IJpaJsonRepository<?>> repository();
+    Class<? extends IJpaJsonRepository<IJapJsonEntity>> repository();
 
     Class<? extends IJapJsonEntity> entity();
 

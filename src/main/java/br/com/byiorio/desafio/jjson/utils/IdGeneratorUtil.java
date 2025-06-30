@@ -5,7 +5,10 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
+import org.springframework.util.ReflectionUtils;
+
 import br.com.byiorio.desafio.jjson.annotations.ID;
+import br.com.byiorio.desafio.jjson.exceptions.JpaJsonException;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = lombok.AccessLevel.PRIVATE)
@@ -18,7 +21,7 @@ public class IdGeneratorUtil {
                     throw new IllegalArgumentException("O campo anotado com @ID deve ser do tipo String.");
                 }
 
-                field.setAccessible(true);
+                ReflectionUtils.makeAccessible(field);
                 try {
                     Object value = field.get(entity);
                     if (value == null || value.toString().isEmpty()) {
@@ -27,7 +30,7 @@ public class IdGeneratorUtil {
                         field.set(entity, encoded);
                     }
                 } catch (IllegalAccessException e) {
-                    throw new RuntimeException("Erro ao gerar ID", e);
+                    throw new JpaJsonException("Erro ao gerar ID");
                 }
             }
         }
