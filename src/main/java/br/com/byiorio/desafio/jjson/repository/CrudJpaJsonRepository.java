@@ -62,6 +62,9 @@ public abstract class CrudJpaJsonRepository implements IAcoesBasicas, IJpaJsonRe
             throw new JpaJsonException("Erro ao salvar arquivo no caminho " + caminhoArquivo);
         }
 
+        // Salva relacionamentos
+        OneToOneUtil.inserirRelacionamentos(entidade);
+
         return entidade;
     }
 
@@ -96,8 +99,8 @@ public abstract class CrudJpaJsonRepository implements IAcoesBasicas, IJpaJsonRe
             E entidade = this.buscar(id, clazz);
 
             // Apaga relacionamentos
-            OneToOneUtil.apagarRelacionados(entidade);
             OneToManyUtil.apagarRelacionados(entidade);
+            OneToOneUtil.apagarRelacionados(entidade);
 
             // Apaga arquivo principal
             Arquivos.apagar(caminhoArquivo);

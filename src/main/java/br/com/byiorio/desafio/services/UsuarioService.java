@@ -4,11 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import br.com.byiorio.desafio.models.MeioPagamentoEntity;
 import br.com.byiorio.desafio.models.UsuarioEntity;
-import br.com.byiorio.desafio.repositories.AvaliacaoRepository;
-import br.com.byiorio.desafio.repositories.MeioPagamentoRepository;
-import br.com.byiorio.desafio.repositories.ProdutoRepository;
 import br.com.byiorio.desafio.repositories.UsuarioRepository;
 import jakarta.validation.Valid;
 

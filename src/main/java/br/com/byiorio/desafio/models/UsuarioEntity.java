@@ -3,7 +3,6 @@ package br.com.byiorio.desafio.models;
 import java.util.HashSet;
 
 import br.com.byiorio.desafio.jjson.annotations.ID;
-import br.com.byiorio.desafio.jjson.annotations.OneToOne;
 import br.com.byiorio.desafio.jjson.annotations.OneToMany;
 import br.com.byiorio.desafio.jjson.entity.IJapJsonEntity;
 import br.com.byiorio.desafio.repositories.AvaliacaoRepository;

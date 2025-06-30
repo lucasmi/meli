@@ -28,27 +28,9 @@ public class AvaliacaoService {
     }
 
     public AvaliacaoEntity criar(@Valid AvaliacaoEntity entidade) {
-        // Verifica se existe usuario
-        UsuarioEntity usuarioEncontrado = usuarioRepository.buscar(entidade.getIdUsuario(),
-                UsuarioEntity.class);
-
-        // Verifica se existe produto
-        ProdutoEntity produtoEncontrado = produtoRepository.buscar(entidade.getIdProduto(),
-                ProdutoEntity.class);
-
-        // Salva avaliacao
+        // Atualiza data do review
         entidade.setDataReview(LocalDateTime.now()); // Data do review
-        AvaliacaoEntity avaliacao = avaliacaoRepository.salvar(entidade);
-
-        // Salva avaliacao no usuario, para registrar que ele fez essa avaliacao
-        usuarioEncontrado.getIdsAvaliacoes().add(avaliacao.getId());
-        usuarioRepository.salvar(usuarioEncontrado);
-
-        // Salva avaliacao no produto, para registrar que ele fez essa avaliacao
-        produtoEncontrado.getIdsAvaliacoes().add(avaliacao.getId());
-        produtoRepository.salvar(produtoEncontrado);
-
-        return avaliacao;
+        return avaliacaoRepository.salvar(entidade);
     }
 
     public AvaliacaoEntity buscar(String id) {

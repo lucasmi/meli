@@ -1,6 +1,5 @@
 package br.com.byiorio.desafio.services;
 
-import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -24,20 +23,7 @@ public class ProdutoService {
     }
 
     public ProdutoEntity criar(@Valid ProdutoEntity entidade) {
-
-        // Já verifica se existe usuario
-        UsuarioEntity usuarioEncontrado = usuarioRepository.buscar(entidade.getIdUsuario(),
-                UsuarioEntity.class);
-
-        // Salva Produto
-        ProdutoEntity produtoSalvo = produtoRepository.salvar(entidade);
-
-        // Salva Id do produto no usuario
-        HashSet<String> produtosCriado = usuarioEncontrado.getIdsProdutos();
-        produtosCriado.add(produtoSalvo.getId());
-        usuarioRepository.salvar(usuarioEncontrado);
-
-        return produtoSalvo;
+        return produtoRepository.salvar(entidade);
     }
 
     public ProdutoEntity buscar(String id) {
