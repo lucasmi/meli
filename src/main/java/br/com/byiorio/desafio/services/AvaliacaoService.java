@@ -1,7 +1,6 @@
 package br.com.byiorio.desafio.services;
 
 import java.time.LocalDateTime;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -57,17 +56,7 @@ public class AvaliacaoService {
     }
 
     public List<AvaliacaoEntity> buscarTodos() {
-
-        // Pega todos os arquivos
-        LinkedList<String> todosArquivos = new LinkedList<>(avaliacaoRepository.buscarTodos());
-
-        // Consulta todos os usuarios
-        LinkedList<AvaliacaoEntity> avaliacoes = new LinkedList<>();
-
-        // adiciona usuarios
-        todosArquivos.forEach(id -> avaliacoes.add(this.buscar(id)));
-
-        return avaliacoes;
+        return avaliacaoRepository.buscarTodos(AvaliacaoEntity.class);
     }
 
     public AvaliacaoEntity atualizar(String id, AvaliacaoEntity entidade) {

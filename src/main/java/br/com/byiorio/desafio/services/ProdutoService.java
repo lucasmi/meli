@@ -46,18 +46,7 @@ public class ProdutoService {
     }
 
     public List<ProdutoEntity> buscarTodos() {
-
-        // Pega todos os arquivos
-        LinkedList<String> todosArquivos = new LinkedList<>(produtoRepository.buscarTodos());
-
-        // Consulta todos os usuarios
-        LinkedList<ProdutoEntity> produtos = new LinkedList<>();
-
-        // adiciona usuarios
-        todosArquivos.forEach(idProduto -> produtos.add(this.buscar(idProduto)));
-
-        return produtos;
-
+        return produtoRepository.buscarTodos(ProdutoEntity.class);
     }
 
     public ProdutoEntity atualizar(String id, ProdutoEntity entidade) {
@@ -79,9 +68,10 @@ public class ProdutoService {
     }
 
     public void apagar(String id) {
+        // Verifica se produto existe
         ProdutoEntity produtoEncontrado = produtoRepository.buscar(id, ProdutoEntity.class);
 
-        // Remove vinculo com o usuario
+        // Remove vinculo do produto com o usuario
         UsuarioEntity usuarioEncontrado = usuarioRepository.buscar(produtoEncontrado.getIdUsuario(),
                 UsuarioEntity.class);
         usuarioEncontrado.getIdsProdutos().remove(produtoEncontrado.getId());

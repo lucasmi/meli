@@ -97,13 +97,13 @@ public class ProdutoDetalhadoService {
                 LinkedList<ProdutoDetalhadoDTO> produtosDetalhado = new LinkedList<>();
 
                 // Pega todos os arquivos
-                LinkedList<String> todosArquivos = new LinkedList<>(produtoRepository.buscarTodos());
+                LinkedList<ProdutoEntity> todosProdutos = new LinkedList<>(
+                                produtoRepository.buscarTodos(ProdutoEntity.class));
 
-                // adiciona usuarios
-                todosArquivos.forEach(idProduto -> produtosDetalhado.add(this.buscar(idProduto)));
+                // Coloca detalhes de cada produto
+                todosProdutos.forEach(produto -> produtosDetalhado.add(this.buscar(produto.getId())));
 
                 return produtosDetalhado;
-
         }
 
 }

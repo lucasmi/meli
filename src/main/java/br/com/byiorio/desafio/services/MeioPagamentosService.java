@@ -1,6 +1,5 @@
 package br.com.byiorio.desafio.services;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -43,21 +42,11 @@ public class MeioPagamentosService {
     }
 
     public List<MeioPagamentoEntity> buscarTodos() {
-
-        // Pega todos os arquivos
-        LinkedList<String> todosArquivos = new LinkedList<>(meioPagamentoRepository.buscarTodos());
-
-        // Consulta todos os usuarios
-        LinkedList<MeioPagamentoEntity> meioPagamentos = new LinkedList<>();
-
-        // adiciona usuarios
-        todosArquivos.forEach(id -> meioPagamentos.add(this.buscar(id)));
-
-        return meioPagamentos;
+        return meioPagamentoRepository.buscarTodos(MeioPagamentoEntity.class);
     }
 
     public MeioPagamentoEntity atualizar(String id, MeioPagamentoEntity entidade) {
-        // Verifica se existe usuario
+        // Verifica se existe Meio de pagamento
         MeioPagamentoEntity meioPagamento = meioPagamentoRepository.buscar(id,
                 MeioPagamentoEntity.class);
 

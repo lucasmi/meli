@@ -1,5 +1,6 @@
 package br.com.byiorio.desafio.jjson.repository;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import br.com.byiorio.desafio.jjson.config.JpajsonConfig;
@@ -89,8 +90,19 @@ public abstract class CrudJpaJsonRepository implements IAcoesBasicas, IJpaJsonRe
         }
     }
 
-    public List<String> buscarTodos() {
-        return Diretorio.listaArquivos(jpajsonConfig.getNome().concat("/").concat(getNome()));
+    @Override
+    public <E extends IJapJsonEntity> List<E> buscarTodos(Class<E> clazz) {
+        // Pega todos os arquivos
+        LinkedList<String> todosArquivos = new LinkedList<>(
+                Diretorio.listaArquivos(jpajsonConfig.getNome().concat("/").concat(getNome())));
+
+        // Consulta todos os usuarios
+        LinkedList<E> entidades = new LinkedList<>();
+
+        // adiciona usuarios
+        todosArquivos.forEach(id -> entidades.add(this.buscar(id, clazz)));
+
+        return entidades;
     }
 
 }
