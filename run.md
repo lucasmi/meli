@@ -3,7 +3,7 @@
 1. **Pré-requisitos:**
    - Java 21 ou superior instalado
    - Maven instalado
-   - Tenho uma pagina explicando como montar o ambiente https://www.byiorio.com.br/product/1
+   - Tenho uma pagina explicando como montar o ambiente https://www.byiorio.com.br/product/1/item/1
 
 2. **Compilar o projeto:**
    ```sh
