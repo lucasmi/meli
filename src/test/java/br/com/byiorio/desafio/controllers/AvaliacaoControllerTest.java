@@ -67,14 +67,14 @@ class AvaliacaoControllerTest {
                 JsonNode jsonNode = mapper.readTree(responseBody);
                 String idGerado = jsonNode.get("id").asText();
 
-                // Verifica se o usuario tem o meio de pagamento como referencia
+                // Verifica se o usuario tem a avliacao
                 mvc.perform(MockMvcRequestBuilders.get("/usuarios/99d44695-2b71-451a-97ee-1398a0b439a5")
                                 .contentType(MediaType.APPLICATION_JSON))
                                 .andDo(MockMvcResultHandlers.print())
                                 .andExpect(MockMvcResultMatchers.jsonPath("$.idsAvaliacoes").value(
                                                 org.hamcrest.Matchers.hasItem(idGerado)));
 
-                // Verifica se o usuario tem o meio de pagamento como referencia
+                // Verifica se o produto tem a avaliacao
                 mvc.perform(MockMvcRequestBuilders.get("/produtos/9bce8ac2-1ddf-48ee-8bd4-2b9e8e13fa95")
                                 .contentType(MediaType.APPLICATION_JSON))
                                 .andDo(MockMvcResultHandlers.print())
@@ -106,7 +106,7 @@ class AvaliacaoControllerTest {
                                 ResourceUtils.getFile("classpath:./avaliacao/PostResponseFixoSucesso.json"),
                                 StandardCharsets.UTF_8.name());
 
-                // Consulta o usuario criado
+                // Consulta avaliacao
                 mvc.perform(MockMvcRequestBuilders.get("/avaliacoes/1eb2bc27-7ae6-472f-9422-cd53fbce22f9")
                                 .contentType(MediaType.APPLICATION_JSON))
                                 .andDo(MockMvcResultHandlers.print())
@@ -126,7 +126,7 @@ class AvaliacaoControllerTest {
                                 ResourceUtils.getFile("classpath:./avaliacao/PutResponseSucesso.json"),
                                 StandardCharsets.UTF_8.name());
 
-                // Consulta o usuario criado
+                // Atualiza Avaliacao
                 mvc.perform(MockMvcRequestBuilders.put("/avaliacoes/1eb2bc27-7ae6-472f-9422-cd53fbce22f9")
                                 .content(request)
                                 .contentType(MediaType.APPLICATION_JSON))
@@ -147,7 +147,7 @@ class AvaliacaoControllerTest {
                                 ResourceUtils.getFile("classpath:./avaliacao/PutResponseError1.json"),
                                 StandardCharsets.UTF_8.name());
 
-                // Consulta o usuario criado
+                // Atualiza avaliacao
                 mvc.perform(MockMvcRequestBuilders.put("/avaliacoes/1eb2bc27-7ae6-472f-9422-cd53fbce22f9")
                                 .content(request)
                                 .contentType(MediaType.APPLICATION_JSON))
@@ -168,7 +168,7 @@ class AvaliacaoControllerTest {
                                 ResourceUtils.getFile("classpath:./avaliacao/PutResponseError2.json"),
                                 StandardCharsets.UTF_8.name());
 
-                // Consulta o usuario criado
+                // Atualiza Avaliacao
                 mvc.perform(MockMvcRequestBuilders.put("/avaliacoes/1eb2bc27-7ae6-472f-9422-cd53fbce22f9")
                                 .content(request)
                                 .contentType(MediaType.APPLICATION_JSON))
@@ -179,10 +179,44 @@ class AvaliacaoControllerTest {
 
         @Test
         void deleteTest() throws Exception {
-                // Consulta o usuario criado
+                // Verifica se o usuario tem a avaliacao como referencia
+                mvc.perform(MockMvcRequestBuilders.get("/usuarios/99d44695-2b71-451a-97ee-1398a0b439a5")
+                                .contentType(MediaType.APPLICATION_JSON))
+                                .andDo(MockMvcResultHandlers.print())
+                                .andExpect(MockMvcResultMatchers.jsonPath("$.idsAvaliacoes").value(
+                                                org.hamcrest.Matchers.hasItem("1eb2bc27-7ae6-472f-9422-cd53fbce22f9")))
+                                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
+
+                // Verifica se o produto tem a avaliacao como referencia
+                mvc.perform(MockMvcRequestBuilders.get("/produtos/9bce8ac2-1ddf-48ee-8bd4-2b9e8e13fa95")
+                                .contentType(MediaType.APPLICATION_JSON))
+                                .andDo(MockMvcResultHandlers.print())
+                                .andExpect(MockMvcResultMatchers.jsonPath("$.idsAvaliacoes").value(
+                                                org.hamcrest.Matchers.hasItem("1eb2bc27-7ae6-472f-9422-cd53fbce22f9")))
+                                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
+
+                // Deleta avaliacao
                 mvc.perform(MockMvcRequestBuilders.delete("/avaliacoes/1eb2bc27-7ae6-472f-9422-cd53fbce22f9")
                                 .contentType(MediaType.APPLICATION_JSON))
                                 .andDo(MockMvcResultHandlers.print())
+                                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
+
+                // Verifica se o usuario perdeu a avaliacao como referencia
+                mvc.perform(MockMvcRequestBuilders.get("/usuarios/99d44695-2b71-451a-97ee-1398a0b439a5")
+                                .contentType(MediaType.APPLICATION_JSON))
+                                .andDo(MockMvcResultHandlers.print())
+                                .andExpect(MockMvcResultMatchers.jsonPath("$.idsAvaliacoes")
+                                                .value(org.hamcrest.Matchers.not(org.hamcrest.Matchers
+                                                                .hasItem("1eb2bc27-7ae6-472f-9422-cd53fbce22f9"))))
+                                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
+
+                // Verifica se o produto perdeu a avaliacao como referencia
+                mvc.perform(MockMvcRequestBuilders.get("/produtos/9bce8ac2-1ddf-48ee-8bd4-2b9e8e13fa95")
+                                .contentType(MediaType.APPLICATION_JSON))
+                                .andDo(MockMvcResultHandlers.print())
+                                .andExpect(MockMvcResultMatchers.jsonPath("$.idsAvaliacoes")
+                                                .value(org.hamcrest.Matchers.not(org.hamcrest.Matchers
+                                                                .hasItem("1eb2bc27-7ae6-472f-9422-cd53fbce22f9"))))
                                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
         }
 }
