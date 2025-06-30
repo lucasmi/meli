@@ -24,6 +24,7 @@ public abstract class CrudJpaJsonRepository implements IAcoesBasicas, IJpaJsonRe
         // Cria diretorio onde serao armazenados os Jsons
         String caminhoCompleto = this.jpajsonConfig.getNome().concat("/").concat(getNome());
 
+        // Verifica se o diretorio existe, se nao existir cria
         if (!Diretorio.verifica(caminhoCompleto)) {
             Diretorio.criar(caminhoCompleto);
         }
@@ -33,13 +34,13 @@ public abstract class CrudJpaJsonRepository implements IAcoesBasicas, IJpaJsonRe
     public <E extends IJapJsonEntity> E salvar(E entidade) {
         boolean novoArquivo = false;
 
-        // Se o id estiver nulo gera o nome do arquivo
+        // Verifica se o id da entidade é nulo, se for, gera um novo id
         if (entidade.getId() == null) {
             entidade.setId(entidade.gerarId());
             novoArquivo = true;
         }
 
-        // gera caminhho
+        // Verifica se o id da entidade é vazio, se for, gera um novo arquivo
         String caminhoArquivo = jpajsonConfig.getNome().concat("/").concat(getNome()).concat("/")
                 .concat(entidade.getId())
                 .concat(JSON_EXTENSAO);
@@ -59,7 +60,6 @@ public abstract class CrudJpaJsonRepository implements IAcoesBasicas, IJpaJsonRe
     }
 
     public <E extends IJapJsonEntity> E salvar(String id, E entidade) {
-        // Salva arquivo
         entidade.setId(id);
         return salvar(entidade);
     }
@@ -70,7 +70,7 @@ public abstract class CrudJpaJsonRepository implements IAcoesBasicas, IJpaJsonRe
         String caminhoArquivo = jpajsonConfig.getNome().concat("/").concat(getNome()).concat("/").concat(id)
                 .concat(JSON_EXTENSAO);
 
-        // Salva arquivo
+        // Le arquivo
         if (Arquivos.verifica(caminhoArquivo)) {
             return Arquivos.ler(caminhoArquivo, clazz);
         } else {
@@ -84,7 +84,7 @@ public abstract class CrudJpaJsonRepository implements IAcoesBasicas, IJpaJsonRe
         String caminhoArquivo = jpajsonConfig.getNome().concat("/").concat(getNome()).concat("/").concat(id)
                 .concat(JSON_EXTENSAO);
 
-        // Salva arquivo
+        // Apagar Arquivo
         if (Arquivos.verifica(caminhoArquivo)) {
             Arquivos.apagar(caminhoArquivo);
         }
@@ -96,10 +96,8 @@ public abstract class CrudJpaJsonRepository implements IAcoesBasicas, IJpaJsonRe
         LinkedList<String> todosArquivos = new LinkedList<>(
                 Diretorio.listaArquivos(jpajsonConfig.getNome().concat("/").concat(getNome())));
 
-        // Consulta todos os usuarios
+        // Consulta todos os arquivos e adiciona na lista
         LinkedList<E> entidades = new LinkedList<>();
-
-        // adiciona usuarios
         todosArquivos.forEach(id -> entidades.add(this.buscar(id, clazz)));
 
         return entidades;
