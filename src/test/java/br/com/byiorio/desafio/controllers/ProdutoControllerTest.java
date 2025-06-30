@@ -157,10 +157,40 @@ class ProdutoControllerTest {
 
         @Test
         void deleteTest() throws Exception {
-                // Consulta o usuario criado
+
+                // Verifica se existe a avaliacao que o usuario fez
+                mvc.perform(MockMvcRequestBuilders.get("/avaliacoes/1eb2bc27-7ae6-472f-9422-cd53fbce22f9")
+                                .contentType(MediaType.APPLICATION_JSON))
+                                .andDo(MockMvcResultHandlers.print())
+                                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
+
+                // Verifica se o usuario tem o produto como referencia
+                mvc.perform(MockMvcRequestBuilders.get("/usuarios/99d44695-2b71-451a-97ee-1398a0b439a5")
+                                .contentType(MediaType.APPLICATION_JSON))
+                                .andDo(MockMvcResultHandlers.print())
+                                .andExpect(MockMvcResultMatchers.jsonPath("$.idsProdutos").value(
+                                                org.hamcrest.Matchers.hasItem("9bce8ac2-1ddf-48ee-8bd4-2b9e8e13fa95")))
+                                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
+
+                // Apaga produto
                 mvc.perform(MockMvcRequestBuilders.delete("/produtos/9bce8ac2-1ddf-48ee-8bd4-2b9e8e13fa95")
                                 .contentType(MediaType.APPLICATION_JSON))
                                 .andDo(MockMvcResultHandlers.print())
+                                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
+
+                // Verifica se existe a avaliacao que o usuario fez
+                mvc.perform(MockMvcRequestBuilders.get("/avaliacoes/1eb2bc27-7ae6-472f-9422-cd53fbce22f9")
+                                .contentType(MediaType.APPLICATION_JSON))
+                                .andDo(MockMvcResultHandlers.print())
+                                .andExpect(MockMvcResultMatchers.status().is4xxClientError());
+
+                // Verifica se removeu o relacionamento
+                mvc.perform(MockMvcRequestBuilders.get("/usuarios/99d44695-2b71-451a-97ee-1398a0b439a5")
+                                .contentType(MediaType.APPLICATION_JSON))
+                                .andDo(MockMvcResultHandlers.print())
+                                .andExpect(MockMvcResultMatchers.jsonPath("$.idsProdutos")
+                                                .value(org.hamcrest.Matchers.not(org.hamcrest.Matchers
+                                                                .hasItem("9bce8ac2-1ddf-48ee-8bd4-2b9e8e13fa95"))))
                                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
         }
 }
