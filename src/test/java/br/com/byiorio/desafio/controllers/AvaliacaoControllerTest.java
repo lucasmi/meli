@@ -3,6 +3,7 @@ package br.com.byiorio.desafio.controllers;
 import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.io.FileUtils;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -133,6 +134,24 @@ class AvaliacaoControllerTest {
                                 .andDo(MockMvcResultHandlers.print())
                                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
                                 .andExpect(MockMvcResultMatchers.content().json(response));
+        }
+
+        @Test
+        void putErrorTest() throws Exception {
+                // le arquivo de request e response
+                // e executa o post
+                String request = FileUtils.readFileToString(
+                                ResourceUtils.getFile("classpath:./avaliacao/PutResponseSucesso.json"),
+                                StandardCharsets.UTF_8.name());
+
+                // Consulta o usuario criado
+                mvc.perform(MockMvcRequestBuilders.put("/avaliacoes/99d44695-2b71-451a-97ee-1398a0ssa5")
+                                .content(request)
+                                .contentType(MediaType.APPLICATION_JSON))
+                                .andDo(MockMvcResultHandlers.print())
+                                .andExpect(MockMvcResultMatchers.status().is4xxClientError())
+                                .andExpect(MockMvcResultMatchers.jsonPath("$.errors[0].msg",
+                                                Matchers.containsString("nao encontrado na base avaliacoes")));
         }
 
         @Test

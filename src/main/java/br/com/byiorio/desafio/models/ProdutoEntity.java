@@ -11,6 +11,7 @@ import br.com.byiorio.desafio.jjson.annotations.OneToMany;
 import br.com.byiorio.desafio.jjson.annotations.OneToOne;
 import br.com.byiorio.desafio.jjson.entity.IJapJsonEntity;
 import br.com.byiorio.desafio.repositories.AvaliacaoRepository;
+import br.com.byiorio.desafio.repositories.ProdutoRepository;
 import br.com.byiorio.desafio.repositories.UsuarioRepository;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
@@ -29,7 +30,7 @@ public class ProdutoEntity implements IJapJsonEntity {
 
     @NotBlank
     @Size(min = 1, max = 50)
-    @OneToOne(repository = UsuarioRepository.class, entity = UsuarioEntity.class, mappedBy = "idsProdutos")
+    @OneToOne(repository = UsuarioRepository.class, entity = UsuarioEntity.class, mappedBy = "idsProdutos", blockOnUpdateOf = ProdutoRepository.class)
     String idUsuario;
 
     @NotBlank

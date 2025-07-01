@@ -7,6 +7,7 @@ import br.com.byiorio.desafio.jjson.config.JpajsonConfig;
 import br.com.byiorio.desafio.jjson.entity.IJapJsonEntity;
 import br.com.byiorio.desafio.jjson.exceptions.JpaJsonException;
 import br.com.byiorio.desafio.jjson.utils.Arquivos;
+import br.com.byiorio.desafio.jjson.utils.BlockOnUpdateUtil;
 import br.com.byiorio.desafio.jjson.utils.Diretorio;
 import br.com.byiorio.desafio.jjson.utils.IdGeneratorUtil;
 import br.com.byiorio.desafio.jjson.utils.OneToManyUtil;
@@ -51,19 +52,28 @@ public abstract class CrudJpaJsonRepository implements IAcoesBasicas, IJpaJsonRe
                 .concat(entidade.getId())
                 .concat(JSON_EXTENSAO);
 
+        // Verifica se existe o id na base
+        if (!novoArquivo && !Arquivos.verifica(caminhoArquivo)) {
+            throw new JpaJsonException("O Id " + entidade.getId() + " nao encontrado na base " + getNome());
+        }
+
+        // Verifica se o relacionamento existe
+        // Importante checar antes de salvar para evitar problemas de relacionamento
+        OneToOneUtil.inserirRelacionamentos(entidade);
+
         if (!Arquivos.verifica(caminhoArquivo) && novoArquivo) {
             // Se for arquivo novo salva
             Arquivos.salvar(caminhoArquivo, entidade);
 
         } else if (Arquivos.verifica(caminhoArquivo) && !novoArquivo) {
+            // Verifica se é necessário travar a alteracao do relacionamento
+            BlockOnUpdateUtil.verificaRelacionamento(entidade);
+
             // Se for arquivo antigo, verifica se existe
             Arquivos.salvar(caminhoArquivo, entidade);
         } else {
             throw new JpaJsonException("Erro ao salvar arquivo no caminho " + caminhoArquivo);
         }
-
-        // Salva relacionamentos
-        OneToOneUtil.inserirRelacionamentos(entidade);
 
         return entidade;
     }

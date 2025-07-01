@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import br.com.byiorio.desafio.jjson.annotations.ID;
 import br.com.byiorio.desafio.jjson.annotations.OneToOne;
 import br.com.byiorio.desafio.jjson.entity.IJapJsonEntity;
+import br.com.byiorio.desafio.repositories.AvaliacaoRepository;
 import br.com.byiorio.desafio.repositories.ProdutoRepository;
 import br.com.byiorio.desafio.repositories.UsuarioRepository;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -27,12 +28,12 @@ public class AvaliacaoEntity implements IJapJsonEntity {
 
     @NotBlank
     @Size(min = 1, max = 50)
-    @OneToOne(repository = UsuarioRepository.class, entity = UsuarioEntity.class, mappedBy = "idsAvaliacoes")
+    @OneToOne(repository = UsuarioRepository.class, entity = UsuarioEntity.class, mappedBy = "idsAvaliacoes", blockOnUpdateOf = AvaliacaoRepository.class)
     String idUsuario;
 
     @NotBlank
     @Size(min = 1, max = 50)
-    @OneToOne(repository = ProdutoRepository.class, entity = ProdutoEntity.class, mappedBy = "idsAvaliacoes")
+    @OneToOne(repository = ProdutoRepository.class, entity = ProdutoEntity.class, mappedBy = "idsAvaliacoes", blockOnUpdateOf = AvaliacaoRepository.class)
     String idProduto;
 
     @NotNull

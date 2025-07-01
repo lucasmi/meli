@@ -1,0 +1,8 @@
+{
+    "errors": [
+        {
+            "codigo": "400",
+            "msg": "Id + 99d44695-2b71-451a-97ee-1398a0ssa5 nao encontrado na base de usuarios"
+        }
+    ]
+}

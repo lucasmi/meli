@@ -16,4 +16,9 @@ public @interface OneToOne {
     Class<? extends IJapJsonEntity> entity();
 
     String mappedBy();
+
+    Class<? extends IJpaJsonRepository<IJapJsonEntity>> blockOnUpdateOf() default OneToOne.None.class;
+
+    public abstract static class None implements IJpaJsonRepository<IJapJsonEntity> {
+    }
 }

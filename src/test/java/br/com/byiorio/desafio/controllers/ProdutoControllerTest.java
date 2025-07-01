@@ -3,6 +3,7 @@ package br.com.byiorio.desafio.controllers;
 import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.io.FileUtils;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -64,7 +65,7 @@ class ProdutoControllerTest {
                                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNotEmpty())
                                 .andExpect(MockMvcResultMatchers.content().json(response)).andReturn();
 
-                // Pega o id gerado do meio de pagamento
+                // Pega o id do produto
                 String responseBody = result.getResponse().getContentAsString();
                 ObjectMapper mapper = new ObjectMapper();
                 JsonNode jsonNode = mapper.readTree(responseBody);
@@ -77,6 +78,27 @@ class ProdutoControllerTest {
                                 .andExpect(MockMvcResultMatchers.jsonPath("$.idsProdutos").value(
                                                 org.hamcrest.Matchers.hasItem(idGerado)));
 
+        }
+
+        @Test
+        void postErrorNaoEncontradoest() throws Exception {
+                // le arquivos de request e response
+                // e executa o post
+                String request = FileUtils.readFileToString(
+                                ResourceUtils.getFile("classpath:./produto/PostRequestError1.json"),
+                                StandardCharsets.UTF_8.name());
+
+                String response = FileUtils.readFileToString(
+                                ResourceUtils.getFile("classpath:./produto/PostResponseError1.json"),
+                                StandardCharsets.UTF_8.name());
+
+                // verifica se o usuario existe
+                mvc.perform(MockMvcRequestBuilders.post("/produtos/")
+                                .content(request)
+                                .contentType(MediaType.APPLICATION_JSON))
+                                .andDo(MockMvcResultHandlers.print())
+                                .andExpect(MockMvcResultMatchers.status().is4xxClientError())
+                                .andExpect(MockMvcResultMatchers.content().json(response));
         }
 
         @Test
@@ -132,24 +154,21 @@ class ProdutoControllerTest {
         }
 
         @Test
-        void putErrorNaoEncontradoest() throws Exception {
+        void putErrorTest() throws Exception {
                 // le arquivo de request e response
                 // e executa o post
                 String request = FileUtils.readFileToString(
-                                ResourceUtils.getFile("classpath:./produto/PutRequestError1.json"),
+                                ResourceUtils.getFile("classpath:./produto/PutRequestSucesso.json"),
                                 StandardCharsets.UTF_8.name());
 
-                String response = FileUtils.readFileToString(
-                                ResourceUtils.getFile("classpath:./produto/PutResponseError1.json"),
-                                StandardCharsets.UTF_8.name());
-
-                // Atualiza produto
-                mvc.perform(MockMvcRequestBuilders.put("/produtos/9bce8ac2-1ddf-48ee-8bd4-2b9e8e13fa95")
+                // Consulta o usuario criado
+                mvc.perform(MockMvcRequestBuilders.put("/produtos/99d44695-2b71-451a-97ee-1398a0ssa5")
                                 .content(request)
                                 .contentType(MediaType.APPLICATION_JSON))
                                 .andDo(MockMvcResultHandlers.print())
                                 .andExpect(MockMvcResultMatchers.status().is4xxClientError())
-                                .andExpect(MockMvcResultMatchers.content().json(response));
+                                .andExpect(MockMvcResultMatchers.jsonPath("$.errors[0].msg",
+                                                Matchers.containsString("nao encontrado na base produtos")));
         }
 
         @Test

@@ -4,22 +4,17 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import br.com.byiorio.desafio.exceptions.NegocialException;
 import br.com.byiorio.desafio.models.ProdutoEntity;
-import br.com.byiorio.desafio.models.UsuarioEntity;
 import br.com.byiorio.desafio.repositories.ProdutoRepository;
-import br.com.byiorio.desafio.repositories.UsuarioRepository;
 import jakarta.validation.Valid;
 
 @Service
 public class ProdutoService {
 
     private ProdutoRepository produtoRepository;
-    private UsuarioRepository usuarioRepository;
 
-    public ProdutoService(ProdutoRepository produtoRepository, UsuarioRepository usuarioRepository) {
+    public ProdutoService(ProdutoRepository produtoRepository) {
         this.produtoRepository = produtoRepository;
-        this.usuarioRepository = usuarioRepository;
     }
 
     public ProdutoEntity criar(@Valid ProdutoEntity entidade) {
@@ -35,21 +30,7 @@ public class ProdutoService {
     }
 
     public ProdutoEntity atualizar(String id, @Valid ProdutoEntity entidade) {
-
-        // verifica se produto existe
-        ProdutoEntity produtoEncontrado = produtoRepository.buscar(id,
-                ProdutoEntity.class);
-
-        // Ja verifica se existe usuario
-        UsuarioEntity usuarioEncontrado = usuarioRepository.buscar(entidade.getIdUsuario(),
-                UsuarioEntity.class);
-
-        // Não deixa trocar de usuario durante atualizacao
-        if (!usuarioEncontrado.getId().equals(produtoEncontrado.getIdUsuario())) {
-            throw new NegocialException("Usuario nao pode ser alterado do produto");
-        }
-
-        return produtoRepository.salvar(produtoEncontrado.getId(), entidade);
+        return produtoRepository.salvar(id, entidade);
     }
 
     public void apagar(String id) {

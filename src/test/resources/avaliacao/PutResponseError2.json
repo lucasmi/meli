@@ -2,7 +2,7 @@
     "errors": [
         {
             "codigo": "400",
-            "msg": "Produto nao pode ser alterado"
+            "msg": "O relacionamento com a entidade ProdutoEntity nao pode ser alterado"
         }
     ]
 }
