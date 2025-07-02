@@ -10,8 +10,9 @@ import br.com.byiorio.desafio.jjson.utils.Arquivos;
 import br.com.byiorio.desafio.jjson.utils.BlockOnUpdateUtil;
 import br.com.byiorio.desafio.jjson.utils.Diretorio;
 import br.com.byiorio.desafio.jjson.utils.IdGeneratorUtil;
-import br.com.byiorio.desafio.jjson.utils.OneToManyUtil;
+import br.com.byiorio.desafio.jjson.utils.ManyToManyUtil;
 import br.com.byiorio.desafio.jjson.utils.ManyToOneUtil;
+import br.com.byiorio.desafio.jjson.utils.OneToManyUtil;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
@@ -60,6 +61,7 @@ public abstract class CrudJpaJsonRepository implements IAcoesBasicas, IJpaJsonRe
         // Verifica se o relacionamento existe
         // Importante checar antes de salvar para evitar problemas de relacionamento
         ManyToOneUtil.inserirRelacionamentos(entidade);
+        ManyToManyUtil.inserirRelacionamentos(entidade);
 
         if (!Arquivos.verifica(caminhoArquivo) && novoArquivo) {
             // Se for arquivo novo salva

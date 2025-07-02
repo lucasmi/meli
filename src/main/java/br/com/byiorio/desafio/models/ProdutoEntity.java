@@ -58,8 +58,7 @@ public class ProdutoEntity implements IJapJsonEntity {
 
     @NotBlank
     @Size(min = 1, max = 50)
-    @Schema(hidden = true)
-    @ManyToMany(repository = CategoriaRepository.class, entity = CategoriaEntity.class, mappedBy = "id")
+    @ManyToMany(repositoryTarget = CategoriaRepository.class, entityTarget = CategoriaEntity.class, mappedBy = "idsProdutos", repositorySource = ProdutoRepository.class, entitySource = ProdutoEntity.class)
     String idCategoria;
 
 }
