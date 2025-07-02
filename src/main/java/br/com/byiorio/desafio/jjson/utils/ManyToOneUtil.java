@@ -5,7 +5,7 @@ import java.util.HashSet;
 
 import org.springframework.util.ReflectionUtils;
 
-import br.com.byiorio.desafio.jjson.annotations.OneToOne;
+import br.com.byiorio.desafio.jjson.annotations.ManyToOne;
 import br.com.byiorio.desafio.jjson.entity.IJapJsonEntity;
 import br.com.byiorio.desafio.jjson.exceptions.JpaJsonException;
 import br.com.byiorio.desafio.jjson.repository.IJpaJsonRepository;
@@ -13,14 +13,14 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 @SuppressWarnings("unchecked")
-public class OneToOneUtil {
+public class ManyToOneUtil {
     public static void realizaRelacionamentos(IJapJsonEntity clazz, String acao) {
         for (Field field : clazz.getClass().getDeclaredFields()) {
-            if (field.isAnnotationPresent(OneToOne.class)) {
+            if (field.isAnnotationPresent(ManyToOne.class)) {
                 ReflectionUtils.makeAccessible(field);
                 try {
                     // Carrega parametros da anotacao
-                    OneToOne otm = field.getAnnotation(OneToOne.class);
+                    ManyToOne otm = field.getAnnotation(ManyToOne.class);
 
                     // Pega o id da tabela de destino
                     Field idField = clazz.getClass().getDeclaredField(field.getName());

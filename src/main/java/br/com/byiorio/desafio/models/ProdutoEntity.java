@@ -6,11 +6,14 @@ import java.util.HashSet;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import br.com.byiorio.desafio.jjson.annotations.ID;
+import br.com.byiorio.desafio.jjson.annotations.GeneratedValue;
+import br.com.byiorio.desafio.jjson.annotations.Id;
+import br.com.byiorio.desafio.jjson.annotations.ManyToMany;
+import br.com.byiorio.desafio.jjson.annotations.ManyToOne;
 import br.com.byiorio.desafio.jjson.annotations.OneToMany;
-import br.com.byiorio.desafio.jjson.annotations.OneToOne;
 import br.com.byiorio.desafio.jjson.entity.IJapJsonEntity;
 import br.com.byiorio.desafio.repositories.AvaliacaoRepository;
+import br.com.byiorio.desafio.repositories.CategoriaRepository;
 import br.com.byiorio.desafio.repositories.ProdutoRepository;
 import br.com.byiorio.desafio.repositories.UsuarioRepository;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -24,13 +27,14 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ProdutoEntity implements IJapJsonEntity {
-    @ID
+    @Id
     @Schema(hidden = true)
+    @GeneratedValue(strategy = GeneratedValue.Strategy.UUID)
     String id;
 
     @NotBlank
     @Size(min = 1, max = 50)
-    @OneToOne(repository = UsuarioRepository.class, entity = UsuarioEntity.class, mappedBy = "idsProdutos", blockOnUpdateOf = ProdutoRepository.class)
+    @ManyToOne(repository = UsuarioRepository.class, entity = UsuarioEntity.class, mappedBy = "idsProdutos", blockOnUpdateOf = ProdutoRepository.class)
     String idUsuario;
 
     @NotBlank
@@ -51,5 +55,11 @@ public class ProdutoEntity implements IJapJsonEntity {
     @Schema(hidden = true)
     @OneToMany(repository = AvaliacaoRepository.class, entity = AvaliacaoEntity.class)
     HashSet<String> idsAvaliacoes = new HashSet<>();
+
+    @NotBlank
+    @Size(min = 1, max = 50)
+    @Schema(hidden = true)
+    @ManyToMany(repository = CategoriaRepository.class, entity = CategoriaEntity.class, mappedBy = "id")
+    String idCategoria;
 
 }

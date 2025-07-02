@@ -2,7 +2,8 @@ package br.com.byiorio.desafio.models;
 
 import java.util.HashSet;
 
-import br.com.byiorio.desafio.jjson.annotations.ID;
+import br.com.byiorio.desafio.jjson.annotations.GeneratedValue;
+import br.com.byiorio.desafio.jjson.annotations.Id;
 import br.com.byiorio.desafio.jjson.annotations.OneToMany;
 import br.com.byiorio.desafio.jjson.entity.IJapJsonEntity;
 import br.com.byiorio.desafio.repositories.AvaliacaoRepository;
@@ -19,7 +20,8 @@ import lombok.Setter;
 @Setter
 public class UsuarioEntity implements IJapJsonEntity {
 
-    @ID
+    @Id
+    @GeneratedValue(strategy = GeneratedValue.Strategy.UUID)
     @Schema(hidden = true)
     String id;
 

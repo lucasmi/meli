@@ -10,15 +10,10 @@ import br.com.byiorio.desafio.jjson.repository.IJpaJsonRepository;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface OneToOne {
+public @interface ManyToMany {
     Class<? extends IJpaJsonRepository<IJapJsonEntity>> repository();
 
     Class<? extends IJapJsonEntity> entity();
 
     String mappedBy();
-
-    Class<? extends IJpaJsonRepository<IJapJsonEntity>> blockOnUpdateOf() default OneToOne.None.class;
-
-    public abstract static class None implements IJpaJsonRepository<IJapJsonEntity> {
-    }
 }

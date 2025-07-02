@@ -4,7 +4,7 @@ import java.lang.reflect.Field;
 
 import org.springframework.util.ReflectionUtils;
 
-import br.com.byiorio.desafio.jjson.annotations.OneToOne;
+import br.com.byiorio.desafio.jjson.annotations.ManyToOne;
 import br.com.byiorio.desafio.jjson.entity.IJapJsonEntity;
 import br.com.byiorio.desafio.jjson.exceptions.JpaJsonException;
 import br.com.byiorio.desafio.jjson.repository.IJpaJsonRepository;
@@ -14,13 +14,13 @@ import lombok.NoArgsConstructor;
 public class BlockOnUpdateUtil {
     public static void verificaRelacionamento(IJapJsonEntity clazz) {
         for (Field field : clazz.getClass().getDeclaredFields()) {
-            if (field.isAnnotationPresent(OneToOne.class)) {
+            if (field.isAnnotationPresent(ManyToOne.class)) {
                 ReflectionUtils.makeAccessible(field);
                 try {
                     // Carrega parametros da anotacao
-                    OneToOne otm = field.getAnnotation(OneToOne.class);
+                    ManyToOne otm = field.getAnnotation(ManyToOne.class);
 
-                    if (otm.blockOnUpdateOf().equals(OneToOne.None.class)) {
+                    if (otm.blockOnUpdateOf().equals(ManyToOne.None.class)) {
                         continue; // Se não tiver anotação de bloqueio, pula
                     }
 
