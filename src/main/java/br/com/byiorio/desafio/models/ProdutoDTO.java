@@ -16,4 +16,5 @@ public class ProdutoDTO {
     String descricao;
     ArrayList<ImagemDTO> imagens;
     BigDecimal preco;
+    CategoriaDTO categoria;
 }

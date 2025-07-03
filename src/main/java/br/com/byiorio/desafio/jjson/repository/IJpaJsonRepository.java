@@ -16,4 +16,6 @@ public interface IJpaJsonRepository<T extends IJapJsonEntity> {
     <E extends T> void apagar(String id, Class<E> clazz);
 
     <E extends T> E alteraEstado(E entidade, EstadoEnum estado);
+
+    <E extends T> void removeEstado(String id, Class<E> clazz, EstadoEnum estado);
 }

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.byiorio.desafio.models.BasicErrorDTO;
-import br.com.byiorio.desafio.models.ProdutoDetalhadoDTO;
+import br.com.byiorio.desafio.models.ProdutoDetalhadoResponse;
 import br.com.byiorio.desafio.services.ProdutoDetalhadoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -31,7 +31,7 @@ public class RaizContextoCrontoller {
     @ApiResponse(responseCode = "400", description = "Erro de parametrização", content = @Content(schema = @Schema(implementation = BasicErrorDTO.class)))
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor", content = @Content(schema = @Schema(implementation = BasicErrorDTO.class)))
     @GetMapping()
-    public ResponseEntity<List<ProdutoDetalhadoDTO>> consultar() {
+    public ResponseEntity<List<ProdutoDetalhadoResponse>> consultar() {
         return ResponseEntity.ok(produtoDetalhadoService.buscarTodos());
     }
 

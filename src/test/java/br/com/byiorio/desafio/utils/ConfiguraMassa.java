@@ -81,6 +81,16 @@ public class ConfiguraMassa {
                                 "src/test/resources/categoria/a817459a-53c6-404f-aa92-89a2f0cea81b.json",
                                 "dbtest/" + CategoriaRepository.NOME_PASTA
                                                 + "/a817459a-53c6-404f-aa92-89a2f0cea81b.json");
+
+                Arquivos.copiar(
+                                "src/test/resources/categoria/1ff7459a-53c6-404f-aa92-89a2f0cea8ff.json",
+                                "dbtest/" + CategoriaRepository.NOME_PASTA
+                                                + "/1ff7459a-53c6-404f-aa92-89a2f0cea8ff.json");
+
+                Arquivos.copiar(
+                                "src/test/resources/categoria/1z17459a-53c6-404f-aa92-89a2f0cea8xx.json",
+                                "dbtest/" + CategoriaRepository.NOME_PASTA
+                                                + "/1z17459a-53c6-404f-aa92-89a2f0cea8xx.json");
         }
 
         public static void configuraMassaMeioPagamento() throws IOException {

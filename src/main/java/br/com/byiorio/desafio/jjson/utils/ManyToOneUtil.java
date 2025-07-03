@@ -11,7 +11,9 @@ import br.com.byiorio.desafio.jjson.entity.IJapJsonEntity;
 import br.com.byiorio.desafio.jjson.exceptions.JpaJsonException;
 import br.com.byiorio.desafio.jjson.repository.IJpaJsonRepository;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @NoArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 @SuppressWarnings("unchecked")
 public class ManyToOneUtil {
@@ -40,6 +42,10 @@ public class ManyToOneUtil {
                     String idPkOrigem = (String) idFieldOrigem.get(clazz);
 
                     // Carrega o repository e a entidade
+                    // Log do processo de deleção
+                    log.info("realizaRelacionamentos entidade: {} id: {} acao: {}", otm.entityTarget().getSimpleName(),
+                            idPkDestino, acao);
+
                     IJpaJsonRepository<IJapJsonEntity> repositorioDestino = SpringContext
                             .getBean(otm.repositoryTarget());
                     IJapJsonEntity entidadeDestino = repositorioDestino.buscar(idPkDestino, otm.entityTarget());

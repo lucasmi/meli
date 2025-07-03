@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class ProdutoDetalhadoDTO {
+public class ProdutoDetalhadoResponse {
     VendedorDTO vendedor;
     LinkedList<AvaliacaoDTO> avaliacoes;
     ProdutoDTO produto;
