@@ -1,7 +1,8 @@
 package br.com.byiorio.desafio.models;
 
-import br.com.byiorio.desafio.jjson.annotations.ID;
-import br.com.byiorio.desafio.jjson.annotations.OneToOne;
+import br.com.byiorio.desafio.jjson.annotations.GeneratedValue;
+import br.com.byiorio.desafio.jjson.annotations.Id;
+import br.com.byiorio.desafio.jjson.annotations.ManyToOne;
 import br.com.byiorio.desafio.jjson.entity.IJapJsonEntity;
 import br.com.byiorio.desafio.repositories.MeioPagamentoRepository;
 import br.com.byiorio.desafio.repositories.UsuarioRepository;
@@ -20,14 +21,15 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MeioPagamentoEntity implements IJapJsonEntity {
-    @ID
+    @Id
     @Schema(hidden = true)
+    @GeneratedValue(strategy = GeneratedValue.Strategy.UUID)
     String id;
 
     @NotBlank
     @Size(min = 1, max = 50)
     @Schema(hidden = true)
-    @OneToOne(repository = UsuarioRepository.class, entity = UsuarioEntity.class, mappedBy = "idsMeioPagamentos", blockOnUpdateOf = MeioPagamentoRepository.class)
+    @ManyToOne(repositoryTarget = UsuarioRepository.class, entityTarget = UsuarioEntity.class, mappedBy = "idsMeioPagamentos", blockOnUpdate = true, repositorySource = MeioPagamentoRepository.class, entitySource = MeioPagamentoEntity.class)
     String idUsuario;
 
     CartaoCreditoDTO cartaoCredito;

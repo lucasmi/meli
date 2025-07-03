@@ -23,6 +23,7 @@ public class CartaoCreditoDTO {
     @Size(max = 19)
     String nomeEmbossing;
 
+    @NotBlank
     @Schema(pattern = "MM/yyyy")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/yyyy")
     String dataVencimentoCartao;

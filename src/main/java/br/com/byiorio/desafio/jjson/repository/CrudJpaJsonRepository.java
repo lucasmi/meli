@@ -4,17 +4,20 @@ import java.util.LinkedList;
 import java.util.List;
 
 import br.com.byiorio.desafio.jjson.config.JpajsonConfig;
+import br.com.byiorio.desafio.jjson.entity.EstadoEnum;
 import br.com.byiorio.desafio.jjson.entity.IJapJsonEntity;
 import br.com.byiorio.desafio.jjson.exceptions.JpaJsonException;
 import br.com.byiorio.desafio.jjson.utils.Arquivos;
 import br.com.byiorio.desafio.jjson.utils.BlockOnUpdateUtil;
 import br.com.byiorio.desafio.jjson.utils.Diretorio;
 import br.com.byiorio.desafio.jjson.utils.IdGeneratorUtil;
+import br.com.byiorio.desafio.jjson.utils.ManyToOneUtil;
 import br.com.byiorio.desafio.jjson.utils.OneToManyUtil;
-import br.com.byiorio.desafio.jjson.utils.OneToOneUtil;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @NoArgsConstructor
+@Slf4j
 public abstract class CrudJpaJsonRepository implements IAcoesBasicas, IJpaJsonRepository<IJapJsonEntity> {
     private static final String JSON_EXTENSAO = ".json";
 
@@ -37,7 +40,10 @@ public abstract class CrudJpaJsonRepository implements IAcoesBasicas, IJpaJsonRe
     }
 
     @Override
-    public <E extends IJapJsonEntity> E salvar(E entidade) {
+    public <E extends IJapJsonEntity> E alteraEstado(E entidade, EstadoEnum estado) {
+        // Log do processo de deleção
+        log.info("alteraEstado tipo: {} estado: {}", entidade.getClass().getSimpleName(), estado);
+
         boolean novoArquivo = false;
 
         // Verifica se o id da entidade é nulo, se for, gera um novo id
@@ -59,7 +65,8 @@ public abstract class CrudJpaJsonRepository implements IAcoesBasicas, IJpaJsonRe
 
         // Verifica se o relacionamento existe
         // Importante checar antes de salvar para evitar problemas de relacionamento
-        OneToOneUtil.inserirRelacionamentos(entidade);
+        ManyToOneUtil.salvarRelacionamento(entidade);
+        OneToManyUtil.salvarRelacionamento(estado, entidade, novoArquivo);
 
         if (!Arquivos.verifica(caminhoArquivo) && novoArquivo) {
             // Se for arquivo novo salva
@@ -78,13 +85,29 @@ public abstract class CrudJpaJsonRepository implements IAcoesBasicas, IJpaJsonRe
         return entidade;
     }
 
+    @Override
+    public <E extends IJapJsonEntity> E salvar(E entidade) {
+        return this.alteraEstado(entidade, null);
+    }
+
     public <E extends IJapJsonEntity> E salvar(String id, E entidade) {
+        // Log do processo de deleção
+        log.info("salvar entidade: {} com id: {}", entidade.getClass().getSimpleName(), id);
+
         entidade.setId(id);
         return salvar(entidade);
     }
 
     @Override
     public <E extends IJapJsonEntity> E buscar(String id, Class<E> clazz) {
+        // Log do processo de deleção
+        log.info("buscar entidade: {} id: {}", clazz.getSimpleName(), id);
+
+        // Nao pode buscar id null
+        if (id == null) {
+            return null;
+        }
+
         // Gera caminhho
         String caminhoArquivo = jpajsonConfig.getNome().concat("/").concat(getNome()).concat("/").concat(id)
                 .concat(JSON_EXTENSAO);
@@ -98,7 +121,10 @@ public abstract class CrudJpaJsonRepository implements IAcoesBasicas, IJpaJsonRe
 
     }
 
-    public <E extends IJapJsonEntity> void apagar(String id, Class<E> clazz) {
+    public <E extends IJapJsonEntity> void removeEstado(String id, Class<E> clazz, EstadoEnum estado) {
+        // Log do processo de deleção
+        log.info("removeEstado entidade: {} id: {}", clazz.getSimpleName(), id);
+
         // gera caminhho
         String caminhoArquivo = jpajsonConfig.getNome().concat("/").concat(getNome()).concat("/").concat(id)
                 .concat(JSON_EXTENSAO);
@@ -109,16 +135,29 @@ public abstract class CrudJpaJsonRepository implements IAcoesBasicas, IJpaJsonRe
             E entidade = this.buscar(id, clazz);
 
             // Apaga relacionamentos
-            OneToManyUtil.apagarRelacionados(entidade);
-            OneToOneUtil.apagarRelacionados(entidade);
+            OneToManyUtil.apagarRelacionados(entidade, estado);
+            ManyToOneUtil.apagarRelacionados(entidade);
 
             // Apaga arquivo principal
             Arquivos.apagar(caminhoArquivo);
+        } else {
+            if (estado == null) {
+                throw new JpaJsonException("o id " + id + " nao foi encontrado na base " + getNome());
+            }
         }
+    }
+
+    public <E extends IJapJsonEntity> void apagar(String id, Class<E> clazz) {
+        // Log do processo de deleção
+        log.info("apagar entidade: {} id: {}", clazz.getSimpleName(), id);
+        this.removeEstado(id, clazz, null);
     }
 
     @Override
     public <E extends IJapJsonEntity> List<E> buscarTodos(Class<E> clazz) {
+        // Log do processo de deleção
+        log.info("buscarTodos entidade: {} ", clazz.getSimpleName());
+
         // Pega todos os arquivos
         LinkedList<String> todosArquivos = new LinkedList<>(
                 Diretorio.listaArquivos(jpajsonConfig.getNome().concat("/").concat(getNome())));

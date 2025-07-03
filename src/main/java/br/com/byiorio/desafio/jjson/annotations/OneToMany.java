@@ -11,7 +11,13 @@ import br.com.byiorio.desafio.jjson.repository.IJpaJsonRepository;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface OneToMany {
-    Class<? extends IJpaJsonRepository<IJapJsonEntity>> repository();
+    Class<? extends IJpaJsonRepository<IJapJsonEntity>> repositoryTarget();
 
-    Class<? extends IJapJsonEntity> entity();
+    Class<? extends IJapJsonEntity> entityTarget();
+
+    Class<? extends IJpaJsonRepository<IJapJsonEntity>> repositorySource();
+
+    Class<? extends IJapJsonEntity> entitySource();
+
+    boolean deleteCascade() default true;
 }

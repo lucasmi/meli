@@ -11,7 +11,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class AvaliacaoDetalhe {
+public class AvaliacaoDetalheDTO {
+    String id;
     Integer nota;
     String comentario;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm")

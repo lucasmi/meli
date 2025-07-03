@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.byiorio.desafio.models.ProdutoEntity;
 import br.com.byiorio.desafio.models.BasicErrorDTO;
+import br.com.byiorio.desafio.models.ProdutoEntity;
 import br.com.byiorio.desafio.services.ProdutoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -72,7 +72,7 @@ public class ProdutoController {
     @PutMapping("{id}")
     public ResponseEntity<ProdutoEntity> atualizar(
             @Parameter(description = "ID do produto", example = "abc123") @PathVariable String id,
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Novos dados do produto") @RequestBody ProdutoEntity entidade) {
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Novos dados do produto") @Valid @RequestBody ProdutoEntity entidade) {
         return ResponseEntity.ok(produtoService.atualizar(id, entidade));
     }
 

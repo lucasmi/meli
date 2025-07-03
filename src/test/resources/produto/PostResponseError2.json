@@ -1,0 +1,8 @@
+{
+    "errors": [
+        {
+            "codigo": "400",
+            "msg": "idCategoria:must not be blank"
+        }
+    ]
+}

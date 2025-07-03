@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.byiorio.desafio.models.ProdutoDetalhadoDTO;
+import br.com.byiorio.desafio.models.ProdutoDetalhadoResponse;
 import br.com.byiorio.desafio.services.ProdutoDetalhadoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -32,7 +32,7 @@ public class ProdutoDetalhesController {
     @ApiResponse(responseCode = "200", description = "Produto detalhado encontrado com sucesso")
     @ApiResponse(responseCode = "404", description = "Produto não encontrado", content = @Content(schema = @Schema(implementation = br.com.byiorio.desafio.models.BasicErrorDTO.class)))
     @GetMapping("/{id}")
-    public ResponseEntity<ProdutoDetalhadoDTO> consultar(
+    public ResponseEntity<ProdutoDetalhadoResponse> consultar(
             @Parameter(description = "ID do produto detalhado", example = "abc123") @PathVariable String id) {
         return ResponseEntity.ok(produtoDetalhadoService.buscar(id));
     }
@@ -40,7 +40,7 @@ public class ProdutoDetalhesController {
     @Operation(summary = "Listar todos os produtos detalhados", description = "Retorna uma lista com todos os produtos detalhados.")
     @ApiResponse(responseCode = "200", description = "Lista de produtos detalhados retornada com sucesso")
     @GetMapping("/")
-    public ResponseEntity<List<ProdutoDetalhadoDTO>> consultar() {
+    public ResponseEntity<List<ProdutoDetalhadoResponse>> consultar() {
         return ResponseEntity.ok(produtoDetalhadoService.buscarTodos());
     }
 }

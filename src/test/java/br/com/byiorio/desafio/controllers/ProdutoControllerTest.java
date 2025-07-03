@@ -31,10 +31,7 @@ class ProdutoControllerTest {
 
         @BeforeEach
         void setup() throws Throwable {
-                ConfiguraMassa.configuraMassaUsuario();
-                ConfiguraMassa.configuraMassaProduto();
-                ConfiguraMassa.configuraMassaMeioPagamento();
-                ConfiguraMassa.configuraMassaAvaliacao();
+                ConfiguraMassa.criaTodoBancoDeDados();
         }
 
         @AfterAll
@@ -81,7 +78,28 @@ class ProdutoControllerTest {
         }
 
         @Test
-        void postErrorNaoEncontradoest() throws Exception {
+        void postErrorCategoriaNaoEncontradaTest() throws Exception {
+                // le arquivos de request e response
+                // e executa o post
+                String request = FileUtils.readFileToString(
+                                ResourceUtils.getFile("classpath:./produto/PostRequestError2.json"),
+                                StandardCharsets.UTF_8.name());
+
+                String response = FileUtils.readFileToString(
+                                ResourceUtils.getFile("classpath:./produto/PostResponseError2.json"),
+                                StandardCharsets.UTF_8.name());
+
+                // verifica se o usuario existe
+                mvc.perform(MockMvcRequestBuilders.post("/produtos/")
+                                .content(request)
+                                .contentType(MediaType.APPLICATION_JSON))
+                                .andDo(MockMvcResultHandlers.print())
+                                .andExpect(MockMvcResultMatchers.status().is4xxClientError())
+                                .andExpect(MockMvcResultMatchers.content().json(response));
+        }
+
+        @Test
+        void postErrorNaoEncontradoTest() throws Exception {
                 // le arquivos de request e response
                 // e executa o post
                 String request = FileUtils.readFileToString(

@@ -26,10 +26,7 @@ class ProdutoDetalhesControllerTest {
 
     @BeforeEach
     void setup() throws Throwable {
-        ConfiguraMassa.configuraMassaAvaliacao();
-        ConfiguraMassa.configuraMassaUsuario();
-        ConfiguraMassa.configuraMassaProduto();
-        ConfiguraMassa.configuraMassaMeioPagamento();
+        ConfiguraMassa.criaTodoBancoDeDados();
     }
 
     @AfterAll
@@ -75,7 +72,7 @@ class ProdutoDetalhesControllerTest {
         // le arquivo de request e response
         // e executa o get
         String response = FileUtils.readFileToString(
-                ResourceUtils.getFile("classpath:./produto-detalhe/PostResponseFixoSucesso.json"),
+                ResourceUtils.getFile("classpath:./produto-detalhe/GetResponse.json"),
                 StandardCharsets.UTF_8.name());
 
         // Consulta um produto detalhado especifico

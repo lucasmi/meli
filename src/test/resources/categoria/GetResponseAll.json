@@ -1,0 +1,28 @@
+[
+    {
+        "id": "1ff7459a-53c6-404f-aa92-89a2f0cea8ff",
+        "nome": "Camas",
+        "idsProdutos": []
+    },
+    {
+        "id": "1z17459a-53c6-404f-aa92-89a2f0cea8xx",
+        "nome": "Camas",
+        "idsProdutos": [
+            "104d49e-89a7-4e3f-9304-2253e5f36dxx"
+        ]
+    },
+    {
+        "id": "2d4d2ab5-3a84-4249-a369-e68bcd43b30d",
+        "nome": "Celulares",
+        "idsProdutos": [
+            "9bce8ac2-1ddf-48ee-8bd4-2b9e8e13fa95"
+        ]
+    },
+    {
+        "id": "a817459a-53c6-404f-aa92-89a2f0cea81b",
+        "nome": "Camas",
+        "idsProdutos": [
+            "a817459a-53c6-404f-aa92-89a2f0cea81b"
+        ]
+    }
+]
