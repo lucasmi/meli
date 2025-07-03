@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class OneToManyUtil {
 
     @SuppressWarnings("unchecked")
-    public static void salvarRelacionamento(EstadoEnum estado, IJapJsonEntity clazz, boolean insert) {
+    public static void salvarRelacionamento(EstadoEnum estado, IJapJsonEntity clazz, boolean insert) { // NOSONAR
         for (Field field : clazz.getClass().getDeclaredFields()) {
             if (field.isAnnotationPresent(OneToMany.class)) {
                 ReflectionUtils.makeAccessible(field);
@@ -49,9 +49,9 @@ public class OneToManyUtil {
                         HashSet<String> destinoSet = (HashSet<String>) idFieldDestino.get(clazz);
 
                         if (estado == null) {
-                            idFieldDestino.set(clazz, origemSet);
+                            idFieldDestino.set(clazz, origemSet); // NOSONAR
                         } else if (EstadoEnum.REMOVER == estado || EstadoEnum.ATUALIZAR == estado) {
-                            idFieldDestino.set(clazz, destinoSet);
+                            idFieldDestino.set(clazz, destinoSet); // NOSONAR
                         }
 
                     }

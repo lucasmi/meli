@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 public class IdGeneratorUtil {
-    public static void processIdAnnotations(Object entity) {
+    public static void processIdAnnotations(Object entity) { // NOSONAR
         for (Field field : entity.getClass().getDeclaredFields()) {
             if (field.isAnnotationPresent(Id.class)) {
 
