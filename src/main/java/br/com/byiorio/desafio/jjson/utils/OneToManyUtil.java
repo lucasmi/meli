@@ -39,7 +39,7 @@ public class OneToManyUtil {
                     if (idFieldDestino.getType().equals(HashSet.class) && !insert) {
 
                         // Log do processo de deleção
-                        log.info("salvarRelacionamento field: {} entidade: {} id: {} estado: {} ",
+                        log.info("salvarRelacionamento HashSet field: {} entidade: {} id: {} estado: {} ",
                                 idFieldDestino.getName(),
                                 otm.entitySource().getSimpleName(),
                                 idPkOrigem,
@@ -62,6 +62,22 @@ public class OneToManyUtil {
                         } else if (EstadoEnum.REMOVER == estado || EstadoEnum.ATUALIZAR == estado) {
                             idFieldDestino.set(clazz, destinoSet); // NOSONAR
                         }
+
+                    } else if (idFieldDestino.getType().equals(String.class) && !insert) {
+                        // Log do processo de deleção
+                        log.info("salvarRelacionamento String field: {} entidade: {} id: {} estado: {} ",
+                                idFieldDestino.getName(),
+                                otm.entitySource().getSimpleName(),
+                                idPkOrigem,
+                                estado);
+
+                    } else {
+                        // Log do processo de deleção
+                        log.info("salvarRelacionamento String field: {} entidade: {} id: {} estado: {} ",
+                                idFieldDestino.getName(),
+                                otm.entitySource().getSimpleName(),
+                                idPkOrigem,
+                                estado);
 
                     }
 
