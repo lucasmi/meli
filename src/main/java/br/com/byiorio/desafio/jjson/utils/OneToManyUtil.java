@@ -113,7 +113,7 @@ public class OneToManyUtil {
                                     otm.entityTarget(), EstadoEnum.REMOVER);
                         } else {
                             throw new JpaJsonException(
-                                    "O registro " + idPkDestino + " está em uso no relacionamento da entidade "
+                                    "O registro " + idPkDestino + " esta em uso no relacionamento da entidade "
                                             + otm.entitySource().getSimpleName() + " no campo " + field.getName());
 
                         }

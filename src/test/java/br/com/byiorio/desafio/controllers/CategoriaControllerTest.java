@@ -157,10 +157,17 @@ class CategoriaControllerTest {
 
         @Test
         void deleteErrorTest() throws Exception {
+                // le arquivo de request e response
+                // e executa o post
+                String response = FileUtils.readFileToString(
+                                ResourceUtils.getFile("classpath:./categoria/DeleteResponseError2.json"),
+                                StandardCharsets.UTF_8.name());
+
                 // Apaga Categoria
                 mvc.perform(MockMvcRequestBuilders.delete("/categorias/1z17459a-53c6-404f-aa92-89a2f0cea8xx")
                                 .contentType(MediaType.APPLICATION_JSON))
                                 .andDo(MockMvcResultHandlers.print())
-                                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
+                                .andExpect(MockMvcResultMatchers.status().is4xxClientError())
+                                .andExpect(MockMvcResultMatchers.content().json(response));
         }
 }

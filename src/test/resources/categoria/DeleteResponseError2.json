@@ -1,0 +1,8 @@
+{
+    "errors": [
+        {
+            "codigo": "400",
+            "msg": "O registro 104d49e-89a7-4e3f-9304-2253e5f36dxx esta em uso no relacionamento da entidade CategoriaEntity no campo idsProdutos"
+        }
+    ]
+}
