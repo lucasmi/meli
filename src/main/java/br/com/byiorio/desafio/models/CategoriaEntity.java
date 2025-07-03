@@ -28,7 +28,7 @@ public class CategoriaEntity implements IJapJsonEntity {
     String nome;
 
     @Schema(hidden = true)
-    @OneToMany(repositoryTarget = ProdutoRepository.class, entityTarget = ProdutoEntity.class, repositorySource = CategoriaRepository.class, entitySource = CategoriaEntity.class)
+    @OneToMany(deleteCascade = false, repositoryTarget = ProdutoRepository.class, entityTarget = ProdutoEntity.class, repositorySource = CategoriaRepository.class, entitySource = CategoriaEntity.class)
     HashSet<String> idsProdutos = new HashSet<>();
 
 }

@@ -18,4 +18,6 @@ public @interface OneToMany {
     Class<? extends IJpaJsonRepository<IJapJsonEntity>> repositorySource();
 
     Class<? extends IJapJsonEntity> entitySource();
+
+    boolean deleteCascade() default true;
 }

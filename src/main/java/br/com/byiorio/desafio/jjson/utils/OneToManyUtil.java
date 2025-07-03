@@ -108,8 +108,15 @@ public class OneToManyUtil {
                                 idPkDestino,
                                 estado);
 
-                        ((IJpaJsonRepository<IJapJsonEntity>) tabelaDestino).removeEstado(idPkDestino,
-                                otm.entityTarget(), EstadoEnum.REMOVER);
+                        if (otm.deleteCascade()) {
+                            ((IJpaJsonRepository<IJapJsonEntity>) tabelaDestino).removeEstado(idPkDestino,
+                                    otm.entityTarget(), EstadoEnum.REMOVER);
+                        } else {
+                            throw new JpaJsonException(
+                                    "O registro " + idPkDestino + " está em uso no relacionamento da entidade "
+                                            + otm.entitySource().getSimpleName() + " no campo " + field.getName());
+
+                        }
                     }
                 } catch (IllegalAccessException | IllegalArgumentException | SecurityException e) {
                     throw new JpaJsonException(e.getMessage());
