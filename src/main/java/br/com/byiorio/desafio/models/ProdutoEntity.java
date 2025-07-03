@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import br.com.byiorio.desafio.jjson.annotations.GeneratedValue;
 import br.com.byiorio.desafio.jjson.annotations.Id;
-import br.com.byiorio.desafio.jjson.annotations.ManyToMany;
 import br.com.byiorio.desafio.jjson.annotations.ManyToOne;
 import br.com.byiorio.desafio.jjson.annotations.OneToMany;
 import br.com.byiorio.desafio.jjson.entity.IJapJsonEntity;
@@ -34,7 +33,7 @@ public class ProdutoEntity implements IJapJsonEntity {
 
     @NotBlank
     @Size(min = 1, max = 50)
-    @ManyToOne(repository = UsuarioRepository.class, entity = UsuarioEntity.class, mappedBy = "idsProdutos", blockOnUpdateOf = ProdutoRepository.class)
+    @ManyToOne(repositoryTarget = UsuarioRepository.class, entityTarget = UsuarioEntity.class, mappedBy = "idsProdutos", blockOnUpdate = true, repositorySource = ProdutoRepository.class, entitySource = ProdutoEntity.class)
     String idUsuario;
 
     @NotBlank
@@ -53,12 +52,12 @@ public class ProdutoEntity implements IJapJsonEntity {
     BigDecimal preco;
 
     @Schema(hidden = true)
-    @OneToMany(repository = AvaliacaoRepository.class, entity = AvaliacaoEntity.class)
+    @OneToMany(repositoryTarget = AvaliacaoRepository.class, entityTarget = AvaliacaoEntity.class, repositorySource = ProdutoRepository.class, entitySource = ProdutoEntity.class)
     HashSet<String> idsAvaliacoes = new HashSet<>();
 
     @NotBlank
     @Size(min = 1, max = 50)
-    @ManyToMany(repositoryTarget = CategoriaRepository.class, entityTarget = CategoriaEntity.class, mappedBy = "idsProdutos", repositorySource = ProdutoRepository.class, entitySource = ProdutoEntity.class)
+    @ManyToOne(repositoryTarget = CategoriaRepository.class, entityTarget = CategoriaEntity.class, mappedBy = "idsProdutos", blockOnUpdate = true, repositorySource = ProdutoRepository.class, entitySource = ProdutoEntity.class)
     String idCategoria;
 
 }

@@ -9,6 +9,7 @@ import br.com.byiorio.desafio.jjson.entity.IJapJsonEntity;
 import br.com.byiorio.desafio.repositories.AvaliacaoRepository;
 import br.com.byiorio.desafio.repositories.MeioPagamentoRepository;
 import br.com.byiorio.desafio.repositories.ProdutoRepository;
+import br.com.byiorio.desafio.repositories.UsuarioRepository;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -35,15 +36,15 @@ public class UsuarioEntity implements IJapJsonEntity {
     String email;
 
     @Schema(hidden = true)
-    @OneToMany(repository = ProdutoRepository.class, entity = ProdutoEntity.class)
+    @OneToMany(repositoryTarget = ProdutoRepository.class, entityTarget = ProdutoEntity.class, repositorySource = UsuarioRepository.class, entitySource = UsuarioEntity.class)
     HashSet<String> idsProdutos = new HashSet<>();
 
     @Schema(hidden = true)
-    @OneToMany(repository = MeioPagamentoRepository.class, entity = MeioPagamentoEntity.class)
+    @OneToMany(repositoryTarget = MeioPagamentoRepository.class, entityTarget = MeioPagamentoEntity.class, repositorySource = UsuarioRepository.class, entitySource = UsuarioEntity.class)
     HashSet<String> idsMeioPagamentos = new HashSet<>();
 
     @Schema(hidden = true)
-    @OneToMany(repository = AvaliacaoRepository.class, entity = AvaliacaoEntity.class)
+    @OneToMany(repositoryTarget = AvaliacaoRepository.class, entityTarget = AvaliacaoEntity.class, repositorySource = UsuarioRepository.class, entitySource = UsuarioEntity.class)
     HashSet<String> idsAvaliacoes = new HashSet<>();
 
 }

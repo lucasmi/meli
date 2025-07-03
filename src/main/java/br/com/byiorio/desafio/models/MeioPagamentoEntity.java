@@ -29,7 +29,7 @@ public class MeioPagamentoEntity implements IJapJsonEntity {
     @NotBlank
     @Size(min = 1, max = 50)
     @Schema(hidden = true)
-    @ManyToOne(repository = UsuarioRepository.class, entity = UsuarioEntity.class, mappedBy = "idsMeioPagamentos", blockOnUpdateOf = MeioPagamentoRepository.class)
+    @ManyToOne(repositoryTarget = UsuarioRepository.class, entityTarget = UsuarioEntity.class, mappedBy = "idsMeioPagamentos", blockOnUpdate = true, repositorySource = MeioPagamentoRepository.class, entitySource = MeioPagamentoEntity.class)
     String idUsuario;
 
     CartaoCreditoDTO cartaoCredito;

@@ -32,6 +32,7 @@ public class ConfiguraMassa {
                 Diretorio.apagar("dbtest/" + AvaliacaoRepository.NOME_PASTA);
                 Diretorio.apagar("dbtest/" + ProdutoRepository.NOME_PASTA);
                 Diretorio.apagar("dbtest/" + MeioPagamentoRepository.NOME_PASTA);
+                Diretorio.apagar("dbtest/" + CategoriaRepository.NOME_PASTA);
         }
 
         public static void configuraMassaProduto() throws IOException {
@@ -96,5 +97,13 @@ public class ConfiguraMassa {
                                 "src/test/resources/meiopagamento/85424311-7cf9-47fa-962f-7f3cb93cf499.json",
                                 "dbtest/" + MeioPagamentoRepository.NOME_PASTA
                                                 + "/85424311-7cf9-47fa-962f-7f3cb93cf499.json");
+        }
+
+        public static void criaTodoBancoDeDados() throws Throwable {
+                ConfiguraMassa.configuraMassaUsuario();
+                ConfiguraMassa.configuraMassaProduto();
+                ConfiguraMassa.configuraMassaMeioPagamento();
+                ConfiguraMassa.configuraMassaAvaliacao();
+                ConfiguraMassa.configuraMassaCategoria();
         }
 }

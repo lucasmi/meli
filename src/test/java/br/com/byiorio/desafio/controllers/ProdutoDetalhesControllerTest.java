@@ -26,10 +26,7 @@ class ProdutoDetalhesControllerTest {
 
     @BeforeEach
     void setup() throws Throwable {
-        ConfiguraMassa.configuraMassaAvaliacao();
-        ConfiguraMassa.configuraMassaUsuario();
-        ConfiguraMassa.configuraMassaProduto();
-        ConfiguraMassa.configuraMassaMeioPagamento();
+        ConfiguraMassa.criaTodoBancoDeDados();
     }
 
     @AfterAll

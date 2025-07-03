@@ -2,6 +2,7 @@ package br.com.byiorio.desafio.jjson.repository;
 
 import java.util.List;
 
+import br.com.byiorio.desafio.jjson.entity.EstadoEnum;
 import br.com.byiorio.desafio.jjson.entity.IJapJsonEntity;
 
 public interface IJpaJsonRepository<T extends IJapJsonEntity> {
@@ -13,4 +14,6 @@ public interface IJpaJsonRepository<T extends IJapJsonEntity> {
     <E extends T> List<E> buscarTodos(Class<E> clazz);
 
     <E extends T> void apagar(String id, Class<E> clazz);
+
+    <E extends T> E alteraEstado(E entidade, EstadoEnum estado);
 }

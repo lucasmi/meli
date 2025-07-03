@@ -31,9 +31,7 @@ class AvaliacaoControllerTest {
 
         @BeforeEach
         void setup() throws Throwable {
-                ConfiguraMassa.configuraMassaAvaliacao();
-                ConfiguraMassa.configuraMassaUsuario();
-                ConfiguraMassa.configuraMassaProduto();
+                ConfiguraMassa.criaTodoBancoDeDados();
         }
 
         @AfterAll

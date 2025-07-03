@@ -4,13 +4,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 import br.com.byiorio.desafio.jjson.config.JpajsonConfig;
+import br.com.byiorio.desafio.jjson.entity.EstadoEnum;
 import br.com.byiorio.desafio.jjson.entity.IJapJsonEntity;
 import br.com.byiorio.desafio.jjson.exceptions.JpaJsonException;
 import br.com.byiorio.desafio.jjson.utils.Arquivos;
 import br.com.byiorio.desafio.jjson.utils.BlockOnUpdateUtil;
 import br.com.byiorio.desafio.jjson.utils.Diretorio;
 import br.com.byiorio.desafio.jjson.utils.IdGeneratorUtil;
-import br.com.byiorio.desafio.jjson.utils.ManyToManyUtil;
 import br.com.byiorio.desafio.jjson.utils.ManyToOneUtil;
 import br.com.byiorio.desafio.jjson.utils.OneToManyUtil;
 import lombok.NoArgsConstructor;
@@ -38,7 +38,7 @@ public abstract class CrudJpaJsonRepository implements IAcoesBasicas, IJpaJsonRe
     }
 
     @Override
-    public <E extends IJapJsonEntity> E salvar(E entidade) {
+    public <E extends IJapJsonEntity> E alteraEstado(E entidade, EstadoEnum estado) {
         boolean novoArquivo = false;
 
         // Verifica se o id da entidade é nulo, se for, gera um novo id
@@ -60,8 +60,8 @@ public abstract class CrudJpaJsonRepository implements IAcoesBasicas, IJpaJsonRe
 
         // Verifica se o relacionamento existe
         // Importante checar antes de salvar para evitar problemas de relacionamento
-        ManyToOneUtil.inserirRelacionamentos(entidade);
-        ManyToManyUtil.inserirRelacionamentos(entidade);
+        ManyToOneUtil.salvarRelacionamento(entidade);
+        OneToManyUtil.salvarRelacionamento(estado, entidade, novoArquivo);
 
         if (!Arquivos.verifica(caminhoArquivo) && novoArquivo) {
             // Se for arquivo novo salva
@@ -78,6 +78,11 @@ public abstract class CrudJpaJsonRepository implements IAcoesBasicas, IJpaJsonRe
         }
 
         return entidade;
+    }
+
+    @Override
+    public <E extends IJapJsonEntity> E salvar(E entidade) {
+        return this.alteraEstado(entidade, null);
     }
 
     public <E extends IJapJsonEntity> E salvar(String id, E entidade) {

@@ -20,7 +20,7 @@ public class BlockOnUpdateUtil {
                     // Carrega parametros da anotacao
                     ManyToOne otm = field.getAnnotation(ManyToOne.class);
 
-                    if (otm.blockOnUpdateOf().equals(ManyToOne.None.class)) {
+                    if (!otm.blockOnUpdate()) {
                         continue; // Se não tiver anotação de bloqueio, pula
                     }
 
@@ -35,7 +35,8 @@ public class BlockOnUpdateUtil {
                     String idPk = (String) idFieldOrigem.get(clazz);
 
                     // Carrega o repository e a entidade
-                    IJpaJsonRepository<IJapJsonEntity> repositorioOrigem = SpringContext.getBean(otm.blockOnUpdateOf());
+                    IJpaJsonRepository<IJapJsonEntity> repositorioOrigem = SpringContext
+                            .getBean(otm.repositorySource());
                     IJapJsonEntity entidadeOrigemEntity = repositorioOrigem.buscar(idPk, clazz.getClass());
 
                     // Se o valor do idFK for direfente do valor do idFKOriginal,
@@ -44,8 +45,9 @@ public class BlockOnUpdateUtil {
                     ReflectionUtils.makeAccessible(idFKOriginal);
                     String idFkOriginal = (String) idFKOriginal.get(entidadeOrigemEntity);
                     if (idFk != null && !idFk.equals(idFkOriginal)) {
-                        throw new JpaJsonException("O relacionamento com a entidade " + otm.entity().getSimpleName()
-                                + " nao pode ser alterado");
+                        throw new JpaJsonException(
+                                "O relacionamento com a entidade " + otm.entityTarget().getSimpleName()
+                                        + " nao pode ser alterado");
                     }
 
                 } catch (IllegalAccessException | IllegalArgumentException | SecurityException

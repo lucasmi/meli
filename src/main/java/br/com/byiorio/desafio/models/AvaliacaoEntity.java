@@ -30,12 +30,12 @@ public class AvaliacaoEntity implements IJapJsonEntity {
 
     @NotBlank
     @Size(min = 1, max = 50)
-    @ManyToOne(repository = UsuarioRepository.class, entity = UsuarioEntity.class, mappedBy = "idsAvaliacoes", blockOnUpdateOf = AvaliacaoRepository.class)
+    @ManyToOne(repositoryTarget = UsuarioRepository.class, entityTarget = UsuarioEntity.class, mappedBy = "idsAvaliacoes", blockOnUpdate = true, repositorySource = AvaliacaoRepository.class, entitySource = AvaliacaoEntity.class)
     String idUsuario;
 
     @NotBlank
     @Size(min = 1, max = 50)
-    @ManyToOne(repository = ProdutoRepository.class, entity = ProdutoEntity.class, mappedBy = "idsAvaliacoes", blockOnUpdateOf = AvaliacaoRepository.class)
+    @ManyToOne(repositoryTarget = ProdutoRepository.class, entityTarget = ProdutoEntity.class, mappedBy = "idsAvaliacoes", blockOnUpdate = true, repositorySource = AvaliacaoRepository.class, entitySource = AvaliacaoEntity.class)
     String idProduto;
 
     @NotNull

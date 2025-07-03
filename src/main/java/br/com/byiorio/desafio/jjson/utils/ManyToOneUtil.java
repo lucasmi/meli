@@ -6,6 +6,7 @@ import java.util.HashSet;
 import org.springframework.util.ReflectionUtils;
 
 import br.com.byiorio.desafio.jjson.annotations.ManyToOne;
+import br.com.byiorio.desafio.jjson.entity.EstadoEnum;
 import br.com.byiorio.desafio.jjson.entity.IJapJsonEntity;
 import br.com.byiorio.desafio.jjson.exceptions.JpaJsonException;
 import br.com.byiorio.desafio.jjson.repository.IJpaJsonRepository;
@@ -14,18 +15,24 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 @SuppressWarnings("unchecked")
 public class ManyToOneUtil {
+    private static final String REMOVER = "remover";
+    private static final String INSERIR = "inserir";
+
     public static void realizaRelacionamentos(IJapJsonEntity clazz, String acao) {
         for (Field field : clazz.getClass().getDeclaredFields()) {
             if (field.isAnnotationPresent(ManyToOne.class)) {
-                ReflectionUtils.makeAccessible(field);
                 try {
                     // Carrega parametros da anotacao
+                    ReflectionUtils.makeAccessible(field);
                     ManyToOne otm = field.getAnnotation(ManyToOne.class);
 
                     // Pega o id da tabela de destino
                     Field idFieldDestino = clazz.getClass().getDeclaredField(field.getName());
                     ReflectionUtils.makeAccessible(idFieldDestino);
                     String idPkDestino = (String) idFieldDestino.get(clazz);
+                    if (idPkDestino == null || idPkDestino.isEmpty()) {
+                        return;
+                    }
 
                     // Pega o id da tabela de origem
                     Field idFieldOrigem = clazz.getClass().getDeclaredField("id");
@@ -33,8 +40,9 @@ public class ManyToOneUtil {
                     String idPkOrigem = (String) idFieldOrigem.get(clazz);
 
                     // Carrega o repository e a entidade
-                    IJpaJsonRepository<IJapJsonEntity> repositorioDestino = SpringContext.getBean(otm.repository());
-                    IJapJsonEntity entidadeDestino = repositorioDestino.buscar(idPkDestino, otm.entity());
+                    IJpaJsonRepository<IJapJsonEntity> repositorioDestino = SpringContext
+                            .getBean(otm.repositoryTarget());
+                    IJapJsonEntity entidadeDestino = repositorioDestino.buscar(idPkDestino, otm.entityTarget());
 
                     // Pega a lista de relacionamentos
                     Field listaHashSetRelacionamento = entidadeDestino.getClass().getDeclaredField(otm.mappedBy());
@@ -43,14 +51,14 @@ public class ManyToOneUtil {
                             .get(entidadeDestino);
 
                     // Apaga ou adiciona conforme a acao
-                    if (acao.equals("inserir")) {
+                    if (acao.equals(INSERIR)) {
                         listaIdsTabelaDestino.add(idPkOrigem);
-                    } else if (acao.equals("remover")) {
-                        listaIdsTabelaDestino.remove(idPkOrigem);
-                    }
+                        repositorioDestino.alteraEstado(entidadeDestino, EstadoEnum.ATUALIZAR);
 
-                    // Salva tudo
-                    repositorioDestino.salvar(entidadeDestino);
+                    } else if (acao.equals(REMOVER)) {
+                        listaIdsTabelaDestino.remove(idPkOrigem);
+                        repositorioDestino.alteraEstado(entidadeDestino, EstadoEnum.REMOVER);
+                    }
 
                 } catch (IllegalAccessException | IllegalArgumentException | SecurityException
                         | NoSuchFieldException e) {
@@ -61,12 +69,12 @@ public class ManyToOneUtil {
     }
 
     public static void apagarRelacionados(IJapJsonEntity clazz) {
-        realizaRelacionamentos(clazz, "remover");
+        realizaRelacionamentos(clazz, REMOVER);
     }
 
     // fazer metodo para inserir relacionamentos
-    public static void inserirRelacionamentos(IJapJsonEntity clazz) {
-        realizaRelacionamentos(clazz, "inserir");
+    public static void salvarRelacionamento(IJapJsonEntity clazz) {
+        realizaRelacionamentos(clazz, INSERIR);
     }
 
 }

@@ -4,10 +4,10 @@ import java.util.HashSet;
 
 import br.com.byiorio.desafio.jjson.annotations.GeneratedValue;
 import br.com.byiorio.desafio.jjson.annotations.Id;
-import br.com.byiorio.desafio.jjson.annotations.ManyToMany;
+import br.com.byiorio.desafio.jjson.annotations.OneToMany;
 import br.com.byiorio.desafio.jjson.entity.IJapJsonEntity;
+import br.com.byiorio.desafio.repositories.AvaliacaoRepository;
 import br.com.byiorio.desafio.repositories.CategoriaRepository;
-import br.com.byiorio.desafio.repositories.ProdutoRepository;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -28,6 +28,7 @@ public class CategoriaEntity implements IJapJsonEntity {
     String nome;
 
     @Schema(hidden = true)
-    @ManyToMany(repositoryTarget = ProdutoRepository.class, entityTarget = ProdutoEntity.class, mappedBy = "idCategoria", repositorySource = CategoriaRepository.class, entitySource = CategoriaEntity.class)
+    @OneToMany(repositoryTarget = AvaliacaoRepository.class, entityTarget = AvaliacaoEntity.class, repositorySource = CategoriaRepository.class, entitySource = CategoriaEntity.class)
     HashSet<String> idsProdutos = new HashSet<>();
+
 }
