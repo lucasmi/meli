@@ -5,6 +5,7 @@ import java.util.HashSet;
 import br.com.byiorio.desafio.jjson.annotations.GeneratedValue;
 import br.com.byiorio.desafio.jjson.annotations.Id;
 import br.com.byiorio.desafio.jjson.annotations.OneToMany;
+import br.com.byiorio.desafio.jjson.annotations.Unique;
 import br.com.byiorio.desafio.jjson.entity.IJapJsonEntity;
 import br.com.byiorio.desafio.repositories.CategoriaRepository;
 import br.com.byiorio.desafio.repositories.ProdutoRepository;
@@ -25,6 +26,7 @@ public class CategoriaEntity implements IJapJsonEntity {
 
     @NotBlank
     @Size(max = 100)
+    @Unique(uniqueIndexName = "categoriaNome")
     String nome;
 
     @Schema(hidden = true)

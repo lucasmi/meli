@@ -7,12 +7,14 @@ import br.com.byiorio.desafio.jjson.config.JpajsonConfig;
 import br.com.byiorio.desafio.jjson.entity.EstadoEnum;
 import br.com.byiorio.desafio.jjson.entity.IJapJsonEntity;
 import br.com.byiorio.desafio.jjson.exceptions.JpaJsonException;
+import br.com.byiorio.desafio.jjson.model.AcaoEnum;
 import br.com.byiorio.desafio.jjson.utils.Arquivos;
 import br.com.byiorio.desafio.jjson.utils.BlockOnUpdateUtil;
 import br.com.byiorio.desafio.jjson.utils.Diretorio;
 import br.com.byiorio.desafio.jjson.utils.IdGeneratorUtil;
 import br.com.byiorio.desafio.jjson.utils.ManyToOneUtil;
 import br.com.byiorio.desafio.jjson.utils.OneToManyUtil;
+import br.com.byiorio.desafio.jjson.utils.UniqueUtils;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -51,6 +53,10 @@ public abstract class CrudJpaJsonRepository implements IAcoesBasicas, IJpaJsonRe
             // Se o id for nulo, gera um novo id
             IdGeneratorUtil.processIdAnnotations(entidade);
             novoArquivo = true;
+
+            UniqueUtils.processaIndice(entidade, AcaoEnum.INSERIR, entidade.getId(), this.jpajsonConfig.getNome());
+        } else {
+            UniqueUtils.processaIndice(entidade, AcaoEnum.ATUALIZAR, entidade.getId(), this.jpajsonConfig.getNome());
         }
 
         // Verifica se o id da entidade é vazio, se for, gera um novo arquivo
@@ -137,6 +143,9 @@ public abstract class CrudJpaJsonRepository implements IAcoesBasicas, IJpaJsonRe
             // Apaga relacionamentos
             OneToManyUtil.apagarRelacionados(entidade, estado);
             ManyToOneUtil.apagarRelacionados(entidade);
+
+            // Remove Sequence
+            UniqueUtils.processaIndice(entidade, AcaoEnum.REMOVER, entidade.getId(), this.jpajsonConfig.getNome());
 
             // Apaga arquivo principal
             Arquivos.apagar(caminhoArquivo);

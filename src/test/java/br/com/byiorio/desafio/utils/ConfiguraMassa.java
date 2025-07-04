@@ -33,6 +33,11 @@ public class ConfiguraMassa {
                 Diretorio.apagar("dbtest/" + ProdutoRepository.NOME_PASTA);
                 Diretorio.apagar("dbtest/" + MeioPagamentoRepository.NOME_PASTA);
                 Diretorio.apagar("dbtest/" + CategoriaRepository.NOME_PASTA);
+                apagaSequences();
+        }
+
+        public static void apagaSequences() throws IOException {
+                Diretorio.apagar("dbtest/controle");
         }
 
         public static void configuraMassaProduto() throws IOException {
@@ -110,6 +115,7 @@ public class ConfiguraMassa {
         }
 
         public static void criaTodoBancoDeDados() throws Throwable {
+                apagaTodoBancoDeDados();
                 ConfiguraMassa.configuraMassaUsuario();
                 ConfiguraMassa.configuraMassaProduto();
                 ConfiguraMassa.configuraMassaMeioPagamento();
