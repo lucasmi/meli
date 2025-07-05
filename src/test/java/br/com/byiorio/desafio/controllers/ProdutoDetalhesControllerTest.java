@@ -51,6 +51,22 @@ class ProdutoDetalhesControllerTest {
     }
 
     @Test
+    void getAllFiltroCategoriaTest() throws Exception {
+
+        // le arquivo de response e executa o get
+        String response = FileUtils.readFileToString(
+                ResourceUtils.getFile("classpath:./produto-detalhe/GetResponseFiltroAll.json"),
+                StandardCharsets.UTF_8.name());
+
+        // Consulta todos os produtos detalhados
+        mvc.perform(MockMvcRequestBuilders.get("/produtos-detalhe/?idCategoria=2d4d2ab5-3a84-4249-a369-e68bcd43b30d")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
+                .andExpect(MockMvcResultMatchers.content().json(response));
+    }
+
+    @Test
     void getAllRaizContextoTest() throws Exception {
 
         // le arquivo de response e executa o get
