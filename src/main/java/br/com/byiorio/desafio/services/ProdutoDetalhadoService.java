@@ -106,13 +106,22 @@ public class ProdutoDetalhadoService {
                                 .build();
         }
 
-        public List<ProdutoDetalhadoResponse> buscarTodos() {
+        public List<ProdutoDetalhadoResponse> buscarTodos(String idCategoria) {
                 // Para cada produto carregar todos os detalhes
                 LinkedList<ProdutoDetalhadoResponse> produtosDetalhado = new LinkedList<>();
 
                 // Pega todos os arquivos
-                LinkedList<ProdutoEntity> todosProdutos = new LinkedList<>(
-                                produtoRepository.buscarTodos(ProdutoEntity.class));
+                LinkedList<ProdutoEntity> todosProdutos = null;
+
+                // Se nao tiver filtro pega tudo, se nao filtra por id de Categoria
+                if (idCategoria == null) {
+                        todosProdutos = new LinkedList<>(
+                                        produtoRepository.buscarTodos(ProdutoEntity.class));
+                } else {
+                        todosProdutos = new LinkedList<>(
+                                        produtoRepository.buscarPorCampo(ProdutoEntity.class, "idCategoria",
+                                                        idCategoria));
+                }
 
                 // Coloca detalhes de cada produto
                 todosProdutos.forEach(produto -> produtosDetalhado.add(this.buscar(produto.getId())));

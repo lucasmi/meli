@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.byiorio.desafio.models.ProdutoDetalhadoResponse;
@@ -40,7 +41,8 @@ public class ProdutoDetalhesController {
     @Operation(summary = "Listar todos os produtos detalhados", description = "Retorna uma lista com todos os produtos detalhados.")
     @ApiResponse(responseCode = "200", description = "Lista de produtos detalhados retornada com sucesso")
     @GetMapping("/")
-    public ResponseEntity<List<ProdutoDetalhadoResponse>> consultar() {
-        return ResponseEntity.ok(produtoDetalhadoService.buscarTodos());
+    public ResponseEntity<List<ProdutoDetalhadoResponse>> consultarTodos(
+            @RequestParam(required = false) String idCategoria) {
+        return ResponseEntity.ok(produtoDetalhadoService.buscarTodos(idCategoria));
     }
 }

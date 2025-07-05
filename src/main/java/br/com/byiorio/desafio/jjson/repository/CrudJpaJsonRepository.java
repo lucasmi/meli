@@ -1,5 +1,6 @@
 package br.com.byiorio.desafio.jjson.repository;
 
+import java.lang.reflect.Field;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -178,4 +179,24 @@ public abstract class CrudJpaJsonRepository implements IAcoesBasicas, IJpaJsonRe
         return entidades;
     }
 
+    // Feito pela IA
+    public <E extends IJapJsonEntity> List<E> buscarPorCampo(Class<E> clazz, String nomeCampo, Object valor) {
+        List<E> resultado = new LinkedList<>();
+        List<E> todasEntidades = this.buscarTodos(clazz);
+
+        for (E entidade : todasEntidades) {
+            try {
+                Field field = clazz.getDeclaredField(nomeCampo);
+                field.setAccessible(true);
+                Object valorCampo = field.get(entidade);
+                if (valorCampo != null && valorCampo.equals(valor)) {
+                    resultado.add(entidade);
+                }
+            } catch (NoSuchFieldException | IllegalAccessException e) {
+                // Trate o erro conforme sua necessidade
+                log.warn("Erro ao acessar campo {}: {}", nomeCampo, e.getMessage());
+            }
+        }
+        return resultado;
+    }
 }
