@@ -56,7 +56,8 @@ public class ProdutoEntity implements IJapJsonEntity {
     HashSet<String> idsAvaliacoes = new HashSet<>();
 
     @Size(min = 1, max = 50)
-    @ManyToOne(repositoryTarget = CategoriaRepository.class, entityTarget = CategoriaEntity.class, mappedBy = "idsProdutos", blockOnUpdate = false, repositorySource = ProdutoRepository.class, entitySource = ProdutoEntity.class)
+    @NotBlank
+    @ManyToOne(repositoryTarget = CategoriaRepository.class, entityTarget = CategoriaEntity.class, mappedBy = "idsProdutos", blockOnUpdate = true, repositorySource = ProdutoRepository.class, entitySource = ProdutoEntity.class)
     String idCategoria;
 
 }
