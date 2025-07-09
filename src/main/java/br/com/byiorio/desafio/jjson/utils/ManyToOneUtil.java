@@ -9,6 +9,7 @@ import br.com.byiorio.desafio.jjson.annotations.ManyToOne;
 import br.com.byiorio.desafio.jjson.entity.EstadoEnum;
 import br.com.byiorio.desafio.jjson.entity.IJapJsonEntity;
 import br.com.byiorio.desafio.jjson.exceptions.JpaJsonException;
+import br.com.byiorio.desafio.jjson.model.DestinoDTO;
 import br.com.byiorio.desafio.jjson.repository.IJpaJsonRepository;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +26,7 @@ public class ManyToOneUtil {
         for (Field field : clazz.getClass().getDeclaredFields()) {
             if (field.isAnnotationPresent(ManyToOne.class)) {
                 try {
+                    // Variavel de valor antigo para controle
                     // Carrega parametros da anotacao
                     ReflectionUtils.makeAccessible(field);
                     ManyToOne otm = field.getAnnotation(ManyToOne.class);
@@ -55,43 +57,52 @@ public class ManyToOneUtil {
 
                             String valorCampoOrigemOriginal = (String) field.get(entidadeOrigemOriginal);
                             if (valorCampoOrigemOriginal != null) {
-                                idPkDestino = valorCampoOrigemOriginal;
-                                acao = ATUALIZAR_REMOVER;
-                            } else {
-                                continue;
+                                if (idPkDestino == null) {
+                                    // Apaga o relacionamento no destino
+                                    executaAcao(idPkOrigem, REMOVER,
+                                            retornaListaDestino(valorCampoOrigemOriginal, otm));
+                                }
+
+                                // Apaga o relacionamento no destino
+                                // executaAcao(valorCampoOrigemOriginal, ATUALIZAR_REMOVER,
+                                // retornaListaDestino(idPkDestino, otm));
                             }
+
                         } catch (JpaJsonException e) {
                             // Se nao achar um id antigo e for a primeira vez
                             continue;
                         }
 
-                    }
+                        // Verifica se ouve uma troca de ID e o sistema tem que remover do ID anterior
+                    } else {
+                        IJpaJsonRepository<IJapJsonEntity> repositorioOrigemOriginal = SpringContext
+                                .getBean(otm.repositorySource());
 
-                    // Verifica entidade destino
-                    IJpaJsonRepository<IJapJsonEntity> repositorioDestino = SpringContext
-                            .getBean(otm.repositoryTarget());
-                    IJapJsonEntity entidadeDestino = repositorioDestino.buscar(idPkDestino, otm.entityTarget());
+                        try {
+                            IJapJsonEntity entidadeOrigemOriginal = repositorioOrigemOriginal.buscar(idPkOrigem,
+                                    otm.entitySource());
 
-                    // Pega a lista de relacionamentos
-                    Field listaHashSetRelacionamento = entidadeDestino.getClass().getDeclaredField(otm.mappedBy());
-                    ReflectionUtils.makeAccessible(listaHashSetRelacionamento);
-                    HashSet<String> listaIdsTabelaDestino = (HashSet<String>) listaHashSetRelacionamento
-                            .get(entidadeDestino);
+                            String valorCampoOrigemOriginal = (String) field.get(entidadeOrigemOriginal);
+                            if (valorCampoOrigemOriginal != null && !valorCampoOrigemOriginal.equals(idPkDestino)) {
+                                // Apaga o relacionamento antigo no destino
+                                executaAcao(idPkOrigem, REMOVER,
+                                        retornaListaDestino(valorCampoOrigemOriginal, otm));
+                            }
 
-                    // Apaga ou adiciona conforme a acao
-                    if (acao.equals(INSERIR) || acao.equals(ATUALIZAR_REMOVER)) {
-                        if (acao.equals(ATUALIZAR_REMOVER)) {
-                            listaIdsTabelaDestino.remove(idPkOrigem);
-                        } else {
-                            listaIdsTabelaDestino.add(idPkOrigem);
+                            // Atualiza o relacionamento no destino
+                            executaAcao(idPkOrigem, acao,
+                                    retornaListaDestino(idPkDestino, otm));
+                            continue;
+
+                        } catch (JpaJsonException e) {
+                            // Se nao achar um id antigo e for a primeira vez
+                            continue;
                         }
-
-                        repositorioDestino.alteraEstado(entidadeDestino, EstadoEnum.ATUALIZAR);
-
-                    } else if (acao.equals(REMOVER)) {
-                        listaIdsTabelaDestino.remove(idPkOrigem);
-                        repositorioDestino.alteraEstado(entidadeDestino, EstadoEnum.REMOVER);
                     }
+
+                    // Pega a lista do relacionamento destino
+                    // DestinoDTO destinoDTO = retornaListaDestino(idPkDestino, otm);
+                    // executaAcao(idPkOrigem, acao, destinoDTO);
 
                 } catch (IllegalAccessException | IllegalArgumentException | SecurityException
                         | NoSuchFieldException e) {
@@ -99,6 +110,50 @@ public class ManyToOneUtil {
                 }
             }
         }
+    }
+
+    private static void executaAcao(String idPkOrigem, String acao, DestinoDTO destinoDTO) {
+        // Apaga ou adiciona conforme a acao
+        if (acao.equals(INSERIR) || acao.equals(ATUALIZAR_REMOVER)) {
+            // Atualiza destino com a FK que foi alterada
+            if (acao.equals(ATUALIZAR_REMOVER)) {
+                destinoDTO.getListaIdsTabelaDestino().remove(idPkOrigem);
+            } else {
+                destinoDTO.getListaIdsTabelaDestino().add(idPkOrigem);
+            }
+
+            destinoDTO.getRepositorioDestino().alteraEstado(destinoDTO.getEntidadeDestino(), EstadoEnum.ATUALIZAR);
+
+        } else if (acao.equals(REMOVER)) {
+            // Remove no destino a FK que foi alterada
+            destinoDTO.getListaIdsTabelaDestino().remove(idPkOrigem);
+            destinoDTO.getRepositorioDestino().alteraEstado(destinoDTO.getEntidadeDestino(), EstadoEnum.REMOVER);
+        }
+    }
+
+    private static DestinoDTO retornaListaDestino(String id, ManyToOne otm)
+            throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+        // Nao retorna uma entidade em caso de null
+        if (id == null) {
+            return null;
+        }
+
+        // Verifica entidade destino
+        IJpaJsonRepository<IJapJsonEntity> repositorioDestino = SpringContext
+                .getBean(otm.repositoryTarget());
+        IJapJsonEntity entidadeDestino = repositorioDestino.buscar(id, otm.entityTarget());
+
+        // Pega a lista de relacionamentos
+        Field listaHashSetRelacionamento = entidadeDestino.getClass().getDeclaredField(otm.mappedBy());
+        ReflectionUtils.makeAccessible(listaHashSetRelacionamento);
+
+        return DestinoDTO.builder()
+                .idPkDestino(id)
+                .entidadeDestino(entidadeDestino)
+                .listaIdsTabelaDestino((HashSet<String>) listaHashSetRelacionamento.get(entidadeDestino))
+                .repositorioDestino(repositorioDestino)
+                .build();
+
     }
 
     public static void apagarRelacionados(IJapJsonEntity clazz) {

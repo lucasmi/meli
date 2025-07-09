@@ -55,9 +55,8 @@ public class ProdutoEntity implements IJapJsonEntity {
     @OneToMany(repositoryTarget = AvaliacaoRepository.class, entityTarget = AvaliacaoEntity.class, repositorySource = ProdutoRepository.class, entitySource = ProdutoEntity.class)
     HashSet<String> idsAvaliacoes = new HashSet<>();
 
-    @NotBlank
     @Size(min = 1, max = 50)
-    @ManyToOne(repositoryTarget = CategoriaRepository.class, entityTarget = CategoriaEntity.class, mappedBy = "idsProdutos", blockOnUpdate = true, repositorySource = ProdutoRepository.class, entitySource = ProdutoEntity.class)
+    @ManyToOne(repositoryTarget = CategoriaRepository.class, entityTarget = CategoriaEntity.class, mappedBy = "idsProdutos", blockOnUpdate = false, repositorySource = ProdutoRepository.class, entitySource = ProdutoEntity.class)
     String idCategoria;
 
 }
