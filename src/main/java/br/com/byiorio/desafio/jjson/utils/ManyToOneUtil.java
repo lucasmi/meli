@@ -19,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ManyToOneUtil {
     private static final String REMOVER = "remover";
     private static final String INSERIR = "inserir";
+    private static final String ATUALIZAR_REMOVER = "atualizar_remover";
 
     public static void realizaRelacionamentos(IJapJsonEntity clazz, String acao) {
         for (Field field : clazz.getClass().getDeclaredFields()) {
@@ -32,9 +33,6 @@ public class ManyToOneUtil {
                     Field idFieldDestino = clazz.getClass().getDeclaredField(field.getName());
                     ReflectionUtils.makeAccessible(idFieldDestino);
                     String idPkDestino = (String) idFieldDestino.get(clazz);
-                    if (idPkDestino == null || idPkDestino.isEmpty()) {
-                        return;
-                    }
 
                     // Pega o id da tabela de origem
                     Field idFieldOrigem = clazz.getClass().getDeclaredField("id");
@@ -46,6 +44,23 @@ public class ManyToOneUtil {
                     log.info("realizaRelacionamentos entidade: {} id: {} acao: {}", otm.entityTarget().getSimpleName(),
                             idPkDestino, acao);
 
+                    // Precisa saber valor atual para saber se foi removido o desconto
+                    if (idPkDestino == null) {
+                        IJpaJsonRepository<IJapJsonEntity> repositorioOrigemOriginal = SpringContext
+                                .getBean(otm.repositorySource());
+                        IJapJsonEntity entidadeOrigemOriginal = repositorioOrigemOriginal.buscar(idPkOrigem,
+                                otm.entitySource());
+
+                        String valorCampoOrigemOriginal = (String) field.get(entidadeOrigemOriginal);
+                        if (valorCampoOrigemOriginal != null) {
+                            idPkDestino = valorCampoOrigemOriginal;
+                            acao = ATUALIZAR_REMOVER;
+                        } else {
+                            continue;
+                        }
+                    }
+
+                    // Verifica entidade destino
                     IJpaJsonRepository<IJapJsonEntity> repositorioDestino = SpringContext
                             .getBean(otm.repositoryTarget());
                     IJapJsonEntity entidadeDestino = repositorioDestino.buscar(idPkDestino, otm.entityTarget());
@@ -57,8 +72,13 @@ public class ManyToOneUtil {
                             .get(entidadeDestino);
 
                     // Apaga ou adiciona conforme a acao
-                    if (acao.equals(INSERIR)) {
-                        listaIdsTabelaDestino.add(idPkOrigem);
+                    if (acao.equals(INSERIR) || acao.equals(ATUALIZAR_REMOVER)) {
+                        if (acao.equals(ATUALIZAR_REMOVER)) {
+                            listaIdsTabelaDestino.remove(idPkOrigem);
+                        } else {
+                            listaIdsTabelaDestino.add(idPkOrigem);
+                        }
+
                         repositorioDestino.alteraEstado(entidadeDestino, EstadoEnum.ATUALIZAR);
 
                     } else if (acao.equals(REMOVER)) {
