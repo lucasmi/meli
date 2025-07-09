@@ -48,16 +48,23 @@ public class ManyToOneUtil {
                     if (idPkDestino == null) {
                         IJpaJsonRepository<IJapJsonEntity> repositorioOrigemOriginal = SpringContext
                                 .getBean(otm.repositorySource());
-                        IJapJsonEntity entidadeOrigemOriginal = repositorioOrigemOriginal.buscar(idPkOrigem,
-                                otm.entitySource());
 
-                        String valorCampoOrigemOriginal = (String) field.get(entidadeOrigemOriginal);
-                        if (valorCampoOrigemOriginal != null) {
-                            idPkDestino = valorCampoOrigemOriginal;
-                            acao = ATUALIZAR_REMOVER;
-                        } else {
+                        try {
+                            IJapJsonEntity entidadeOrigemOriginal = repositorioOrigemOriginal.buscar(idPkOrigem,
+                                    otm.entitySource());
+
+                            String valorCampoOrigemOriginal = (String) field.get(entidadeOrigemOriginal);
+                            if (valorCampoOrigemOriginal != null) {
+                                idPkDestino = valorCampoOrigemOriginal;
+                                acao = ATUALIZAR_REMOVER;
+                            } else {
+                                continue;
+                            }
+                        } catch (JpaJsonException e) {
+                            // Se nao achar um id antigo e for a primeira vez
                             continue;
                         }
+
                     }
 
                     // Verifica entidade destino
