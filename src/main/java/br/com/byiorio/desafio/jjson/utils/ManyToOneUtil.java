@@ -95,6 +95,10 @@ public class ManyToOneUtil {
                             continue;
 
                         } catch (JpaJsonException e) {
+                            // Fazer uma inserção nova
+                            DestinoDTO destinoDTO = retornaListaDestino(idPkDestino, otm);
+                            executaAcao(idPkOrigem, acao, destinoDTO);
+
                             // Se nao achar um id antigo e for a primeira vez
                             continue;
                         }
