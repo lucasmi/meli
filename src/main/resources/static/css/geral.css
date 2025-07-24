@@ -1,0 +1,15 @@
+body {
+    margin: 0px;
+    background: #ededed;
+    font-family: Proxima Nova, -apple-system, Roboto, Arial, sans-serif;
+}
+
+h3 {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+span {
+    font-size: 12px;
+    font-weight: 400;
+}

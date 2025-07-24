@@ -1,0 +1,55 @@
+.produto-card {
+    display: flex;
+    flex: 0 0 calc(33.333%);
+    flex-direction: column;
+    background-color: white;
+    max-width: 284px;
+    box-sizing: border-box;
+    border-radius: 10px 10px 10px;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .12);
+    cursor: pointer;
+}
+
+.produto-foto {
+    border-bottom: 1px solid #ededed;
+    border-radius: 10px 10px 0px 0px;
+    max-height: 250px;
+}
+
+.produto-font-titulo {
+    line-height: 18px;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 10px;
+}
+
+.produto-font-vendedor {
+    padding: 0px 10px;
+    color: rgba(0, 0, 0, .55);
+}
+
+.produto-preco-box {
+    padding: 15px 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.produto-font-green {
+    color: rgb(0, 166, 80);
+}
+
+.produto-font-preco {
+    font-size: 16px;
+    font-weight: 300;
+}
+
+.produto-font-desconto {
+    line-height: 15px;
+    font-weight: 400;
+    text-decoration: line-through;
+    color: rgba(0, 0, 0, .55);
+}
+
+.produto-font-padding-10-sm {
+    padding: 5px 10px;
+}

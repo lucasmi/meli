@@ -1,0 +1,11 @@
+.home-body {
+    padding: 30px;
+}
+
+.home-body-produtos {
+    max-width: 885px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}

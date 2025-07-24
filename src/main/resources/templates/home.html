@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="<http://www.thymeleaf.org>" lang="pt-br" xml:lang="pt-br">
+
+<head>
+    <title>Meli</title>
+    <link rel="stylesheet" th:href="@{/css/produto-card.css}" />
+    <link rel="stylesheet" th:href="@{/css/header.css}" />
+    <link rel="stylesheet" th:href="@{/css/geral.css}" />
+    <link rel="stylesheet" th:href="@{/css/home.css}" />
+</head>
+
+<body>
+    <div th:replace="fragments/header :: cabecalho"></div>
+
+    <div class="home-body">
+
+        <div class="home-body-filtro">
+
+        </div>
+        <div class="home-body-produtos">
+            <div th:replace="fragments/produto-card :: produtoFragmento"></div>
+        </div>
+    </div>
+
+</body>
+
+</html>
