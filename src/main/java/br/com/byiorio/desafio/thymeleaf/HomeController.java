@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import br.com.byiorio.desafio.models.ProdutoDetalhadoResponse;
 import br.com.byiorio.desafio.services.CategoriaService;
@@ -22,8 +23,15 @@ public class HomeController {
     }
 
     @GetMapping("/home")
-    public String home(Model model) {
-        List<ProdutoDetalhadoResponse> listaProduto = produtoDetalhadoService.buscarTodos(null);
+    public String home(@RequestParam(required = false) String categoria, Model model) {
+
+        List<ProdutoDetalhadoResponse> listaProduto = null;
+        if (categoria == null){
+            listaProduto = produtoDetalhadoService.buscarTodos(null);
+        }else{
+            listaProduto = produtoDetalhadoService.buscarTodos(categoria);
+        }
+
         model.addAttribute("listaProdutos", listaProduto);
 
         model.addAttribute("categorias", categoriaService.buscarTodos());
