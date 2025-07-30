@@ -90,9 +90,9 @@ public class HomeController {
     }
 
     @GetMapping("/produto")
-    public String produto(Model model) {
-        List<ProdutoDetalhadoResponse> listaProduto = produtoDetalhadoService.buscarTodos(null);
-        model.addAttribute(LISTA_PRODUTOS, listaProduto);
+    public String produto(@RequestParam(required = true) String id, Model model) {
+        ProdutoDetalhadoResponse produto = produtoDetalhadoService.buscar(id);
+        model.addAttribute("produto", produto);
         return "produto";
     }
 }
