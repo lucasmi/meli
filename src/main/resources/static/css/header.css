@@ -7,3 +7,26 @@ header {
     border: 0;
     position: relative;
 }
+
+.header-logo {
+    width: 134px;
+    height: 34px;
+}
+
+
+.header-main {
+    display: flex;
+    flex-direction: column;
+    max-width: 1200px;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.header-serach {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    width: 100%;
+    flex-direction: row;
+}

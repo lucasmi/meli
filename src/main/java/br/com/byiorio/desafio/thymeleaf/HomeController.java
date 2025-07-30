@@ -24,4 +24,11 @@ public class HomeController {
         model.addAttribute("listaProdutos", listaProduto);
         return "home";
     }
+
+    @GetMapping("/produto")
+    public String produto(Model model) {
+        List<ProdutoDetalhadoResponse> listaProduto = produtoDetalhadoService.buscarTodos(null);
+        model.addAttribute("listaProdutos", listaProduto);
+        return "produto";
+    }
 }

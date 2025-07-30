@@ -29,15 +29,6 @@ public class RaizContextoCrontoller {
         this.produtoDetalhadoService = produtoDetalhadoService;
     }
 
-    @Operation(summary = "Buscar produto por ID", description = "Retorna os detalhes de um produto pelo seu ID.")
-    @ApiResponse(responseCode = "200", description = "Produto detalhado encontrado com sucesso")
-    @ApiResponse(responseCode = "404", description = "Produto não encontrado", content = @Content(schema = @Schema(implementation = br.com.byiorio.desafio.models.BasicErrorDTO.class)))
-    @GetMapping("/{id}")
-    public ResponseEntity<ProdutoDetalhadoResponse> consultar(
-            @Parameter(description = "ID do produto detalhado", example = "abc123") @PathVariable String id) {
-        return ResponseEntity.ok(produtoDetalhadoService.buscar(id));
-    }
-
     @Operation(summary = "Busca todos os produtos", description = "Retorna uma lista de todos os produtos detalhados.")
     @ApiResponse(responseCode = "200", description = "Operação realizada com sucesso")
     @ApiResponse(responseCode = "400", description = "Erro de parametrização", content = @Content(schema = @Schema(implementation = BasicErrorDTO.class)))
