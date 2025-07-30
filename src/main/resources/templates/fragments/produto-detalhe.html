@@ -2,14 +2,13 @@
 
     <div class="produto-detalhe-imagem-container">
         <div class="produto-detalhe-imagem-itens">
-            <img alt="Foto produto" th:src="${produto.produto.imagens[0].url}" class="produto-detalhe-foto" />
-            <img alt="Foto produto" th:src="${produto.produto.imagens[0].url}" class="produto-detalhe-foto" />
-            <img alt="Foto produto" th:src="${produto.produto.imagens[0].url}" class="produto-detalhe-foto" />
-            <img alt="Foto produto" th:src="${produto.produto.imagens[0].url}" class="produto-detalhe-foto" />
+            <img th:each="imagem : ${produto.produto.imagens}" th:src="${imagem.url}" alt="Foto produto"
+                class="produto-detalhe-foto" onclick="document.getElementById('imagem-maior').src=this.src;"
+                onmouseover="document.getElementById('imagem-maior').src=this.src;" />
         </div>
         <div class="produto-detalhe-imagem-maior">
             <figure>
-                <img alt="Foto produto" th:src="${produto.produto.imagens[0].url}" />
+                <img id="imagem-maior" alt="Foto produto" th:src="${produto.produto.imagens[0].url}" />
             </figure>
         </div>
         <div class="produto-detalhe-info">

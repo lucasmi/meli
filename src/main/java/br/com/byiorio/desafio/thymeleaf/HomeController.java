@@ -94,6 +94,7 @@ public class HomeController {
     public String produto(@RequestParam(required = true) String id, Model model) {
         ProdutoDetalhadoResponse produto = produtoDetalhadoService.buscar(id);
         model.addAttribute("produto", produto);
+        model.addAttribute(CATEGORIAS, categoriaService.buscarTodos());
         return "produto";
     }
 }

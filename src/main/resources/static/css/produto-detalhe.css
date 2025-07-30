@@ -35,6 +35,10 @@
     margin-right: 20px;
 }
 
+.produto-detalhe-imagem-itens img:hover {
+    border: 1px solid #ffe600
+}
+
 .produto-detalhe-imagem-maior {
     width: 358px;
     height: 504px;
