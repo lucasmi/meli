@@ -1,0 +1,23 @@
+<div class="produto-card" th:fragment="produtoDetalhe">
+    <img alt="Foto produto" th:src="${produto.produto.imagens[0].url}" class="produto-foto" />
+
+    <span th:if="${produto.produto != null and produto.produto.titulo != null}" th:text="${produto.produto.titulo}"
+        class="produto-font-titulo padding-10">
+    </span>
+
+    <span th:if="${produto.vendedor != null and produto.vendedor.nome != null}" class="produto-font-vendedor"
+        th:text="'Por ' + ${produto.vendedor.nome}"></span>
+
+
+    <div th:if="${produto.produto.preco == null}" class="produto-preco-box">
+        <span class="produto-font-desconto" th:text="'R$ ' + ${produto.produto.preco}"></span>
+        <span class="produto-font-preco">R$ 35,90 <span class="produto-font-green">25 % OFF</span></span>
+    </div>
+    <div th:unless="${produto.produto.preco == null}" class="produto-preco-box">
+        <span class="produto-font-preco" th:text="'R$ ' + ${produto.produto.preco}"></span>
+    </div>
+
+    <span class="produto-font-green produto-font-padding-10-sm">Frete grátis</span>
+    <span class="produto-font-padding-10-sm">Enviado pelo <img src="imgs/lightning-alt-svgrepo-com.svg" alt="Full"
+            height="12px" /><span class="produto-font-green">FULL</span></span>
+</div>
