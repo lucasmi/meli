@@ -2,14 +2,14 @@
     <header>
         <div class="header-main">
             <div class="header-serach">
-                <img src="imgs/pt_logo_large_plus@2x.webp" alt="Logo Meli" class="header-logo" />
+                <img src="imgs/pt_logo_large_plus@2x.webp" alt="Logo Meli" class="header-logo" onclick="window.location.href='/home'" style="cursor: pointer;"/>
 
                 <div class="search-container" style="padding-left: 50px;">
                     <div th:replace="~{fragments/search-box :: input}"></div>
                 </div>
             </div>
-            <div>
-                <div th:replace="~{fragments/menu :: menu}"></div>
+            <div style="padding-left: 165px">
+                <div th:replace="~{fragments/menu :: menu}" ></div>
             </div>
         </div>
     </header>

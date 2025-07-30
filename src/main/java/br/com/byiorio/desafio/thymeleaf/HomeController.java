@@ -14,7 +14,6 @@ import br.com.byiorio.desafio.models.ProdutoDetalhadoResponse;
 import br.com.byiorio.desafio.services.CategoriaService;
 import br.com.byiorio.desafio.services.ProdutoDetalhadoService;
 import br.com.byiorio.desafio.thymeleaf.dto.HomeRequest;
-import jakarta.annotation.Nullable;
 
 @Controller
 public class HomeController {

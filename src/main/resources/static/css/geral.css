@@ -9,7 +9,7 @@ body {
 }
 
 * {
-    font-family: Proxima Nova, -apple-system, Roboto, Arial, sans-serif;
+    font-family: "Proxima Nova", -apple-system, Roboto, Arial, sans-serif !important;
 }
 
 

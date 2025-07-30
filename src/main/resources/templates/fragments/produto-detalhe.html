@@ -1,23 +1,52 @@
-<div class="produto-card" th:fragment="produtoDetalhe">
-    <img alt="Foto produto" th:src="${produto.produto.imagens[0].url}" class="produto-foto" />
+<div class="produto-detalhe-card" th:fragment="produtoDetalhe">
 
-    <span th:if="${produto.produto != null and produto.produto.titulo != null}" th:text="${produto.produto.titulo}"
-        class="produto-font-titulo padding-10">
-    </span>
+    <div class="produto-detalhe-imagem-container">
+        <div class="produto-detalhe-imagem-itens">
+            <img alt="Foto produto" th:src="${produto.produto.imagens[0].url}" class="produto-detalhe-foto" />
+            <img alt="Foto produto" th:src="${produto.produto.imagens[0].url}" class="produto-detalhe-foto" />
+            <img alt="Foto produto" th:src="${produto.produto.imagens[0].url}" class="produto-detalhe-foto" />
+            <img alt="Foto produto" th:src="${produto.produto.imagens[0].url}" class="produto-detalhe-foto" />
+        </div>
+        <div class="produto-detalhe-imagem-maior">
+            <figure>
+                <img alt="Foto produto" th:src="${produto.produto.imagens[0].url}" />
+            </figure>
+        </div>
+        <div class="produto-detalhe-info">
 
-    <span th:if="${produto.vendedor != null and produto.vendedor.nome != null}" class="produto-font-vendedor"
-        th:text="'Por ' + ${produto.vendedor.nome}"></span>
+            <span class="produto-detalhe-font-codigo">Cód. <span th:text="${produto.produto.id}"></span></span>
 
+            <span th:if="${produto.produto != null and produto.produto.titulo != null}"
+                th:text="${produto.produto.titulo}" class="produto-detalhe-font-titulo padding-10">
+            </span>
 
-    <div th:if="${produto.produto.preco == null}" class="produto-preco-box">
-        <span class="produto-font-desconto" th:text="'R$ ' + ${produto.produto.preco}"></span>
-        <span class="produto-font-preco">R$ 35,90 <span class="produto-font-green">25 % OFF</span></span>
+            <span th:if="${produto.vendedor != null and produto.vendedor.nome != null}"
+                class="produto-detalhe-font-vendedor" th:text="'Por ' + ${produto.vendedor.nome}"></span>
+
+            <div class="estrelas">
+                <span class="estrela preenchida">&#9733;</span>
+                <span class="estrela preenchida">&#9733;</span>
+                <span class="estrela preenchida">&#9733;</span>
+                <span class="estrela preenchida">&#9733;</span>
+                <span class="estrela">&#9733;</span>
+            </div>
+
+            <div th:if="${produto.produto.preco == null}" class="produto-detalhe-preco-box">
+                <span class="produto-detalhe-font-desconto" th:text="'R$ ' + ${produto.produto.preco}"></span>
+                <span class="produto-detalhe-font-preco">R$ 35,90 <span class="produto-detalhe-font-green">25 %
+                        OFF</span></span>
+            </div>
+            <div th:unless="${produto.produto.preco == null}" class="produto-detalhe-preco-box">
+                <span class="produto-detalhe-font-preco" th:text="'R$ ' + ${produto.produto.preco}"></span>
+            </div>
+
+            <span class="produto-detalhe-font-green produto-detalhe-font-padding-10-sm">Frete grátis</span>
+            <span class="produto-detalhe-font-padding-10-sm">Enviado pelo <img src="imgs/lightning-alt-svgrepo-com.svg"
+                    alt="Full" height="12px" /><span class="produto-detalhe-font-green">FULL</span></span>
+        </div>
     </div>
-    <div th:unless="${produto.produto.preco == null}" class="produto-preco-box">
-        <span class="produto-font-preco" th:text="'R$ ' + ${produto.produto.preco}"></span>
+    <div class="produto-detalhe-descricao">
+        <h1 class="produto-detalhe-font-descricao" style="font-size: 18px;">Descrição</h1>
+        <span class="produto-detalhe-font-texto" th:utext="${produto.produto.descricao}"></span>
     </div>
-
-    <span class="produto-font-green produto-font-padding-10-sm">Frete grátis</span>
-    <span class="produto-font-padding-10-sm">Enviado pelo <img src="imgs/lightning-alt-svgrepo-com.svg" alt="Full"
-            height="12px" /><span class="produto-font-green">FULL</span></span>
 </div>

@@ -1,0 +1,138 @@
+.produto-detalhe-card * {
+    box-sizing: border-box;
+}
+
+.produto-detalhe-card {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    max-width: 851px;
+    width: 100%;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .12);
+}
+
+.produto-detalhe-imagem-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.produto-detalhe-imagem-itens {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.produto-detalhe-imagem-itens img {
+    display: flex;
+    width: 50px;
+    height: 50px;
+    border: 1px solid rgb(231, 231, 231);
+    border-radius: 10px;
+    padding: 3px;
+    margin-right: 20px;
+}
+
+.produto-detalhe-imagem-maior {
+    width: 358px;
+    height: 504px;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: rgb(247, 247, 247);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.produto-detalhe-imagem-maior img {
+    width: 100%;
+    display: flex;
+    align-self: center;
+
+    background-color: transparent;
+    mix-blend-mode: normal;
+
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+
+}
+
+.produto-detalhe-info {
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+    max-width: 340px;
+}
+
+.produto-detalhe-font-codigo {
+    padding: 10px;
+}
+
+.produto-detalhe-font-titulo {
+    font-size: 22px;
+    font-weight: 400;
+    padding: 10px;
+    line-height: 24px;
+}
+
+.produto-detalhe-font-vendedor {
+    padding: 0px 10px;
+    color: rgba(0, 0, 0, .55);
+}
+
+.produto-detalhe-preco-box {
+    padding: 15px 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.produto-detalhe-font-green {
+    color: rgb(0, 166, 80);
+}
+
+.produto-detalhe-font-preco {
+    font-size: 36px;
+    font-weight: 300;
+    line-height: 36px
+}
+
+.produto-detalhe-font-desconto {
+    line-height: 15px;
+    font-weight: 400;
+    text-decoration: line-through;
+    color: rgba(0, 0, 0, .55);
+}
+
+.produto-detalhe-font-padding-10-sm {
+    padding: 5px 10px;
+}
+
+.produto-detalhe-descricao {
+    margin-top: 20px;
+    border-top: 1px solid rgba(0, 0, 0, .1);
+}
+
+.produto-detalhe-font-texto {
+    font-size: 16px;
+    font-weight: normal;
+}
+
+.estrelas {
+    display: flex;
+    gap: 5px;
+    padding: 5px 10px;
+}
+
+.estrela {
+    font-size: 30px;
+    color: #ccc;
+    /* Cor da estrela vazia */
+    transition: color 0.3s;
+}
+
+.estrela.preenchida {
+    color: gold;
+    /* Cor da estrela preenchida */
+}
