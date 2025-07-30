@@ -18,6 +18,11 @@
    ```sh
    http://localhost:8080/swagger-ui/index.html
 
+
+  - Abra o browser e acesse a pagina feita em thymeleaf
+   ```sh
+   http://localhost:8080/home
+   
 5. **Sonar**
   - Esse comando funciona somente na maquina onde foi desenvolvido. 
   - A imagem do relatório está no arquivo relatiroSonar.png

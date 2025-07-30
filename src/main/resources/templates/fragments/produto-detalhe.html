@@ -1,0 +1,81 @@
+<div class="produto-detalhe-card" th:fragment="produtoDetalhe">
+
+    <div class="produto-detalhe-imagem-container">
+        <div class="produto-detalhe-imagem-itens">
+            <img th:each="imagem : ${produto.produto.imagens}" th:src="${imagem.url}" alt="Foto produto"
+                class="produto-detalhe-foto" onclick="document.getElementById('imagem-maior').src=this.src;"
+                onmouseover="document.getElementById('imagem-maior').src=this.src;" onkeydown="javascript:void(0);"
+                onkeypress="javascript:void(0);" onfocus="javascript:void(0);" />
+        </div>
+        <div class="produto-detalhe-imagem-maior">
+            <figure>
+                <img id="imagem-maior" alt="Foto produto" th:src="${produto.produto.imagens[0].url}" />
+            </figure>
+        </div>
+        <div class="produto-detalhe-info">
+
+            <span class="produto-detalhe-font-codigo">Cód. <span th:text="${produto.produto.id}"></span></span>
+
+            <span th:if="${produto.produto != null and produto.produto.titulo != null}"
+                th:text="${produto.produto.titulo}" class="produto-detalhe-font-titulo padding-10">
+            </span>
+
+            <span th:if="${produto.vendedor != null and produto.vendedor.nome != null}"
+                class="produto-detalhe-font-vendedor" th:text="'Por ' + ${produto.vendedor.nome}"></span>
+
+            <div class="estrelas" style="padding: 0px 5px">
+                <span th:text="'( ' + ${produto.produto.media} + ')' " style="opacity: 0.3;"></span>
+                <div th:replace="fragments/estrelas :: estrelasFragmento(${produto.produto.nota})"></div>
+                <span th:text="'( ' + ${produto.avaliacoes.size()} + ' )'" style="opacity: 0.3;"></span>
+            </div>
+
+            <div th:if="${produto.produto.preco == null}" class="produto-detalhe-preco-box">
+                <span class="produto-detalhe-font-desconto" th:text="'R$ ' + ${produto.produto.preco}"></span>
+                <span class="produto-detalhe-font-preco">R$ 35,90 <span class="produto-detalhe-font-green">25 %
+                        OFF</span></span>
+            </div>
+            <div th:unless="${produto.produto.preco == null}" class="produto-detalhe-preco-box">
+                <span class="produto-detalhe-font-preco" th:text="'R$ ' + ${produto.produto.preco}"></span>
+            </div>
+
+            <span class="produto-detalhe-font-green produto-detalhe-font-padding-10-sm">Frete grátis</span>
+            <span class="produto-detalhe-font-padding-10-sm">Enviado pelo <img src="imgs/lightning-alt-svgrepo-com.svg"
+                    alt="Full" height="12px" /><span class="produto-detalhe-font-green">FULL</span></span>
+        </div>
+    </div>
+    <div class="produto-detalhe-descricao">
+        <h1 class="produto-detalhe-font-descricao" style="font-size: 18px;">Descrição</h1>
+        <span class="produto-detalhe-font-texto" th:utext="${produto.produto.descricao}"></span>
+    </div>
+    <div class="produto-detalhe-descricao">
+        <h1 class="produto-detalhe-font-descricao" style="font-size: 18px; margin-bottom: 0px;">Opiniões em destaque
+        </h1>
+
+        <div class="avaliacoes-container">
+            <div class="estrelas estrelas-container">
+                <span th:text="'( ' + ${produto.produto.media} + ')' " style="opacity: 0.3;"></span>
+                <div th:replace="fragments/estrelas :: estrelasFragmento(${produto.produto.nota})"></div>
+                <span th:text="'( ' + ${produto.avaliacoes.size()} + ' )'" style="opacity: 0.3;"></span>
+            </div>
+
+            <div th:if="${produto?.avaliacoes != null and not #lists.isEmpty(produto.avaliacoes)}"
+                class="avaliacoes-usuarios-container">
+                <div th:each="avaliacao : ${produto.avaliacoes}" class="avaliacoes-usuarios">
+                    <div class="avaliacoes-header">
+                        <div class="avaliacoes-estrelas" style="padding: 0px; font-size: 10px;">
+                            <div th:replace="fragments/estrelas :: estrelasFragmento(${avaliacao.nota})" ></div>
+                        </div>
+
+                        <span th:text="${avaliacao.dataReview}" class="avaliacoes-data"></span>
+                    </div>
+
+                    <span th:text="${avaliacao.comentario}"></span>
+                </div>
+            </div>
+
+            <div th:unless="${produto?.avaliacoes != null and not #lists.isEmpty(produto.avaliacoes)}">
+                <p>Nenhuma avaliação disponível no momento.</p>
+            </div>
+        </div>
+    </div>
+</div>

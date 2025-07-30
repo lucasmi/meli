@@ -1,0 +1,20 @@
+html {
+    padding: 0px;
+    margin: 0px;
+}
+
+body {
+    margin: 0px;
+    background: #ededed;
+}
+
+* {
+    font-family: "Proxima Nova", -apple-system, Roboto, Arial, sans-serif !important;
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+span {
+    font-size: 12px;
+    font-weight: 400;
+}

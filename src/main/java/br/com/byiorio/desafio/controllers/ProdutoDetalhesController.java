@@ -19,7 +19,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@RequestMapping(value = "/produtos-detalhe")
+@RequestMapping(value = "/v1/produtos-detalhe")
 @Tag(name = "Detalhe dos protudos", description = "Operações relacionadas aos detalhes dos produtos")
 public class ProdutoDetalhesController {
 

@@ -41,7 +41,7 @@ public class ProdutoEntity implements IJapJsonEntity {
     String titulo;
 
     @NotBlank
-    @Size(max = 500)
+    @Size(max = 1500)
     String descricao;
 
     @Valid

@@ -1,0 +1,9 @@
+<div th:fragment="menu" style="display: contents;">
+    <div class="menu-wrapper">
+        <button class="menu-button">Categorias ▼</button>
+        <div class="dropdown">
+            <a href="/home" class="menu-link">Todos</a>
+            <a href="#" th:each="f : ${categorias}" th:text="${f.nome}" th:href="@{'/home?categoria=' + ${f.id}}"></a>
+        </div>
+    </div>
+</div>

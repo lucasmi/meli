@@ -1,0 +1,15 @@
+.home-body {
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-body-produtos {
+    max-width: 1200px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    flex: 0 0 calc(54%);
+}
