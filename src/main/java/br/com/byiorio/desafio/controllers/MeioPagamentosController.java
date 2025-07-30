@@ -20,7 +20,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@RequestMapping(value = "/meio-pagamentos")
+@RequestMapping(value = "/v1/meio-pagamentos")
 @Tag(name = "Meios de Pagamento", description = "Operações relacionadas aos meios de pagamento dos usuários")
 public class MeioPagamentosController {
     MeioPagamentosService meioPagamentosService;

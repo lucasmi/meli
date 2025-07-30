@@ -15,7 +15,7 @@
             <span class="produto-font-preco">R$ 35,90 <span class="produto-font-green">25 % OFF</span></span>
         </div>
         <div th:unless="${f.produto.preco == null}" class="produto-preco-box">
-            <span class="produto-font-preco" th:text="'R$ ' + ${f.produto.preco}">/span>
+            <span class="produto-font-preco" th:text="'R$ ' + ${f.produto.preco}"></span>
         </div>
 
         <span class="produto-font-green produto-font-padding-10-sm">Frete grátis</span>

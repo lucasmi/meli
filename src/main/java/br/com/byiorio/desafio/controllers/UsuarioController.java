@@ -30,7 +30,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping(value = "/usuarios")
+@RequestMapping(value = "/v1/usuarios")
 @Tag(name = "Usuários", description = "Operações relacionadas aos usuários")
 public class UsuarioController {
 
