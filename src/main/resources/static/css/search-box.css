@@ -1,0 +1,36 @@
+    .search-container {
+        width: 100%;
+        max-width: 600px;
+    }
+
+    .search-box {
+        display: flex;
+        align-items: center;
+        background-color: #fff;
+        border: 1px solid #dcdcdc;
+        padding: 0 16px;
+        height: 40px;
+        max-width: 588px;
+    }
+
+    .search-box input {
+        flex: 1;
+        border: none;
+        outline: none;
+        font-size: 16px;
+        color: #333;
+
+    }
+
+    .search-box input::placeholder {
+        color: #999;
+    }
+
+    .search-box button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 18px;
+        color: #999;
+        padding-left: 8px;
+    }
