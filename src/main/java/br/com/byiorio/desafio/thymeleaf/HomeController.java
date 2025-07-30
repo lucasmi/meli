@@ -39,6 +39,7 @@ public class HomeController {
             Model model) {
 
         @SuppressWarnings("unchecked")
+        // Se chegar produtos filtrados do redirect do get, pega essa variavel
         List<ProdutoDetalhadoResponse> listaProduto = (List<ProdutoDetalhadoResponse>) model
                 .getAttribute(LISTA_PRODUTOS);
 
@@ -86,6 +87,7 @@ public class HomeController {
         redirectAttributes.addFlashAttribute(CATEGORIAS, categoriaService.buscarTodos());
         redirectAttributes.addAttribute(CATEGORIA2, request.getCategoria());
 
+        // Faz o redirect para o get
         return "redirect:/home";
     }
 
