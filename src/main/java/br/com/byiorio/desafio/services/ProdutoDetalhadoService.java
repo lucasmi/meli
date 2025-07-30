@@ -1,5 +1,7 @@
 package br.com.byiorio.desafio.services;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -76,6 +78,16 @@ public class ProdutoDetalhadoService {
 
                 });
 
+                // Calcula média de notas
+                double mediaNota = avaliacoes.stream()
+                                .mapToDouble(AvaliacaoDTO::getNota)
+                                .average()
+                                .orElse(0.0);
+
+                // Se quiser arredondar para meia estrela (ex: 4.5)
+                double notaArredondada = Math.round(mediaNota * 2) / 2.0;
+                BigDecimal notaFormatada = BigDecimal.valueOf(notaArredondada).setScale(2, RoundingMode.HALF_UP);
+
                 // Monta produto detalhado
                 VendedorDTO vendedor = VendedorDTO.builder()
                                 .nome(usuarioEntity.getNome())
@@ -95,6 +107,8 @@ public class ProdutoDetalhadoService {
                                 .descricao(produtoEntity.getDescricao())
                                 .preco(produtoEntity.getPreco())
                                 .imagens(produtoEntity.getImagens())
+                                .nota(notaArredondada)
+                                .media(notaFormatada.doubleValue())
                                 .id(produtoEntity.getId())
                                 .categoria(categoria)
                                 .build();

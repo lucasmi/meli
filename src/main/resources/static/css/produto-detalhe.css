@@ -120,19 +120,55 @@
 }
 
 .estrelas {
+    align-items: center;
     display: flex;
     gap: 5px;
-    padding: 5px 10px;
 }
 
 .estrela {
     font-size: 30px;
     color: #ccc;
-    /* Cor da estrela vazia */
     transition: color 0.3s;
 }
 
 .estrela.preenchida {
     color: gold;
     /* Cor da estrela preenchida */
+}
+
+.avaliacoes-container {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    width: 100%;
+}
+
+.avaliacoes-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.avaliacoes-data {
+    font-size: 9px;
+}
+
+.avaliacoes-usuarios {
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    margin-bottom: 10px;
+
+}
+
+.avaliacoes-usuarios-container {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+}
+
+.estrelas-container {
+    display: flex;
+    flex: 1;
 }

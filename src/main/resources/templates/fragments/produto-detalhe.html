@@ -23,12 +23,14 @@
             <span th:if="${produto.vendedor != null and produto.vendedor.nome != null}"
                 class="produto-detalhe-font-vendedor" th:text="'Por ' + ${produto.vendedor.nome}"></span>
 
-            <div class="estrelas">
-                <span class="estrela preenchida">&#9733;</span>
-                <span class="estrela preenchida">&#9733;</span>
-                <span class="estrela preenchida">&#9733;</span>
-                <span class="estrela preenchida">&#9733;</span>
-                <span class="estrela">&#9733;</span>
+            <div class="estrelas" style="padding: 0px 5px">
+                <span th:text="'( ' + ${produto.produto.media} + ')' " style="opacity: 0.3;"></span>
+                <span th:class="${produto.produto.nota} >= 1 ? 'estrela preenchida' : 'estrela'">&#9733;</span>
+                <span th:class="${produto.produto.nota} >= 2 ? 'estrela preenchida' : 'estrela'">&#9733;</span>
+                <span th:class="${produto.produto.nota} >= 3 ? 'estrela preenchida' : 'estrela'">&#9733;</span>
+                <span th:class="${produto.produto.nota} >= 4 ? 'estrela preenchida' : 'estrela'">&#9733;</span>
+                <span th:class="${produto.produto.nota} >= 5 ? 'estrela preenchida' : 'estrela'">&#9733;</span>
+                <span th:text="'( ' + ${produto.avaliacoes.size()} + ' )'" style="opacity: 0.3;"></span>
             </div>
 
             <div th:if="${produto.produto.preco == null}" class="produto-detalhe-preco-box">
@@ -49,4 +51,49 @@
         <h1 class="produto-detalhe-font-descricao" style="font-size: 18px;">Descrição</h1>
         <span class="produto-detalhe-font-texto" th:utext="${produto.produto.descricao}"></span>
     </div>
+    <div class="produto-detalhe-descricao">
+        <h1 class="produto-detalhe-font-descricao" style="font-size: 18px; margin-bottom: 0px;">Opiniões em destaque
+        </h1>
+
+        <div class="avaliacoes-container">
+            <div class="estrelas estrelas-container">
+                <span th:text="'( ' + ${produto.produto.media} + ')' " style="opacity: 0.3;"></span>
+                <span th:class="${produto.produto.nota} >= 1 ? 'estrela preenchida' : 'estrela'">&#9733;</span>
+                <span th:class="${produto.produto.nota} >= 2 ? 'estrela preenchida' : 'estrela'">&#9733;</span>
+                <span th:class="${produto.produto.nota} >= 3 ? 'estrela preenchida' : 'estrela'">&#9733;</span>
+                <span th:class="${produto.produto.nota} >= 4 ? 'estrela preenchida' : 'estrela'">&#9733;</span>
+                <span th:class="${produto.produto.nota} >= 5 ? 'estrela preenchida' : 'estrela'">&#9733;</span>
+                <span th:text="'( ' + ${produto.avaliacoes.size()} + ' )'" style="opacity: 0.3;"></span>
+            </div>
+
+            <div th:if="${produto?.avaliacoes != null and not #lists.isEmpty(produto.avaliacoes)}"
+                class="avaliacoes-usuarios-container">
+                <div th:each="avaliacao : ${produto.avaliacoes}" class="avaliacoes-usuarios">
+                    <div class="avaliacoes-header">
+                        <div class="estrelas" style="padding: 0px;">
+                            <span th:class="${avaliacao.nota} >= 1 ? 'estrela preenchida' : 'estrela'"
+                                style="font-size: 15px">&#9733;</span>
+                            <span th:class="${avaliacao.nota} >= 2 ? 'estrela preenchida' : 'estrela'"
+                                style="font-size: 15px">&#9733;</span>
+                            <span th:class="${avaliacao.nota} >= 3 ? 'estrela preenchida' : 'estrela'"
+                                style="font-size: 15px">&#9733;</span>
+                            <span th:class="${avaliacao.nota} >= 4 ? 'estrela preenchida' : 'estrela'"
+                                style="font-size: 15px">&#9733;</span>
+                            <span th:class="${avaliacao.nota} >= 5 ? 'estrela preenchida' : 'estrela'"
+                                style="font-size: 15px">&#9733;</span>
+                        </div>
+
+                        <span th:text="${avaliacao.dataReview}" class="avaliacoes-data"></span>
+                    </div>
+
+                    <span th:text="${avaliacao.comentario}"></span>
+                </div>
+            </div>
+
+            <div th:unless="${produto?.avaliacoes != null and not #lists.isEmpty(produto.avaliacoes)}">
+                <p>Nenhuma avaliação disponível no momento.</p>
+            </div>
+        </div>
+    </div>
+
 </div>

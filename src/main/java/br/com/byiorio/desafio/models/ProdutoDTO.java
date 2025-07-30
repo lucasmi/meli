@@ -14,6 +14,8 @@ public class ProdutoDTO {
     String id;
     String titulo;
     String descricao;
+    double nota;
+    double media;
     ArrayList<ImagemDTO> imagens;
     BigDecimal preco;
     CategoriaDTO categoria;
