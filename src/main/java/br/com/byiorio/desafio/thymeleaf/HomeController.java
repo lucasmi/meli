@@ -8,17 +8,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.byiorio.desafio.models.ProdutoDetalhadoResponse;
 import br.com.byiorio.desafio.services.CategoriaService;
 import br.com.byiorio.desafio.services.ProdutoDetalhadoService;
 import br.com.byiorio.desafio.thymeleaf.dto.HomeRequest;
+import jakarta.annotation.Nullable;
 
 @Controller
 public class HomeController {
 
-    private static final String LISTA_PRODUTOS = "listaProdutos";
+    private static final String CATEGORIA2 = "categoria";
     private static final String CATEGORIAS = "categorias";
+    private static final String BUSCA = "busca";
+    private static final String LISTA_PRODUTOS = "listaProdutos";
 
     ProdutoDetalhadoService produtoDetalhadoService;
     CategoriaService categoriaService;
@@ -29,23 +33,37 @@ public class HomeController {
     }
 
     @GetMapping("/home")
-    public String home(@RequestParam(required = false) String categoria, Model model) {
+    public String home(@RequestParam(required = false) String categoria,
+            @ModelAttribute(BUSCA) String busca,
+            @ModelAttribute(CATEGORIA2) String categoriaParam,
+            Model model) {
 
-        List<ProdutoDetalhadoResponse> listaProduto = null;
+        @SuppressWarnings("unchecked")
+        List<ProdutoDetalhadoResponse> listaProduto = (List<ProdutoDetalhadoResponse>) model
+                .getAttribute(LISTA_PRODUTOS);
+
         // Listando produtos
-        if (categoria == null) {
-            listaProduto = produtoDetalhadoService.buscarTodos(null);
+        if (listaProduto == null) {
+            if (categoria == null) {
+                listaProduto = produtoDetalhadoService.buscarTodos(null);
+            } else {
+                listaProduto = produtoDetalhadoService.buscarTodos(categoria);
+            }
+            model.addAttribute(LISTA_PRODUTOS, listaProduto);
         } else {
-            listaProduto = produtoDetalhadoService.buscarTodos(categoria);
+            model.addAttribute(LISTA_PRODUTOS, listaProduto);
         }
-        model.addAttribute(LISTA_PRODUTOS, listaProduto);
 
+        // Carrega todos os parametros
+        model.addAttribute(BUSCA, busca);
         model.addAttribute(CATEGORIAS, categoriaService.buscarTodos());
+        model.addAttribute(CATEGORIA2, (categoriaParam != null) ? categoriaParam : categoria);
+
         return "home";
     }
 
     @PostMapping("/home")
-    public String homePost(@ModelAttribute HomeRequest request, Model model) {
+    public String homePost(@ModelAttribute HomeRequest request, RedirectAttributes redirectAttributes) {
         List<ProdutoDetalhadoResponse> listaProduto = null;
 
         // Listando produtos
@@ -61,10 +79,14 @@ public class HomeController {
                     .filter(p -> p.getProduto().getTitulo().toUpperCase().contains(request.getBusca().toUpperCase()))
                     .toList();
         }
-        model.addAttribute(LISTA_PRODUTOS, listaProduto);
 
-        model.addAttribute(CATEGORIAS, categoriaService.buscarTodos());
-        return "home";
+        // Salva os paramestros para o redirect no get
+        redirectAttributes.addFlashAttribute(BUSCA, request.getBusca());
+        redirectAttributes.addFlashAttribute(LISTA_PRODUTOS, listaProduto);
+        redirectAttributes.addFlashAttribute(CATEGORIAS, categoriaService.buscarTodos());
+        redirectAttributes.addAttribute(CATEGORIA2, request.getCategoria());
+
+        return "redirect:/home";
     }
 
     @GetMapping("/produto")

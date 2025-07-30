@@ -1,7 +1,7 @@
 <div th:fragment="input" style="display: contents;">
     <form th:action="@{/home}" method="post">
         <div class="search-box">
-            <input type="text" name="busca" placeholder="Buscar produtos, marcas e muito mais..." />
+            <input type="text" name="busca" placeholder="Buscar produtos, marcas e muito mais..." th:value="${busca}" />
             <input type="hidden" name="categoria" th:value="${param.categoria}" />
             <button type="submit">🔍</button>
         </div>
