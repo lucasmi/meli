@@ -180,3 +180,43 @@
 .avaliacoes-estrelas .estrela {
     font-size: 15px;
 }
+
+
+@media (max-width: 768px) {
+
+    .avaliacoes-container {
+        flex-direction: column;
+    }
+
+    .estrelas-container {
+        padding-bottom: 15px
+    }
+
+    .avaliacoes-usuarios-container {
+        width: 100%;
+    }
+
+    .produto-detalhe-imagem-container {
+        flex-direction: column;
+    }
+
+    .produto-detalhe-info {
+        padding: 0px;
+    }
+
+    .produto-detalhe-imagem-maior {
+        height: auto;
+    }
+
+    .produto-detalhe-imagem-itens {
+        flex-direction: row;
+    }
+
+    .produto-detalhe-imagem-itens {
+        margin-bottom: 20px;
+    }
+
+    .produto-detalhe-imagem-itens img {
+        margin-right: 0px !important;
+    }
+}
